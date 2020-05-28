@@ -37,9 +37,9 @@ func loadPublicConfiguration() (enabled bool, prefix string, root string, config
 // Set default configuration for the Logger Middleware
 func setDefaultPublicConfiguration(provider *viper.Viper) {
 	provider.SetDefault("Enabled", true)
-	provider.SetDefault("Prefix", "/")
+	provider.SetDefault("Prefix", "/assets")
 	provider.SetDefault("Root", "./public")
-	provider.SetDefault("Compress", false)
+	provider.SetDefault("Compress", true)
 	provider.SetDefault("ByteRange", false)
 	provider.SetDefault("Browse", false)
 	provider.SetDefault("Index", "index.html")

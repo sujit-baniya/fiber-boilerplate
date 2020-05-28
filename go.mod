@@ -5,7 +5,6 @@ go 1.14
 require (
 	github.com/alexedwards/argon2id v0.0.0-20200522061839-9369edc04b05 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20200428022330-06a60b6afbbc // indirect
-	github.com/eknkc/amber v0.0.0-20171010120322-cdade1c07385
 	github.com/fasthttp/session/v2 v2.1.0
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/gofiber/compression v0.1.0
@@ -28,6 +27,9 @@ require (
 	github.com/thomasvvugt/fiber-hashing v0.0.0-20200511145001-a62bb48860d5
 	go.opentelemetry.io/otel v0.6.0 // indirect
 	golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37 // indirect
+	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
+	golang.org/x/net v0.0.0-20200520182314-0ba52f642ac2 // indirect
 	golang.org/x/sys v0.0.0-20200523222454-059865788121 // indirect
+	golang.org/x/tools v0.0.0-20200527183253-8e7acdbce89d // indirect
 	gopkg.in/ini.v1 v1.57.0 // indirect
 )
