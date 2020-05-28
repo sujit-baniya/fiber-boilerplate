@@ -1,0 +1,3 @@
+Listen: 8080
+SuppressWWW: true
+ForceHTTPS: false

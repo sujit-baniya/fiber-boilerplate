@@ -1,0 +1,10 @@
+Hello, {{name}}!
+
+{{#if auth}}
+    <br /><br />You are logged-in as <b>{{username}}</b>!<br />
+    <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+    <form id="logout-form" action="/logout" method="POST" style="display: none;"></form>
+{{else}}
+    <br /><br />You are not logged-in!<br />
+    <a href="/login">Log-in</a>
+{{/if}}

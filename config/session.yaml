@@ -1,0 +1,3 @@
+Lookup: "cookie:fiber_session"
+Driver: "redis"
+KeyPrefix: "fiber_session"
