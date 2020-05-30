@@ -7,8 +7,6 @@ type System struct {
 	CPU       CPU                      `json:"cpu"`
 	RAM       RAM                      `json:"ram"`
 	Disks     Disks                    `json:"disks"`
-	Network   NetworkDevices           `json:"network"`
-	Processes Processes                `json:"processes"`
 	Bandwidth []NetworkDeviceBandwidth `json:"bandwidth"`
 }
 
@@ -18,8 +16,6 @@ func CheckSystem() System {
 		CPU:       CheckCpu(),
 		RAM:       CheckRam(),
 		Disks:     CheckDisk(),
-		Network:   CheckNetwork(),
-		Processes: CheckProcess(),
 		Bandwidth: CheckBandwidth(),
 	}
 	return sys
