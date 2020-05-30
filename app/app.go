@@ -1,7 +1,9 @@
 package app
 
 import (
+	"errors"
 	"fmt"
+	"github.com/thomasvvugt/fiber-boilerplate/app/middlewares/error_handler"
 	"log"
 	"os"
 	"os/signal"
@@ -20,6 +22,11 @@ import (
 	"github.com/thomasvvugt/fiber-boilerplate/database"
 	"github.com/thomasvvugt/fiber-boilerplate/routes"
 )
+
+var data = fiber.Map{
+	"firstName": "John",
+	"lastName":  "Doe",
+}
 
 func Serve() {
 	// Load configurations
@@ -106,10 +113,53 @@ func Serve() {
 		app.Static(config.PublicPrefix, config.PublicRoot, config.Public)
 	}
 
-	// Custom 404-page
-	app.Use(func(c *fiber.Ctx) {
-		c.Redirect("/404")
-		return
+	app.Use(error_handler.New(error_handler.Config{
+		UseTemplate: true,
+		//Log: true,
+		Handler: func(c *fiber.Ctx, err error, fallback func(...interface{})) {
+			if he, ok := err.(error_handler.HTTPError); ok {
+				switch he.StatusCode() {
+				case fiber.StatusUnauthorized:
+					c.Status(he.StatusCode()).Render("custom-err", fiber.Map{
+						"StatusCode": he.StatusCode(),
+						"Message":    he.Message(),
+						"Reason":     "Please login first",
+						"SomeData":   he.Data(),
+					})
+					return
+
+				default:
+					break
+				}
+			}
+			fallback(err)
+		},
+	}))
+
+	apiv1.Get("/", func(c *fiber.Ctx) {
+		c.JSON(data)
+	})
+	apiv1.Get("/panic", func(c *fiber.Ctx) {
+		panic(errors.New("winter is coming to the api"))
+	})
+	apiv1.Get("/err-403", func(c *fiber.Ctx) {
+		c.Next(error_handler.NewHttpError(fiber.StatusForbidden, "Cannot access this", nil))
+	})
+
+	app.Get("/panic", func(c *fiber.Ctx) {
+		panic(errors.New("winter is coming to the web"))
+	})
+	app.Get("/err-403", func(c *fiber.Ctx) {
+		c.Next(error_handler.NewHttpError(fiber.StatusForbidden, "Cannot access this", nil))
+	})
+	app.Get("/custom", func(c *fiber.Ctx) {
+		c.Next(error_handler.NewHttpError(fiber.StatusUnauthorized, "unauthorized", struct {
+			FirstName string
+			LastName  string
+		}{
+			FirstName: "John",
+			LastName:  "Wick",
+		}))
 	})
 
 	// Set configuration provider
