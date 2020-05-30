@@ -15,12 +15,17 @@ require (
 	github.com/gofiber/recover v0.1.0
 	github.com/gofiber/session v1.2.0
 	github.com/gofiber/template v1.3.1
+	github.com/jaypipes/ghw v0.6.1 // indirect
 	github.com/jcmturner/gokrb5/v8 v8.3.0 // indirect
 	github.com/jinzhu/gorm v1.9.12
 	github.com/klauspost/compress v1.10.6 // indirect
 	github.com/lib/pq v1.6.0 // indirect
+	github.com/mitchellh/go-ps v1.0.0 // indirect
 	github.com/mitchellh/mapstructure v1.3.1 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
+	github.com/prometheus/procfs v0.0.11 // indirect
+	github.com/shirou/gopsutil v2.20.4+incompatible // indirect
 	github.com/spf13/afero v1.2.2 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
@@ -34,4 +39,5 @@ require (
 	golang.org/x/sys v0.0.0-20200523222454-059865788121 // indirect
 	golang.org/x/tools v0.0.0-20200529172331-a64b76657301 // indirect
 	gopkg.in/ini.v1 v1.57.0 // indirect
+	howett.net/plist v0.0.0-20200419221736-3b63eb3a43b5 // indirect
 )
