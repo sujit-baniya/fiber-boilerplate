@@ -106,8 +106,9 @@ func Serve() {
 	// Register application API routes (using the /api/v1 group)
 	api := app.Group("/api")
 	apiv1 := api.Group("/v1")
+	systemRoutes := app.Group("/system")
 	routes.RegisterAPI(apiv1)
-
+	routes.RegisterSystemRoutes(systemRoutes)
 	// Serve public, static files
 	if config.Enabled["public"] {
 		app.Static(config.PublicPrefix, config.PublicRoot, config.Public)

@@ -7,6 +7,7 @@ require (
 	github.com/denisenkom/go-mssqldb v0.0.0-20200428022330-06a60b6afbbc // indirect
 	github.com/fasthttp/session/v2 v2.1.0
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
+	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gofiber/compression v0.1.0
 	github.com/gofiber/cors v0.1.0
 	github.com/gofiber/fiber v1.10.1
@@ -15,23 +16,26 @@ require (
 	github.com/gofiber/recover v0.1.0
 	github.com/gofiber/session v1.2.0
 	github.com/gofiber/template v1.3.1
-	github.com/jaypipes/ghw v0.6.1 // indirect
+	github.com/gomodule/redigo v1.8.1
+	github.com/jaypipes/ghw v0.6.1
 	github.com/jcmturner/gokrb5/v8 v8.3.0 // indirect
 	github.com/jinzhu/gorm v1.9.12
 	github.com/klauspost/compress v1.10.6 // indirect
 	github.com/lib/pq v1.6.0 // indirect
-	github.com/mitchellh/go-ps v1.0.0 // indirect
+	github.com/mitchellh/go-ps v1.0.0
 	github.com/mitchellh/mapstructure v1.3.1 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
-	github.com/prometheus/procfs v0.0.11 // indirect
-	github.com/shirou/gopsutil v2.20.4+incompatible // indirect
+	github.com/pkg/errors v0.9.1
+	github.com/prometheus/procfs v0.0.11
+	github.com/shirou/gopsutil v2.20.4+incompatible
 	github.com/spf13/afero v1.2.2 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.7.0
+	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/thomasvvugt/fiber-hashing v0.0.0-20200511145001-a62bb48860d5
+	go.mongodb.org/mongo-driver v1.3.3
 	go.opentelemetry.io/otel v0.6.0 // indirect
 	golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37 // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
