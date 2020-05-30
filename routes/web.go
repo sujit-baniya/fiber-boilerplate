@@ -1,33 +1,33 @@
 package routes
 
 import (
+	"fmt"
 	"github.com/gofiber/fiber"
-	"log"
-
 	Controller "github.com/thomasvvugt/fiber-boilerplate/app/controllers/web"
-	"github.com/thomasvvugt/fiber-boilerplate/app/providers"
 )
 
 func RegisterWeb(app *fiber.App) {
+	errorPages(app)
 	// Homepage
 	app.Get("/", Controller.Index)
-
-	// Panic test route, this brings up an error
-	app.Get("/panic", func(c *fiber.Ctx) {
-		panic("Hi, I'm a panic error!")
-	})
-
-	// Make a new hash
-	app.Get("/hash/*", func(c *fiber.Ctx) {
-		hash, err := providers.HashProvider().CreateHash(c.Params("*"))
-		if err != nil {
-			log.Fatalf("Error when creating hash: %v", err)
-		}
-		c.Send(hash)
-	})
 
 	// Auth routes
 	app.Get("/login", Controller.ShowLoginForm)
 	app.Post("/login", Controller.PostLoginForm)
 	app.Post("/logout", Controller.PostLogoutForm)
+}
+func errorPages(app *fiber.App) {
+	// Homepage
+	app.Get("/404", func(c *fiber.Ctx) {
+		errorPageHandlers(c, 404)
+	})
+	// Homepage
+	app.Get("/500", func(c *fiber.Ctx) {
+		errorPageHandlers(c, 500)
+	})
+}
+
+func errorPageHandlers(c *fiber.Ctx, code int) {
+	c.SendStatus(code)
+	c.Render(fmt.Sprintf("errors/%d", code), fiber.Map{})
 }
