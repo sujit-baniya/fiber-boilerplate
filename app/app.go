@@ -108,10 +108,8 @@ func Serve() {
 
 	// Custom 404-page
 	app.Use(func(c *fiber.Ctx) {
-		c.SendStatus(404)
-		if err := c.Render("errors/404", fiber.Map{}); err != nil {
-			c.Status(500).Send(err.Error())
-		}
+		c.Redirect("/404")
+		return
 	})
 
 	// Set configuration provider
