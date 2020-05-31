@@ -2,12 +2,12 @@ package web
 
 import (
 	"github.com/gofiber/fiber"
-	"log"
-
 	"github.com/thomasvvugt/fiber-boilerplate/app/providers"
+	"log"
 )
 
 func Index(c *fiber.Ctx) {
+
 	auth := providers.IsAuthenticated(c)
 	// Bind data to template
 	bind := fiber.Map{

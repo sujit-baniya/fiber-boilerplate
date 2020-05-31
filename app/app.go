@@ -27,6 +27,7 @@ var data = fiber.Map{
 	"firstName": "John",
 	"lastName":  "Doe",
 }
+var app *fiber.App
 
 func Serve() {
 	// Load configurations
@@ -37,7 +38,7 @@ func Serve() {
 	}
 
 	// Create a new Fiber application
-	app := fiber.New(&config.Fiber)
+	app = fiber.New(&config.Fiber)
 
 	// Use the Logger Middleware if enabled
 	if config.Enabled["logger"] {
@@ -106,22 +107,22 @@ func Serve() {
 	// Register application API routes (using the /api/v1 group)
 	api := app.Group("/api")
 	apiv1 := api.Group("/v1")
-	systemRoutes := app.Group("/system")
+	// systemRoutes := app.Group("/system")
 	routes.RegisterAPI(apiv1)
-	routes.RegisterSystemRoutes(systemRoutes)
+	// routes.RegisterSystemRoutes(systemRoutes)
 	// Serve public, static files
 	if config.Enabled["public"] {
 		app.Static(config.PublicPrefix, config.PublicRoot, config.Public)
 	}
-
 	app.Use(error_handler.New(error_handler.Config{
 		UseTemplate: true,
-		//Log: true,
 		Handler: func(c *fiber.Ctx, err error, fallback func(...interface{})) {
+			fmt.Println("Break1")
 			if he, ok := err.(error_handler.HTTPError); ok {
+				fmt.Println("Break2")
 				switch he.StatusCode() {
 				case fiber.StatusUnauthorized:
-					c.Status(he.StatusCode()).Render("custom-err", fiber.Map{
+					c.Status(he.StatusCode()).Render("errors/403", fiber.Map{
 						"StatusCode": he.StatusCode(),
 						"Message":    he.Message(),
 						"Reason":     "Please login first",
@@ -130,39 +131,15 @@ func Serve() {
 					return
 
 				default:
+					fmt.Println("Break")
 					break
 				}
 			}
+			fmt.Println("Break3")
 			fallback(err)
 		},
 	}))
-
-	apiv1.Get("/", func(c *fiber.Ctx) {
-		c.JSON(data)
-	})
-	apiv1.Get("/panic", func(c *fiber.Ctx) {
-		panic(errors.New("winter is coming to the api"))
-	})
-	apiv1.Get("/err-403", func(c *fiber.Ctx) {
-		c.Next(error_handler.NewHttpError(fiber.StatusForbidden, "Cannot access this", nil))
-	})
-
-	app.Get("/panic", func(c *fiber.Ctx) {
-		panic(errors.New("winter is coming to the web"))
-	})
-	app.Get("/err-403", func(c *fiber.Ctx) {
-		c.Next(error_handler.NewHttpError(fiber.StatusForbidden, "Cannot access this", nil))
-	})
-	app.Get("/custom", func(c *fiber.Ctx) {
-		c.Next(error_handler.NewHttpError(fiber.StatusUnauthorized, "unauthorized", struct {
-			FirstName string
-			LastName  string
-		}{
-			FirstName: "John",
-			LastName:  "Wick",
-		}))
-	})
-
+	SampleRoute()
 	// Set configuration provider
 	providers.SetConfiguration(&config)
 
@@ -212,4 +189,23 @@ func exit(config *configuration.Configuration, app *fiber.App, err error) {
 	} else {
 		os.Exit(0)
 	}
+}
+
+func SampleRoute() {
+
+	app.Get("/panic", func(c *fiber.Ctx) {
+		panic(errors.New("winter is coming to the web"))
+	})
+	app.Get("/err-403", func(c *fiber.Ctx) {
+		c.Next(error_handler.NewHttpError(fiber.StatusForbidden, "Cannot access this", nil))
+	})
+	app.Get("/custom", func(c *fiber.Ctx) {
+		c.Next(error_handler.NewHttpError(fiber.StatusUnauthorized, "unauthorized", struct {
+			FirstName string
+			LastName  string
+		}{
+			FirstName: "John",
+			LastName:  "Wick",
+		}))
+	})
 }

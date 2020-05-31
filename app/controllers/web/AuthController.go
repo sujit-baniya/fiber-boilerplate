@@ -10,7 +10,8 @@ import (
 
 func ShowLoginForm(c *fiber.Ctx) {
 	store := providers.SessionProvider().Get(c)
-	if store != nil {
+	userid := store.Get("userid")
+	if userid != nil {
 		c.Redirect("/home")
 		return
 	}
