@@ -5,6 +5,8 @@ go 1.14
 require (
 	github.com/alexedwards/argon2id v0.0.0-20200522061839-9369edc04b05 // indirect
 	github.com/allegro/bigcache v1.2.1
+	github.com/casbin/casbin/v2 v2.6.5
+	github.com/casbin/gorm-adapter/v2 v2.1.0
 	github.com/cosiner/argv v0.1.0 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20200428022330-06a60b6afbbc // indirect
 	github.com/fasthttp/session/v2 v2.1.0
@@ -55,7 +57,7 @@ require (
 	golang.org/x/net v0.0.0-20200528225125-3c3fba18258b // indirect
 	golang.org/x/sync v0.0.0-20200317015054-43a5402ce75a // indirect
 	golang.org/x/sys v0.0.0-20200523222454-059865788121 // indirect
-	golang.org/x/tools v0.0.0-20200529172331-a64b76657301 // indirect
+	golang.org/x/tools v0.0.0-20200530233709-52effbd89c51 // indirect
 	gopkg.in/ini.v1 v1.57.0 // indirect
 	howett.net/plist v0.0.0-20200419221736-3b63eb3a43b5 // indirect
 )

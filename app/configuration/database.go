@@ -5,9 +5,9 @@ import (
 )
 
 type DatabaseConfiguration struct {
-	Driver string
-	Host string
-	Port int
+	Driver   string //nolint:gofmt
+	Host     string
+	Port     int
 	Username string
 	Password string
 	Database string
@@ -27,7 +27,7 @@ func loadDatabaseConfiguration() (enabled bool, config DatabaseConfiguration, er
 	// Read configuration file
 	err = provider.ReadInConfig()
 	if err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok { //nolint:gosimple
 			// Config file not found; ignore error since we have default configurations
 		} else {
 			// Config file was found but another error was produced
@@ -42,7 +42,7 @@ func loadDatabaseConfiguration() (enabled bool, config DatabaseConfiguration, er
 	return provider.GetBool("Enabled"), config, err
 }
 
-// Set default configuration for the Database
+//nolint:godot    // Set default configuration for the Database
 func setDefaultDatabaseConfiguration(provider *viper.Viper) {
 	provider.SetDefault("Enabled", true)
 	provider.SetDefault("Driver", "mysql")

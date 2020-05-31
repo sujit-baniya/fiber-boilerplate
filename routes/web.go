@@ -22,6 +22,14 @@ func errorPages(app *fiber.App) {
 		errorPageHandlers(c, 404)
 	})
 	// Homepage
+	app.Get("/401", func(c *fiber.Ctx) {
+		errorPageHandlers(c, 401)
+	})
+	// Homepage
+	app.Get("/403", func(c *fiber.Ctx) {
+		errorPageHandlers(c, 403)
+	})
+	// Homepage
 	app.Get("/500", func(c *fiber.Ctx) {
 		errorPageHandlers(c, 500)
 	})

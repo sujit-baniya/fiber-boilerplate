@@ -3,6 +3,7 @@ package app
 import (
 	"errors"
 	"fmt"
+	"github.com/thomasvvugt/fiber-boilerplate/app/middlewares/auth"
 	"github.com/thomasvvugt/fiber-boilerplate/app/middlewares/error_handler"
 	"log"
 	"os"
@@ -29,6 +30,7 @@ var data = fiber.Map{
 }
 var app *fiber.App
 
+//nolint:funlen
 func Serve() {
 	// Load configurations
 	config, err := configuration.LoadConfigurations()
@@ -40,6 +42,11 @@ func Serve() {
 	// Create a new Fiber application
 	app = fiber.New(&config.Fiber)
 
+	authz := auth.New(auth.Config{
+		ModelFilePath: "./config/rbac_model.conf",
+		PolicyAdapter: auth.CasbinRbac(&config.Database),
+	})
+	fmt.Println(authz)
 	// Use the Logger Middleware if enabled
 	if config.Enabled["logger"] {
 		app.Use(logger.New(config.Logger))
@@ -93,8 +100,9 @@ func Serve() {
 	// Connect to a database
 	if config.Enabled["database"] {
 		database.Connect(&config.Database)
-	}
 
+		auth.CasbinRbac(&config.Database)
+	}
 	// Run auto migrations
 	database.Instance().AutoMigrate(&models.Role{})
 	database.Instance().AutoMigrate(&models.User{})
@@ -106,6 +114,8 @@ func Serve() {
 
 	// Register application API routes (using the /api/v1 group)
 	api := app.Group("/api")
+	// Enable Casbin Route Permission
+	// api.Use(authz.RoutePermission())
 	apiv1 := api.Group("/v1")
 	// systemRoutes := app.Group("/system")
 	routes.RegisterAPI(apiv1)
