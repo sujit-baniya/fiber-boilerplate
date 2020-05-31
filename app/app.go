@@ -114,12 +114,14 @@ func Serve() {
 	if config.Enabled["public"] {
 		app.Static(config.PublicPrefix, config.PublicRoot, config.Public)
 	}
+	app.Use(func(c *fiber.Ctx) {
+		c.Redirect("/404")
+		return
+	})
 	app.Use(error_handler.New(error_handler.Config{
 		UseTemplate: true,
 		Handler: func(c *fiber.Ctx, err error, fallback func(...interface{})) {
-			fmt.Println("Break1")
 			if he, ok := err.(error_handler.HTTPError); ok {
-				fmt.Println("Break2")
 				switch he.StatusCode() {
 				case fiber.StatusUnauthorized:
 					c.Status(he.StatusCode()).Render("errors/403", fiber.Map{
@@ -131,11 +133,9 @@ func Serve() {
 					return
 
 				default:
-					fmt.Println("Break")
 					break
 				}
 			}
-			fmt.Println("Break3")
 			fallback(err)
 		},
 	}))

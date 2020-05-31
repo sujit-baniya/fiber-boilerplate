@@ -32,6 +32,8 @@ github.com/alexedwards/argon2id v0.0.0-20200420065805-90c52fcb498a h1:AdMvl6qmXj
 github.com/alexedwards/argon2id v0.0.0-20200420065805-90c52fcb498a/go.mod h1:GFtu6vaWaRJV5EvSFaVqgq/3Iq95xyYElBV/aupGzUo=
 github.com/alexedwards/argon2id v0.0.0-20200522061839-9369edc04b05 h1:votg1faEmwABhCeJ4tiBrvwk4BWftQGkEtFy5iuI7rU=
 github.com/alexedwards/argon2id v0.0.0-20200522061839-9369edc04b05/go.mod h1:GFtu6vaWaRJV5EvSFaVqgq/3Iq95xyYElBV/aupGzUo=
+github.com/allegro/bigcache v1.2.1 h1:hg1sY1raCwic3Vnsvje6TT7/pnZba83LeFck5NrFKSc=
+github.com/allegro/bigcache v1.2.1/go.mod h1:Cb/ax3seSYIx7SuZdm2G2xzfwmv3TPSk2ucNfQESPXM=
 github.com/andybalholm/brotli v1.0.0 h1:7UCwP93aiSfvWpapti8g88vVVGp2qqtGyePsSuDafo4=
 github.com/andybalholm/brotli v1.0.0/go.mod h1:loMXtMfwqflxFJPmdbJO0a3KNoPuLBgiu3qAvBg8x/Y=
 github.com/armon/circbuf v0.0.0-20150827004946-bbbad097214e/go.mod h1:3U/XgcO3hCbHZ8TKRvWD2dDTCfh9M9ya+I9JpbB7O8o=

@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/alexedwards/argon2id v0.0.0-20200522061839-9369edc04b05 // indirect
+	github.com/allegro/bigcache v1.2.1
 	github.com/cosiner/argv v0.1.0 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20200428022330-06a60b6afbbc // indirect
 	github.com/fasthttp/session/v2 v2.1.0
