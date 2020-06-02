@@ -1,50 +1,25 @@
 {
-  "name": "src",
-  "version": "1.0.0",
+  "name": "fiber-boilerplate",
+  "description": "A boilerplate for the Fiber web framework",
+  "version": "0.0.4",
+  "repository": "https://github.com/thomasvvugt/fiber-boilerplate.git",
+  "author": "Thomas van Vugt <56607882+thomasvvugt@users.noreply.github.com>",
   "license": "MIT",
-  "main": "src/main.js",
+  "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "npm run dev -- --watch",
-    "prod": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run development -- --watch",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.9.6",
-    "@tailwindcss/ui": "^0.3.0",
-    "@vue/cli-plugin-babel": "^4.3.1",
-    "@vue/cli-plugin-eslint": "^4.3.1",
-    "@vue/cli-service": "^4.3.1",
-    "babel-eslint": "^10.1.0",
-    "babel-polyfill": "^6.26.0",
-    "browser-sync": "^2.26.7",
-    "browser-sync-webpack-plugin": "^2.2.2",
-    "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
-    "eslint": "^7.1.0",
-    "eslint-plugin-vue": "^6.2.2",
     "laravel-mix": "^5.0.4",
-    "laravel-mix-purgecss": "^5.0.0",
-    "lodash": "^4.17.15",
     "resolve-url-loader": "^3.1.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "tailwindcss": "^1.4.6",
-    "vue": "^2.6.11",
-    "vue-template-compiler": "^2.6.11",
-    "vuetify": "^2.2.29"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
+    "vue-template-compiler": "^2.6.11"
   }
 }

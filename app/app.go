@@ -3,11 +3,11 @@ package app
 import (
 	"errors"
 	"fmt"
-	"github.com/thomasvvugt/fiber-boilerplate/app/middlewares/auth"
-	"github.com/thomasvvugt/fiber-boilerplate/app/middlewares/error_handler"
 	"log"
 	"os"
 	"os/signal"
+
+	"github.com/thomasvvugt/fiber-boilerplate/app/middlewares/error_handler"
 
 	"github.com/gofiber/compression"
 	"github.com/gofiber/cors"
@@ -42,11 +42,6 @@ func Serve() {
 	// Create a new Fiber application
 	app = fiber.New(&config.Fiber)
 
-	authz := auth.New(auth.Config{
-		ModelFilePath: "./config/rbac_model.conf",
-		PolicyAdapter: auth.CasbinRbac(&config.Database),
-	})
-	fmt.Println(authz)
 	// Use the Logger Middleware if enabled
 	if config.Enabled["logger"] {
 		app.Use(logger.New(config.Logger))
@@ -100,8 +95,6 @@ func Serve() {
 	// Connect to a database
 	if config.Enabled["database"] {
 		database.Connect(&config.Database)
-
-		auth.CasbinRbac(&config.Database)
 	}
 	// Run auto migrations
 	database.Instance().AutoMigrate(&models.Role{})
@@ -124,9 +117,13 @@ func Serve() {
 	if config.Enabled["public"] {
 		app.Static(config.PublicPrefix, config.PublicRoot, config.Public)
 	}
+
+	// Custom 404-page
 	app.Use(func(c *fiber.Ctx) {
-		c.Redirect("/404")
-		return
+		c.SendStatus(404)
+		if err := c.Render("errors/404", fiber.Map{}); err != nil {
+			c.Status(500).Send(err.Error())
+		}
 	})
 	app.Use(error_handler.New(error_handler.Config{
 		UseTemplate: true,

@@ -43,8 +43,10 @@ func setDefaultRecoverConfiguration(provider *viper.Viper) {
 	provider.SetDefault("Enabled", true)
 	provider.SetDefault("Filter", nil)
 	provider.SetDefault("Handler", func(c *fiber.Ctx, err error) {
-		c.Redirect("/500")
-		return
+		c.SendStatus(500)
+		if err := c.Render("errors/500", fiber.Map{}); err != nil {
+			c.Status(500).Send(err.Error())
+		}
 	})
 	provider.SetDefault("Log", false)
 	provider.SetDefault("Output", os.Stderr)

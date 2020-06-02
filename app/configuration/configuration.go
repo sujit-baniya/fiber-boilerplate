@@ -13,20 +13,20 @@ import (
 )
 
 type Configuration struct {
-	Fiber fiber.Settings
-	App ApplicationConfiguration
-	Enabled map[string]bool
-	Logger logger.Config
-	Recover recover.Config
-	Compression compression.Config
-	CORS cors.Config
-	Helmet helmet.Config
-	Hash hashing.Config
-	Session session.Config
+	Fiber        fiber.Settings //nolint:gofmt
+	App          ApplicationConfiguration
+	Enabled      map[string]bool
+	Logger       logger.Config
+	Recover      recover.Config
+	Compression  compression.Config
+	CORS         cors.Config
+	Helmet       helmet.Config
+	Hash         hashing.Config
+	Session      session.Config
 	PublicPrefix string
-	PublicRoot string
-	Public fiber.Static
-	Database DatabaseConfiguration
+	PublicRoot   string //nolint:gofmt
+	Public       fiber.Static
+	Database     DatabaseConfiguration
 }
 
 func LoadConfigurations() (config Configuration, err error) {
@@ -36,21 +36,26 @@ func LoadConfigurations() (config Configuration, err error) {
 	if err != nil {
 		return config, err
 	}
-	config.Fiber = fiberSettings
+	config.Fiber = fiberSettings //nolint:wsl
+
+	templateEnabled, template := loadTemplateConfiguration()
+	if templateEnabled {
+		config.Fiber.Templates = template
+	}
 
 	// Load the application configuration
 	appConfig, err := loadApplicationConfiguration()
 	if err != nil {
 		return config, err
 	}
-	config.App = appConfig
+	config.App = appConfig //nolint:wsl
 
 	// Load the logger middleware configuration
 	loggerEnabled, loggerConfig, err := loadLoggerConfiguration()
 	if err != nil {
 		return config, err
 	}
-	config.Enabled["logger"] = loggerEnabled
+	config.Enabled["logger"] = loggerEnabled //nolint:wsl
 	config.Logger = loggerConfig
 
 	// Load the recover middleware configuration
@@ -58,7 +63,7 @@ func LoadConfigurations() (config Configuration, err error) {
 	if err != nil {
 		return config, err
 	}
-	config.Enabled["recover"] = recoverEnabled
+	config.Enabled["recover"] = recoverEnabled //nolint:wsl
 	config.Recover = recoverConfig
 
 	// Load the compression middleware configuration
@@ -66,7 +71,7 @@ func LoadConfigurations() (config Configuration, err error) {
 	if err != nil {
 		return config, err
 	}
-	config.Enabled["compression"] = compressionEnabled
+	config.Enabled["compression"] = compressionEnabled //nolint:wsl
 	config.Compression = compressionConfig
 
 	// Load the CORS middleware configuration
@@ -74,7 +79,7 @@ func LoadConfigurations() (config Configuration, err error) {
 	if err != nil {
 		return config, err
 	}
-	config.Enabled["cors"] = corsEnabled
+	config.Enabled["cors"] = corsEnabled //nolint:wsl
 	config.CORS = corsConfig
 
 	// Load the Helmet middleware configuration

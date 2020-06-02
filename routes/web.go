@@ -2,6 +2,7 @@ package routes
 
 import (
 	"fmt"
+
 	"github.com/gofiber/fiber"
 	Controller "github.com/thomasvvugt/fiber-boilerplate/app/controllers/web"
 )
