@@ -1,25 +1,40 @@
 {
-  "name": "fiber-boilerplate",
-  "description": "A boilerplate for the Fiber web framework",
-  "version": "0.0.4",
-  "repository": "https://github.com/thomasvvugt/fiber-boilerplate.git",
-  "author": "Thomas van Vugt <56607882+thomasvvugt@users.noreply.github.com>",
+  "name": "go-service-toolkit",
+  "version": "1.0.0",
+  "repository": "https://gitlab.com/itsursujit/go-service-toolkit.git",
+  "author": "Sujit <itsursujit@gmail.com>",
   "license": "MIT",
-  "private": true,
   "scripts": {
-    "dev": "npm run development",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "npm run development -- --watch",
-    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run dev -- --watch",
+    "prod": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
+    "@vue/babel-preset-app": "^4.4.1",
+    "axios": "^0.19.2",
+    "babel-polyfill": "^6.26.0",
+    "browser-sync": "^2.26.7",
+    "browser-sync-webpack-plugin": "^2.0.1",
     "cross-env": "^7.0.2",
     "laravel-mix": "^5.0.4",
+    "laravel-mix-purgecss": "^5.0.0",
+    "lodash": "^4.17.15",
     "resolve-url-loader": "^3.1.0",
-    "sass": "^1.26.5",
+    "sass": "^1.26.7",
     "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11",
+    "vue2-dropzone": "^3.6.0",
+    "vuetify": "^2.2.31"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/vue-fontawesome": "^0.1.9",
+    "chart.js": "^2.9.3",
+    "tailwindcss": "^1.4.6",
+    "vue-router": "^3.3.2",
+    "vuejs-datatable": "^2.0.0-alpha.7",
+    "vuex": "^3.4.0"
   }
 }

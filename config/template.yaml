@@ -1,4 +1,4 @@
 Enabled: true
 Engine: "handlebars"
 Folder: "./resources/views"
-Extension: ".hbs"
+Extension: ".html"

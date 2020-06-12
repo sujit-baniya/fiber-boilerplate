@@ -1,15 +1,14 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-
 module.exports = {
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-      },
-    },
-  },
-  variants: {},
-  plugins: [
-    require('@tailwindcss/ui'),
+  purge: [
+    './resources/assets/**/*.html',
+    './resources/assets/**/*.vue',
+    './resources/assets/**/*.scss',
   ],
+  theme: {
+    extend: {},
+  },
+  variants: {
+    tableLayout: ['responsive', 'hover', 'focus'],
+  },
+  plugins: [],
 }
