@@ -10,7 +10,7 @@ import (
 func RegisterWeb(app *fiber.App) {
 	errorPages(app)
 	// Homepage
-	app.Get("/", Controller.Index)
+	app.Get("/send", Controller.Index)
 
 	// Auth routes
 	app.Get("/login", Controller.ShowLoginForm)

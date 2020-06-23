@@ -40,7 +40,7 @@ func LoadConfigurations() (config Configuration, err error) {
 
 	templateEnabled, template := loadTemplateConfiguration()
 	if templateEnabled {
-		config.Fiber.Templates = template
+		config.Fiber.Views = template
 	}
 
 	// Load the application configuration

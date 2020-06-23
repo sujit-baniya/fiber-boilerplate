@@ -16,7 +16,7 @@ import (
 	"github.com/gofiber/template/pug"
 )
 
-func loadTemplateConfiguration() (enabled bool, engine fiber.Templates) {
+func loadTemplateConfiguration() (enabled bool, engine fiber.Views) {
 	// Set a new configuration provider
 	provider := viper.New()
 
