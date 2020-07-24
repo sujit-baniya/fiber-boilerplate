@@ -33,4 +33,4 @@ Thanks to following libraries:
 * [Fiber-Casbin](https://github.com/arsmn/fiber-casbin)
 * [Air](https://github.com/cosmtrek/air)
 
-[![Donate with PayPal](https://raw.githubusercontent.com/itsursujit/fiber-boilerplate/master/paypal-donate-button.png)](https://www.paypal.me/spbaniya)
+[![Donate with PayPal](https://raw.githubusercontent.com/itsursujit/fiber-boilerplate/master/paypal-donate-button.png =250x)](https://www.paypal.me/spbaniya)
