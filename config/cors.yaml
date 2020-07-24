@@ -1,3 +1,0 @@
-Enabled: true
-AllowOrigins: ["*"]
-AllowMethods: ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'PATCH']

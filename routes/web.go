@@ -1,42 +1,51 @@
 package routes
 
 import (
-	"fmt"
-
 	"github.com/gofiber/fiber"
-	Controller "github.com/thomasvvugt/fiber-boilerplate/app/controllers/web"
+	. "github.com/itsursujit/fiber-boilerplate/app"
+	"github.com/itsursujit/fiber-boilerplate/auth"
+	"github.com/itsursujit/fiber-boilerplate/config"
+	"github.com/itsursujit/fiber-boilerplate/controllers"
+	"github.com/itsursujit/fiber-boilerplate/middlewares"
 )
 
-func RegisterWeb(app *fiber.App) {
-	errorPages(app)
-	// Homepage
-	app.Get("/send", Controller.Index)
-
-	// Auth routes
-	app.Get("/login", Controller.ShowLoginForm)
-	app.Post("/login", Controller.PostLoginForm)
-	app.Post("/logout", Controller.PostLogoutForm)
-}
-func errorPages(app *fiber.App) {
-	// Homepage
-	app.Get("/404", func(c *fiber.Ctx) {
-		errorPageHandlers(c, 404)
-	})
-	// Homepage
-	app.Get("/401", func(c *fiber.Ctx) {
-		errorPageHandlers(c, 401)
-	})
-	// Homepage
-	app.Get("/403", func(c *fiber.Ctx) {
-		errorPageHandlers(c, 403)
-	})
-	// Homepage
-	app.Get("/500", func(c *fiber.Ctx) {
-		errorPageHandlers(c, 500)
-	})
+func WebRoutes() {
+	web := App.Group("")
+	web.Use(auth.AuthCookie)
+	LandingRoutes(web)
+	UserRoutes(web)
 }
 
-func errorPageHandlers(c *fiber.Ctx, code int) {
-	c.SendStatus(code)
-	c.Render(fmt.Sprintf("errors/%d", code), fiber.Map{})
+func LandingRoutes(app fiber.Router) {
+	app.Use(middlewares.Authenticate(middlewares.AuthConfig{
+		SigningKey:  []byte(config.AuthConfig.App_Jwt_Secret),
+		TokenLookup: "cookie:fiber-boilerplate-Token",
+		ErrorHandler: func(ctx *fiber.Ctx, err error) {
+			auth.Logout(ctx)
+			ctx.Next()
+		},
+	}))
+	app.Get("/", controllers.Landing)
+}
+
+func UserRoutes(app fiber.Router) {
+	account := app.Group("/account")
+	account.Use(middlewares.Authenticate(middlewares.AuthConfig{
+		SigningKey:  []byte(config.AuthConfig.App_Jwt_Secret),
+		TokenLookup: "cookie:fiber-boilerplate-Token",
+		ErrorHandler: func(ctx *fiber.Ctx, err error) {
+			auth.Logout(ctx)
+			ctx.Redirect("/login")
+			return
+		},
+	}))
+	// account.Get("/users", controllers.Index)
+	account.Get("/file-manager", controllers.FileIndex)
+	account.Get("/file-manager/view", controllers.ViewFile)
+	account.Post("/file-manager/upload", controllers.Upload)
+	account.Post("/paypal/do/order", controllers.PlaceOrderFromPaypal)
+	account.Post("/paypal/do/order/validate/:amount", controllers.ValidateOrderFromPaypal)
+	account.Get("/paypal/order/success/:id", controllers.PostOrderSuccessResponseFromPaypal)
+	account.Post("/paypal/order/cancel/:id", controllers.PostOrderCancelResponseFromPaypal)
+	account.Get("/paypal/order/:id", controllers.GetOrderDetailFromPaypal)
 }

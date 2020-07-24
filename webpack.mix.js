@@ -1,15 +1,14 @@
 const mix = require('laravel-mix');
-require('laravel-mix-purgecss');
 const tailwindcss = require('tailwindcss');
 // ...
-mix.js('resources/assets/js/app.js', 'assets/js')
-    .sass('resources/assets/sass/app.scss', 'assets/css')
-    .sass('resources/assets/sass/vendor.scss', 'assets/css')
-    .copy('resources/assets/images', 'assets/images')
+mix.js('resources/src/js/app.js', 'resources/assets/js')
+    .js('resources/src/js/payment.js', 'resources/assets/js')
+    .sass('resources/src/sass/app.scss', 'resources/assets/css')
+    .sass('resources/src/sass/vendor.scss', 'resources/assets/css')
+    .copy('resources/src/images', 'resources/assets/images')
     .options({
         processCssUrls: false,
         postCss: [tailwindcss('./tailwind.config.js')],
     })
     .extract()
-    .purgeCss()
     .browserSync('http://localhost:8080');

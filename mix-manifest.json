@@ -1,7 +1,8 @@
 {
-    "/assets/js/app.js": "/assets/js/app.js",
-    "/assets/css/app.css": "/assets/css/app.css",
-    "/assets/css/vendor.css": "/assets/css/vendor.css",
-    "/assets/js/manifest.js": "/assets/js/manifest.js",
-    "/assets/js/vendor.js": "/assets/js/vendor.js"
+    "/resources/assets/js/manifest.js": "/resources/assets/js/manifest.js",
+    "/resources/assets/js/app.js": "/resources/assets/js/app.js",
+    "/resources/assets/css/app.css": "/resources/assets/css/app.css",
+    "/resources/assets/css/vendor.css": "/resources/assets/css/vendor.css",
+    "/resources/assets/js/payment.js": "/resources/assets/js/payment.js",
+    "/resources/assets/js/vendor.js": "/resources/assets/js/vendor.js"
 }

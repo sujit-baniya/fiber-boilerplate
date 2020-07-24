@@ -1,4 +1,0 @@
-Enabled: true
-Engine: "handlebars"
-Folder: "./resources/views"
-Extension: ".html"

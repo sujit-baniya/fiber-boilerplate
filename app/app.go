@@ -1,218 +1,78 @@
 package app
 
 import (
-	"errors"
-	"fmt"
-	"log"
-	"os"
-	"os/signal"
-
-	"github.com/thomasvvugt/fiber-boilerplate/app/middlewares/error_handler"
-
-	"github.com/gofiber/compression"
-	"github.com/gofiber/cors"
+	"github.com/alexedwards/argon2id"
+	"github.com/casbin/casbin/v2"
+	gormadapter "github.com/casbin/gorm-adapter/v2"
+	"github.com/go-redis/redis"
 	"github.com/gofiber/fiber"
-	"github.com/gofiber/helmet"
-	"github.com/gofiber/logger"
-	"github.com/gofiber/recover"
 	"github.com/gofiber/session"
-
-	"github.com/thomasvvugt/fiber-boilerplate/app/configuration"
-	"github.com/thomasvvugt/fiber-boilerplate/app/models"
-	"github.com/thomasvvugt/fiber-boilerplate/app/providers"
-	"github.com/thomasvvugt/fiber-boilerplate/database"
-	"github.com/thomasvvugt/fiber-boilerplate/routes"
+	"github.com/gofiber/template/html"
+	"github.com/itsursujit/flash"
+	"github.com/itsursujit/fiber-boilerplate/mail"
+	"github.com/jinzhu/gorm"
+	"github.com/plutov/paypal/v3"
+	"github.com/rs/zerolog"
+	"github.com/streadway/amqp"
 )
 
-var data = fiber.Map{
-	"firstName": "John",
-	"lastName":  "Doe",
-}
-var app *fiber.App
+var App *fiber.App //nolint:gochecknoglobals
 
-//nolint:funlen
-func Serve() {
-	// Load configurations
-	config, err := configuration.LoadConfigurations()
-	if err != nil {
-		// Error when loading the configurations
-		log.Fatalf("An error occurred while loading the configurations: %v", err)
-	}
+var TemplateEngine *html.Engine
 
-	// Create a new Fiber application
-	app = fiber.New(&config.Fiber)
+var Ctx *fiber.Ctx
 
-	// Use the Logger Middleware if enabled
-	if config.Enabled["logger"] {
-		app.Use(logger.New(config.Logger))
-	}
+var Hash *HashDriver //nolint:gochecknoglobals
 
-	// Use the Recover Middleware if enabled
-	if config.Enabled["recover"] {
-		app.Use(recover.New(config.Recover))
-	}
+var Flash *flash.Flash
 
-	// Use HTTP best practices
-	app.Use(func(c *fiber.Ctx) {
-		// Suppress the `www.` at the beginning of URLs
-		if config.App.SuppressWWW {
-			providers.SuppressWWW(c)
-		}
-		// Force HTTPS protocol
-		if config.App.ForceHTTPS {
-			providers.ForceHTTPS(c)
-		}
-		// Move on the the next route
-		c.Next()
-	})
+var Session *session.Session
 
-	// Use the Compression Middleware if enabled
-	if config.Enabled["compression"] {
-		app.Use(compression.New(config.Compression))
-	}
+var MailerServer *mail.SMTPServer
 
-	// Use the CORS Middleware if enabled
-	if config.Enabled["cors"] {
-		app.Use(cors.New(config.CORS))
-	}
+var Mailer *mail.SMTPClient
 
-	// Use the Helmet Middleware if enabled
-	if config.Enabled["helmet"] {
-		app.Use(helmet.New(config.Helmet))
-	}
+var Paypal *paypal.Client
 
-	// Use the Session Middleware if enabled
-	if config.Enabled["session"] {
-		// create session handler
-		providers.SetSessionProvider(session.New(config.Session))
-	}
+var DB *gorm.DB //nolint:gochecknoglobals
 
-	// Set hashing provider
-	if config.Enabled["hash"] {
-		providers.SetHashProvider(config.Hash)
-	}
+var RedisClient *redis.Client
 
-	// Connect to a database
-	if config.Enabled["database"] {
-		database.Connect(&config.Database)
-	}
-	// Run auto migrations
-	database.Instance().AutoMigrate(&models.Role{})
-	database.Instance().AutoMigrate(&models.User{})
-	// Set CASCADE foreign key
-	database.Instance().Model(&models.User{}).AddForeignKey("role_id", "roles(id)", "RESTRICT", "CASCADE")
+var PermissionAdapter *gormadapter.Adapter //nolint:gochecknoglobals
 
-	// Register application web routes
-	routes.RegisterWeb(app)
+var Enforcer *casbin.Enforcer //nolint:gochecknoglobals
 
-	// Register application API routes (using the /api/v1 group)
-	api := app.Group("/api")
-	// Enable Casbin Route Permission
-	// api.Use(authz.RoutePermission())
-	apiv1 := api.Group("/v1")
-	// systemRoutes := app.Group("/system")
-	routes.RegisterAPI(apiv1)
-	// routes.RegisterSystemRoutes(systemRoutes)
-	// Serve public, static files
-	if config.Enabled["public"] {
-		app.Static(config.PublicPrefix, config.PublicRoot, config.Public)
-	}
+var Queue *amqp.Connection
 
-	// Custom 404-page
-	app.Use(func(c *fiber.Ctx) {
-		c.SendStatus(404)
-		if err := c.Render("errors/404", fiber.Map{}); err != nil {
-			c.Status(500).Send(err.Error())
-		}
-	})
-	app.Use(error_handler.New(error_handler.Config{
-		UseTemplate: true,
-		Handler: func(c *fiber.Ctx, err error, fallback func(...interface{})) {
-			if he, ok := err.(error_handler.HTTPError); ok {
-				switch he.StatusCode() {
-				case fiber.StatusUnauthorized:
-					c.Status(he.StatusCode()).Render("errors/403", fiber.Map{
-						"StatusCode": he.StatusCode(),
-						"Message":    he.Message(),
-						"Reason":     "Please login first",
-						"SomeData":   he.Data(),
-					})
-					return
+var Log *Logger
 
-				default:
-					break
-				}
-			}
-			fallback(err)
-		},
-	}))
-	SampleRoute()
-	// Set configuration provider
-	providers.SetConfiguration(&config)
-
-	// Close any connections on interrupt signal
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
-	go func() {
-		<-c
-		exit(&config, app, nil)
-	}()
-
-	// Start listening on the specified address
-	err = app.Listen(config.App.Listen)
-	if err != nil {
-		// Exit the application
-		exit(&config, app, err)
-	}
+type HashConfig struct {
+	// Argon2id configuration
+	Params *argon2id.Params
 }
 
-func exit(config *configuration.Configuration, app *fiber.App, err error) {
-	// Close database connection
-	var dbErr error
-	if config.Enabled["database"] {
-		dbErr = database.Close()
-		if dbErr != nil {
-			fmt.Printf("Closed database: %v\n", dbErr)
-		} else {
-			fmt.Println("Closed database.")
-		}
-	}
-	// Shutdown Fiber application
-	var appErr error
-	if err != nil {
-		fmt.Printf("Shutdown Fiber application: %v", err)
-		appErr = err
-	} else {
-		appErr = app.Shutdown()
-		if appErr != nil {
-			fmt.Printf("Shutdown Fiber application: %v", appErr)
-		} else {
-			fmt.Print("Shutdown Fiber application.")
-		}
-	}
-	// Return with corresponding exit code
-	if dbErr != nil || appErr != nil {
-		os.Exit(1)
-	} else {
-		os.Exit(0)
-	}
+type HashDriver struct {
+	// Configuration for the argon2id driver
+	Config *HashConfig
 }
 
-func SampleRoute() {
+type Logger struct {
+	*zerolog.Logger
+}
 
-	app.Get("/panic", func(c *fiber.Ctx) {
-		panic(errors.New("winter is coming to the web"))
-	})
-	app.Get("/err-403", func(c *fiber.Ctx) {
-		c.Next(error_handler.NewHttpError(fiber.StatusForbidden, "Cannot access this", nil))
-	})
-	app.Get("/custom", func(c *fiber.Ctx) {
-		c.Next(error_handler.NewHttpError(fiber.StatusUnauthorized, "unauthorized", struct {
-			FirstName string
-			LastName  string
-		}{
-			FirstName: "John",
-			LastName:  "Wick",
-		}))
-	})
+func NewHashDriver(config ...HashConfig) *HashDriver {
+	var cfg HashConfig
+	cfg.Params = argon2id.DefaultParams
+	if len(config) > 0 {
+		cfg = config[0]
+	}
+	return &HashDriver{Config: &cfg}
+}
+
+func (d *HashDriver) Create(password string) (hash string, err error) {
+	return argon2id.CreateHash(password, d.Config.Params)
+}
+
+func (d *HashDriver) Match(password string, hash string) (match bool, err error) {
+	return argon2id.ComparePasswordAndHash(password, hash)
 }

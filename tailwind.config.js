@@ -1,14 +1,24 @@
 module.exports = {
-  purge: [
-    './resources/assets/**/*.html',
-    './resources/assets/**/*.vue',
-    './resources/assets/**/*.scss',
-  ],
-  theme: {
-    extend: {},
-  },
-  variants: {
-    tableLayout: ['responsive', 'hover', 'focus'],
-  },
-  plugins: [],
+    purge: [
+        './resources/**/*.html',
+        './resources/**/*.js',
+        './resources/**/*.vue',
+        './resources/**/*.scss',
+        './resources/**/*.css',
+    ],
+    theme: {
+        extend: {
+            colors: {
+                black: '#0f1c33',
+            },
+            margin: {
+                '96': '24rem',
+                '128': '32rem',
+            },
+        }
+    },
+    variants: {
+        tableLayout: ['responsive', 'hover', 'focus'],
+    },
+    plugins: [],
 }

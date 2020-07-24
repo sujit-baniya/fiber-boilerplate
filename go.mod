@@ -1,58 +1,51 @@
-module github.com/thomasvvugt/fiber-boilerplate
+module github.com/itsursujit/fiber-boilerplate
 
 go 1.14
 
 require (
-	github.com/CloudyKit/jet v2.1.2+incompatible // indirect
-	github.com/alexedwards/argon2id v0.0.0-20200522061839-9369edc04b05 // indirect
-	github.com/casbin/casbin/v2 v2.6.5
+	github.com/alexedwards/argon2id v0.0.0-20200522061839-9369edc04b05
+	github.com/araddon/dateparse v0.0.0-20200409225146-d820a6159ab1
+	github.com/casbin/casbin/v2 v2.8.6
 	github.com/casbin/gorm-adapter/v2 v2.1.0
-	github.com/denisenkom/go-mssqldb v0.0.0-20200620013148-b91950f658ec // indirect
-	github.com/fasthttp/session/v2 v2.1.1
-	github.com/flosch/pongo2 v0.0.0-20200529170236-5abacdfa4915 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/digitalocean/go-workers2 v0.9.2
+	github.com/francoispqt/gojay v1.2.13
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
-	github.com/go-redis/redis/v8 v8.0.0-beta.5 // indirect
+	github.com/go-redis/redis v6.15.8+incompatible
 	github.com/go-sql-driver/mysql v1.5.0
-	github.com/gofiber/compression v0.2.0
-	github.com/gofiber/cors v0.2.0
-	github.com/gofiber/fiber v1.12.0
-	github.com/gofiber/helmet v0.1.0
-	github.com/gofiber/logger v0.2.2
-	github.com/gofiber/recover v0.1.0
-	github.com/gofiber/session v1.2.1
-	github.com/gofiber/template v1.5.2
-	github.com/gomodule/redigo v1.8.2
-	github.com/jaypipes/ghw v0.6.1
-	github.com/jcmturner/gokrb5/v8 v8.3.0 // indirect
-	github.com/jinzhu/gorm v1.9.14
-	github.com/juju/errors v0.0.0-20200330140219-3fe23663418f // indirect
-	github.com/klauspost/compress v1.10.9 // indirect
-	github.com/lib/pq v1.7.0
-	github.com/mitchellh/go-ps v1.0.0
-	github.com/mitchellh/mapstructure v1.3.2 // indirect
+	github.com/gobuffalo/here v0.6.2 // indirect
+	github.com/gofiber/fiber v1.13.3
+	github.com/gofiber/pprof v0.1.1
+	github.com/gofiber/session v1.2.5
+	github.com/gofiber/template v1.5.5
+	github.com/google/btree v1.0.0
+	github.com/google/uuid v1.1.1
+	github.com/gookit/goutil v0.2.14 // indirect
+	github.com/gookit/validate v1.2.2
+	github.com/gorilla/websocket v1.4.2
+	github.com/hashicorp/go-uuid v1.0.2
+	github.com/itsursujit/flash v0.0.0-20200706060944-c4f9cbcfc292
+	github.com/itsursujit/phonenumbers v1.0.57-0.20200723112245-859f2e508673
+	github.com/jinzhu/gorm v1.9.15
+	github.com/json-iterator/go v1.1.10
+	github.com/klauspost/pgzip v1.2.4
+	github.com/lib/pq v1.7.1 // indirect
+	github.com/markbates/pkger v0.17.0
+	github.com/mitchellh/mapstructure v1.3.3 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
-	github.com/pkg/errors v0.9.1
-	github.com/prometheus/procfs v0.1.3
-	github.com/savsgio/gotils v0.0.0-20200616100644-13ff1fd2c28c // indirect
-	github.com/shirou/gopsutil v2.20.5+incompatible
-	github.com/spf13/afero v1.3.0 // indirect
+	github.com/plutov/paypal/v3 v3.0.22
+	github.com/rs/zerolog v1.19.0
+	github.com/spf13/afero v1.3.2 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
-	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.7.0
 	github.com/streadway/amqp v1.0.0
-	github.com/thomasvvugt/fiber-hashing v0.0.0-20200511145001-a62bb48860d5
-	github.com/valyala/fasttemplate v1.1.1 // indirect
-	go.mongodb.org/mongo-driver v1.3.4
-	go.opentelemetry.io/otel v0.6.0 // indirect
-	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 // indirect
-	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
-	golang.org/x/net v0.0.0-20200602114024-627f9648deb9 // indirect
-	golang.org/x/sync v0.0.0-20200317015054-43a5402ce75a // indirect
-	golang.org/x/sys v0.0.0-20200622214017-ed371f2e16b4 // indirect
+	github.com/valyala/bytebufferpool v1.0.0
+	go.opentelemetry.io/otel v0.9.0 // indirect
+	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899
+	golang.org/x/sys v0.0.0-20200722175500-76b94024e4b6 // indirect
 	golang.org/x/text v0.3.3 // indirect
-	golang.org/x/tools v0.0.0-20200623045635-ff88973b1e4e // indirect
-	google.golang.org/grpc v1.30.0 // indirect
+	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f
 	gopkg.in/ini.v1 v1.57.0 // indirect
-	howett.net/plist v0.0.0-20200419221736-3b63eb3a43b5 // indirect
+	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 )
