@@ -3,6 +3,7 @@ package middlewares
 import (
 	"errors"
 	"fmt"
+	config2 "github.com/itsursujit/fiber-boilerplate/config"
 	"log"
 	"reflect"
 	"strings"
@@ -78,13 +79,22 @@ func Authenticate(config ...AuthConfig) func(*fiber.Ctx) {
 	}
 	if cfg.ErrorHandler == nil {
 		cfg.ErrorHandler = func(c *fiber.Ctx, err error) {
+			var er fiber.Error
 			if err.Error() == "Missing or malformed JWT" {
+				er.Code = fiber.StatusBadRequest
+			} else {
+				er.Code = fiber.StatusUnauthorized
+				c.SendString("Invalid or expired JWT")
+			}
+			er.Message = err.Error()
+			config2.CustomErrorHandler(c, &er)
+			/*if err.Error() == "Missing or malformed JWT" {
 				c.Status(fiber.StatusBadRequest)
 				c.SendString("Missing or malformed JWT")
 			} else {
 				c.Status(fiber.StatusUnauthorized)
 				c.SendString("Invalid or expired JWT")
-			}
+			}*/
 		}
 	}
 	if cfg.SigningKey == nil && len(cfg.SigningKeys) == 0 {

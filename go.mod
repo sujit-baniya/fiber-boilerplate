@@ -7,6 +7,8 @@ require (
 	github.com/araddon/dateparse v0.0.0-20200409225146-d820a6159ab1
 	github.com/casbin/casbin/v2 v2.8.6
 	github.com/casbin/gorm-adapter/v2 v2.1.0
+	github.com/cosmtrek/air v1.12.1 // indirect
+	github.com/creack/pty v1.1.11 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/digitalocean/go-workers2 v0.9.2
 	github.com/francoispqt/gojay v1.2.13
@@ -24,6 +26,7 @@ require (
 	github.com/gookit/validate v1.2.2
 	github.com/gorilla/websocket v1.4.2
 	github.com/hashicorp/go-uuid v1.0.2
+	github.com/imdario/mergo v0.3.10 // indirect
 	github.com/itsursujit/flash v0.0.0-20200706060944-c4f9cbcfc292
 	github.com/itsursujit/phonenumbers v1.0.57-0.20200723112245-859f2e508673
 	github.com/jinzhu/gorm v1.9.15
@@ -43,7 +46,7 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0
 	go.opentelemetry.io/otel v0.9.0 // indirect
 	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899
-	golang.org/x/sys v0.0.0-20200722175500-76b94024e4b6 // indirect
+	golang.org/x/sys v0.0.0-20200724161237-0e2f3a69832c // indirect
 	golang.org/x/text v0.3.3 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f
 	gopkg.in/ini.v1 v1.57.0 // indirect

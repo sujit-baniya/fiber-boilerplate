@@ -94,15 +94,24 @@ func BootApp() {
 	}
 }
 
-func CustomErrorHandler(ctx *fiber.Ctx, err error) {
+func CustomErrorHandler(c *fiber.Ctx, err error) {
+	contentType := c.Get("Content-Type")
 	// StatusCode defaults to 500
 	code := fiber.StatusInternalServerError
 	//nolint:misspell    // Retrieve the custom statuscode if it's an fiber.*Error
 	if e, ok := err.(*fiber.Error); ok {
 		code = e.Code
-		fmt.Print(e)
 	} //nolint:gofmt,wsl
-	_ = ctx.Render(fmt.Sprintf("errors/%d", code), fiber.Map{ //nolint:nolintlint,errcheck
-		"error": err,
-	})
+	fmt.Println(contentType)
+	switch contentType {
+	case "application/json":
+		c.SendStatus(code)
+		_ = c.JSON(err)
+	default:
+		c.SendStatus(code)
+		_ = c.Render(fmt.Sprintf("errors/%d", code), fiber.Map{ //nolint:nolintlint,errcheck
+			"error": err,
+		})
+	}
+
 }
