@@ -4,7 +4,7 @@ With simple setup, you can use many features out of the box:
 
 The features include:
 
-* Simple Basic Auth with Login,Register
+* Basic Auth with Login,Register
 * Email confirmation on Registration
 * Role based authentication using Casbin
 * File uploads
