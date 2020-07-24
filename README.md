@@ -32,3 +32,9 @@ Thanks to following libraries:
 * [Jwt](https://github.com/dgrijalva/jwt-go)
 * [Fiber-Casbin](https://github.com/arsmn/fiber-casbin)
 * [Air](https://github.com/cosmtrek/air)
+
+[
+  ![Donate with PayPal]
+  (https://raw.githubusercontent.com/itsursujit/fiber-boilerplate/master/paypal-donate-button.png)
+]
+(https://www.paypal.me/spbaniya)
