@@ -104,7 +104,7 @@ func CustomErrorHandler(c *fiber.Ctx, err error) {
 	} //nolint:gofmt,wsl
 	fmt.Println(contentType)
 	switch contentType {
-	case "application/json":
+	case fiber.MIMEApplicationJSON:
 		c.SendStatus(code)
 		_ = c.JSON(err)
 	default:
