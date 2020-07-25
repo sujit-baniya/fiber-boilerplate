@@ -28,7 +28,7 @@ func (w *Webhook) Dispatch() {
 		Verbose:       true,
 	})
 	Log.Info().Msg("Webhook client initiated")
-	go Worker(retryClient, "http://116.203.188.34/send", w.Payload)
+	go Worker(retryClient, w.Url, w.Payload)
 }
 
 func Worker(retryClient *http.Client, url string, payload interface{}) {

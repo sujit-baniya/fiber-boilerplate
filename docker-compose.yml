@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.7'
 
 #services describe the containers that will start
 services:
@@ -8,13 +8,14 @@ services:
     build: "."
     # Exposes the port 1421 from a container and binds it to a random port
     ports:
-      - "1421"
+      - "1421:1421"
     # If the container goes down, it will restart
     restart: "always"
+    command: tail -f /dev/null
     # Connects the API to a common api.network bridge
     # Starts up 5 replicas of the same image
-    deploy:
-      replicas: 5
+    # deploy:
+    #  replicas: 5
   # nginx container
   nginx:
     # specifies the latest nginx image
@@ -51,5 +52,6 @@ services:
       - "15672:15672"
       # Service port
       - "5672:5672"
-# networks:
-#  api.network:
+networks:
+  default:
+    name: fiber-boilerplate

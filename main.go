@@ -10,24 +10,22 @@ import (
 	"github.com/itsursujit/fiber-boilerplate/middlewares"
 	"github.com/itsursujit/fiber-boilerplate/models"
 	"github.com/itsursujit/fiber-boilerplate/routes"
+	"log"
 )
 
 func main() {
 	Log = libraries.SetupZeroLog()
-	initMigrate := false
 	migrate := flag.Bool("migrate", false, "Migrate the pending migration files")
 	flag.Parse()
 	if *migrate {
-		initMigrate = true
-	}
-	Serve(initMigrate)
-}
-
-func Serve(initMigrate bool) {
-	Boot(initMigrate)
-	if initMigrate {
+		initMigrate()
 		return
 	}
+	Serve()
+}
+
+func Serve() {
+	Boot()
 	App.Use(middlewares.LogMiddleware)
 	routes.Load()
 	App.Use(func(c *fiber.Ctx) {
@@ -38,24 +36,30 @@ func Serve(initMigrate bool) {
 	// go libraries.Consume("webhook-callback")               //nolint:wsl
 	err := App.Listen(config.AppConfig.App_Port) //nolint:wsl
 	if err != nil {
-		// panic(err)
+		log.Fatal(err)
 	}
 	defer DB.Close()
 }
 
-func Boot(initMigrate bool) {
+func Boot() {
 	config.LoadEnv()
 	config.BootApp()
-	LoadComponents(initMigrate)
+	LoadComponents()
 }
 
-func LoadComponents(initMigrate bool) {
+func LoadComponents() {
 	config.LoadQueueConfig()
 	config.LoadPaypalConfig()
-	if initMigrate {
-		Migrate()
-	}
 	Queue = libraries.SetupQueue() //nolint:wsl
+}
+
+func initMigrate() {
+	config.LoadEnv()
+	_, err := config.SetupDB()
+	if err != nil {
+		panic(err)
+	}
+	Migrate()
 }
 
 func Migrate() {
