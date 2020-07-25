@@ -38,6 +38,9 @@ func AuthRoutes() {
 		middlewares.ValidateRegisterPost,
 		controllers.PasswordResetPost)
 	App.Get("/resend/confirm", controllers.ResendConfirmEmail)
-	App.Get("/do/verify-email", controllers.VerifyRegisteredEmail)
+	App.Get("/do/verify-email",
+		middlewares.ValidateConfirmToken,
+		controllers.VerifyRegisteredEmail,
+	)
 
 }

@@ -35,10 +35,6 @@ func RegisterPost(c *fiber.Ctx) {
 }
 
 func VerifyRegisteredEmail(c *fiber.Ctx) {
-	user := c.Locals("user").(models.User)
-	user.EmailVerified = true
-	DB.Save(&user)
-	auth.Login(c, user.ID, config.AuthConfig.App_Jwt_Secret) //nolint:wsl
 	c.Redirect("/")
 	return
 }

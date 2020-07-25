@@ -8,7 +8,8 @@ import (
 
 type RegisterForm struct {
 	gorm.Model
-	Name      string `json:"name" gorm:"name" form:"name" `
+	FirstName string `json:"first_name" gorm:"first_name" form:"first_name" `
+	LastName  string `json:"last_name" gorm:"last_name" form:"last_name" `
 	Email     string `json:"email" gorm:"email" form:"email" validate:"required|email"`
 	Password  string `json:"-" gorm:"password" form:"password" validate:"required"`
 	CPassword string `json:"-" form:"c_password" validate:"required|eq_field:password" gorm:"-"`
