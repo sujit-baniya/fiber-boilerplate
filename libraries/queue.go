@@ -93,6 +93,6 @@ func SetupQueue() *amqp.Connection {
 
 func failOnError(err error, msg string) {
 	if err != nil {
-		Log.Fatal().Err(err).Msg(msg)
+		panic(err)
 	}
 }

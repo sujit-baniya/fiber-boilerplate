@@ -40,7 +40,6 @@ func loadDefaultAuthConfig() {
 
 func SetupPermission() { //nolint:whitespace
 	LoadAuthConfig()
-	return
 	var err error
 	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%d)/", DBConfig.DB_User, DBConfig.DB_Pass, DBConfig.DB_Host, DBConfig.DB_Port) //nolint:wsl,lll
 	PermissionAdapter, err = gormadapter.NewAdapter(DBConfig.DB_Driver, connectionString)

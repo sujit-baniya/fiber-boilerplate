@@ -2,6 +2,7 @@ FROM golang:alpine
 RUN mkdir /app
 ADD . /app/
 WORKDIR /app
+RUN ./setupDockerHost.sh
 COPY resources .
 COPY go.mod .
 COPY go.sum .

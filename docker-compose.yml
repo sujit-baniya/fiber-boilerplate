@@ -20,6 +20,7 @@ services:
   nginx:
     # specifies the latest nginx image
     image: nginx:latest
+    network_mode: host
     # Connects the conf file of the container to the conf file in our folder
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro

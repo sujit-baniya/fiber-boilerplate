@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"github.com/jinzhu/gorm"
 	"time"
@@ -36,13 +37,13 @@ func SetupDB() (*gorm.DB, error) {
 	if DB != nil {
 		return DB, nil
 	}
-	connectionString := DBConfig.DB_User + ":" + DBConfig.DB_Pass + "@tcp(" + DBConfig.DB_Host + ")/" + DBConfig.DB_Name + "?charset=utf8&parseTime=True&loc=Local" //nolint:wsl,lll
-	var err error                                                                                                                                                   //nolint:wsl
+	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", DBConfig.DB_User, DBConfig.DB_Pass, DBConfig.DB_Host, DBConfig.DB_Port, DBConfig.DB_Name) //nolint:wsl,lll
+	var err error                                                                                                                                                                          //nolint:wsl
 
 	// Connect again with DB name.
 	DB, err = gorm.Open(DBConfig.DB_Driver, connectionString)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
 	DB.DB().SetMaxOpenConns(100)

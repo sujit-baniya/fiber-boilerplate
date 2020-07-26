@@ -1,9 +1,9 @@
 package config
 
 import (
+	"fmt"
 	"github.com/go-redis/redis"
 	. "github.com/itsursujit/fiber-boilerplate/app"
-	"log"
 )
 
 type CacheConfiguration struct {
@@ -16,9 +16,9 @@ var CacheConfig *CacheConfiguration //nolint:gochecknoglobals
 func LoadCacheConfig() {
 	loadDefaultCacheConfig()
 	ViperConfig.Unmarshal(&CacheConfig)
-	option, err := redis.ParseURL("redis://127.0.0.1:6379/0")
+	option, err := redis.ParseURL(fmt.Sprintf("redis://%s/%d", CacheConfig.Cache_DSN, CacheConfig.Cache_DB))
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	RedisClient = redis.NewClient(option)
 }

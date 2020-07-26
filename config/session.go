@@ -29,7 +29,7 @@ func loadDefaultSessionConfig() {
 func LoadSession() {
 	LoadSessionConfig()
 	provider := redis.New(redis.Config{
-		KeyPrefix:   "verify_rest_",
+		KeyPrefix:   "fiber_boilerplate",
 		Addr:        SessionConfig.Session_DSN,
 		PoolSize:    8,                //nolint:gomnd
 		IdleTimeout: 30 * time.Second, //nolint:gomnd
