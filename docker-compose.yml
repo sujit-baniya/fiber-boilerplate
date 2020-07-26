@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 #services describe the containers that will start
 services:
@@ -31,7 +31,7 @@ services:
   redis:
     image: redis:alpine
     container_name: redis
-    hostname: redis
+    # hostname: redis
     ports:
       - "6379:6379"
     expose:
@@ -42,7 +42,7 @@ services:
   mariadb:
     image: mariadb:latest
     container_name: mariadb
-    hostname: mariadb
+    # hostname: mariadb
     networks:
       - default
     volumes:
@@ -58,7 +58,7 @@ services:
     networks:
       - default
     container_name: rabbitmq
-    hostname: rabbitmq
+    # hostname: rabbitmq
     ports:
       # Management port
       - "15672:15672"
@@ -70,3 +70,4 @@ services:
 networks:
   default:
     driver: bridge
+    name: fiber-boilerplate
