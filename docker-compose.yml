@@ -11,7 +11,16 @@ services:
       - "1421:1421"
     # If the container goes down, it will restart
     restart: "always"
+    networks:
+      - default
+    expose:
+      - "1421"
     command: tail -f /dev/null
+
+    depends_on:
+      - mariadb
+      - redis
+      - rabbitmq
     # Connects the API to a common api.network bridge
     # Starts up 5 replicas of the same image
     # deploy:
@@ -20,39 +29,55 @@ services:
   nginx:
     # specifies the latest nginx image
     image: nginx:latest
-    network_mode: host
     # Connects the conf file of the container to the conf file in our folder
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     # It will start up the nginx only when all api containers have started
     depends_on:
       - api
+    networks:
+      - default
     # Connects the port 80 of the nginx container to localhost:80 or localhost
     ports:
       - "8080:8080"
+    expose:
+      - "8080"
   redis:
     image: redis:alpine
     container_name: redis
-    hostname: redis
+    ports:
+      - "6379:6379"
+    expose:
+      - "6379"
+
+    networks:
+      - default
   mariadb:
     image: mariadb:latest
     container_name: mariadb
-    hostname: mariadb
+    networks:
+      - default
     volumes:
       - ./backup:/backup
     ports:
-      - 3307:3306
+      - "3307:3306"
+    expose:
+      - "3307"
     environment:
       - MYSQL_ROOT_PASSWORD=root
   rabbitmq:
     image: rabbitmq:3-management
-    hostname: rabbitmq
+    networks:
+      - default
     container_name: rabbitmq
     ports:
       # Management port
       - "15672:15672"
       # Service port
       - "5672:5672"
+    expose:
+      - "15672"
+      - "5672"
 networks:
   default:
     name: fiber-boilerplate

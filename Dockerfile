@@ -18,5 +18,4 @@ RUN mkdir -p ./uploads
 RUN chown appuser ./uploads
 USER appuser
 EXPOSE 1421
-RUN ./main -migrate
 CMD ["./main"]
