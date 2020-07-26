@@ -2,7 +2,6 @@ FROM golang:alpine
 RUN mkdir /app
 ADD . /app/
 WORKDIR /app
-RUN ./setupDockerHost.sh
 COPY resources .
 COPY go.mod .
 COPY go.sum .
@@ -18,4 +17,4 @@ RUN mkdir -p ./uploads
 RUN chown appuser ./uploads
 USER appuser
 EXPOSE 1421
-CMD ["./main"]
+ENTRYPOINT ["./setupDockerHost.sh"]

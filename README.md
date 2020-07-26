@@ -22,6 +22,7 @@ The features include:
 * Hot Reload with Air
 * Flash Message based on cookies
 * Easy Config Settings based on .env
+* Setup for Docker
 
 Thanks to following libraries:
 

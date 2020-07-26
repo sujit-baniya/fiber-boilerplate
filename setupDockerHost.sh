@@ -1,1 +1,4 @@
-echo -e "ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+'\tdocker.host.internal" | tee -a /etc/hosts
+#!/bin/sh
+
+/app/main -migrate
+/app/main

@@ -10,7 +10,6 @@ import (
 	"github.com/itsursujit/fiber-boilerplate/middlewares"
 	"github.com/itsursujit/fiber-boilerplate/models"
 	"github.com/itsursujit/fiber-boilerplate/routes"
-	"log"
 )
 
 func main() {
@@ -36,8 +35,9 @@ func Serve() {
 	// go libraries.Consume("webhook-callback")               //nolint:wsl
 	err := App.Listen(config.AppConfig.App_Port) //nolint:wsl
 	if err != nil {
-		log.Fatal(err)
+		panic("App not starting: " + err.Error() + "on Port: " + config.AppConfig.App_Port)
 	}
+
 	defer DB.Close()
 }
 
@@ -54,6 +54,7 @@ func LoadComponents() {
 }
 
 func initMigrate() {
+	fmt.Println("1")
 	config.LoadEnv()
 	_, err := config.SetupDB()
 	if err != nil {

@@ -9,13 +9,12 @@ services:
     # Exposes the port 1421 from a container and binds it to a random port
     ports:
       - "1421:1421"
-    # If the container goes down, it will restart
-    restart: "always"
-    networks:
-      - default
     expose:
       - "1421"
-    command: tail -f /dev/null
+    # If the container goes down, it will restart
+    restart: "always"
+    # networks:
+    #   - default
     depends_on:
       - mariadb
       - redis
@@ -30,34 +29,34 @@ services:
     #  replicas: 5
   redis:
     image: redis:alpine
-    container_name: redis
+    container_name: fiber-redis
     # hostname: redis
     ports:
       - "6379:6379"
     expose:
       - "6379"
 
-    networks:
-      - default
+    # networks:
+    #   - default
   mariadb:
     image: mariadb:latest
-    container_name: mariadb
+    container_name: fiber-mariadb
     # hostname: mariadb
-    networks:
-      - default
-    volumes:
-      - ./backup:/backup
+    # networks:
+    #   - default
+    # volumes:
+    #   - ./backup:/backup
     ports:
       - "3307:3306"
     expose:
-      - "3307"
+      - "3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root
   rabbitmq:
     image: rabbitmq:3-management
-    networks:
-      - default
-    container_name: rabbitmq
+    # networks:
+    #   - default
+    container_name: fiber-rabbitmq
     # hostname: rabbitmq
     ports:
       # Management port
@@ -67,7 +66,7 @@ services:
     expose:
       - "15672"
       - "5672"
-networks:
-  default:
-    driver: bridge
-    name: fiber-boilerplate
+# networks:
+#   default:
+#     driver: bridge
+#     name: fiber-boilerplate
