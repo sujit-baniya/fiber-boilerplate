@@ -6,7 +6,7 @@ The features include:
 
 * Basic Auth with Login,Register
 * Email confirmation on Registration
-* Role based authentication using Casbin
+* Role based authorization using Casbin
 * File uploads
 * UI on Tailwind. Setup ready for VueJS integration
 * Laravel mix for UI
@@ -22,6 +22,7 @@ The features include:
 * Hot Reload with Air
 * Flash Message based on cookies
 * Easy Config Settings based on .env
+* Setup for Docker
 
 Thanks to following libraries:
 

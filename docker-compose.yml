@@ -1,0 +1,72 @@
+version: '3.7'
+
+#services describe the containers that will start
+services:
+  # api is the container name for our Go API
+  api:
+    # It will look for a Dockerfile in the project root and build it
+    build: "."
+    # Exposes the port 1421 from a container and binds it to a random port
+    ports:
+      - "1421:1421"
+    expose:
+      - "1421"
+    # If the container goes down, it will restart
+    restart: "always"
+    # networks:
+    #   - default
+    depends_on:
+      - mariadb
+      - redis
+      - rabbitmq
+    links:
+      - mariadb
+      - redis
+      - rabbitmq
+    # Connects the API to a common api.network bridge
+    # Starts up 5 replicas of the same image
+    # deploy:
+    #  replicas: 5
+  redis:
+    image: redis:alpine
+    container_name: fiber-redis
+    # hostname: redis
+    ports:
+      - "6379:6379"
+    expose:
+      - "6379"
+
+    # networks:
+    #   - default
+  mariadb:
+    image: mariadb:latest
+    container_name: fiber-mariadb
+    # hostname: mariadb
+    # networks:
+    #   - default
+    # volumes:
+    #   - ./backup:/backup
+    ports:
+      - "3307:3306"
+    expose:
+      - "3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+  rabbitmq:
+    image: rabbitmq:3-management
+    # networks:
+    #   - default
+    container_name: fiber-rabbitmq
+    # hostname: rabbitmq
+    ports:
+      # Management port
+      - "15672:15672"
+      # Service port
+      - "5672:5672"
+    expose:
+      - "15672"
+      - "5672"
+# networks:
+#   default:
+#     driver: bridge
+#     name: fiber-boilerplate

@@ -66,7 +66,7 @@ func BootApp() {
 		ErrorHandler:          CustomErrorHandler,
 		ServerHeader:          "fiber-boilerplate",
 		Prefork:               true,
-		DisableStartupMessage: true,
+		DisableStartupMessage: false,
 		Views:                 TemplateEngine,
 		BodyLimit:             AppConfig.App_Upload_Size,
 	})
@@ -80,13 +80,16 @@ func BootApp() {
 		CookieSecure:   true,
 	}))*/
 
-	App.Static("/assets", "./resources/assets", fiber.Static{
+	App.Static("/assets", "resources/assets", fiber.Static{
 		Compress: true,
 	})
 
 	App.Use(LoadCacheHeaders)
 	Hash = NewHashDriver()
-	_, _ = SetupDB()
+	_, err := SetupDB()
+	if err != nil {
+		panic(err)
+	}
 	SetupPermission()
 	LoadSession()
 	Flash = &flash.Flash{
