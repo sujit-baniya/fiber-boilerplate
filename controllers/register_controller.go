@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"github.com/itsursujit/fiber-boilerplate/auth"
 	"github.com/itsursujit/fiber-boilerplate/config"
@@ -11,18 +11,15 @@ import (
 	"time"
 )
 
-func RegisterGet(c *fiber.Ctx) {
-	if err := c.Render("auth/register", fiber.Map{"Title": "Register"}, "layouts/auth"); err != nil { //nolint:wsl
-		panic(err.Error())
-	}
+func RegisterGet(c *fiber.Ctx) error {
+	return c.Render("auth/register", fiber.Map{"Title": "Register"}, "layouts/auth")
 }
 
-func RegisterPost(c *fiber.Ctx) {
+func RegisterPost(c *fiber.Ctx) error {
 	register := c.Locals("register").(models.RegisterForm)
 	user, err := register.Signup()
 	if err != nil {
-		_ = c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": true, "message": "Error on register request", "data": err.Error()}) //nolint:errcheck
-		return
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": true, "message": "Error on register request", "data": err.Error()}) //nolint:errcheck
 	}
 	store := Session.Get(c)       // get/create new session
 	store.Set("user_id", user.ID) // save to storage
@@ -30,20 +27,17 @@ func RegisterPost(c *fiber.Ctx) {
 
 	go SendConfirmationEmail(user.Email, c.BaseURL())
 	_ = c.JSON(user)
-	c.Redirect("/")
-	return
+	return c.Redirect("/")
 }
 
-func VerifyRegisteredEmail(c *fiber.Ctx) {
-	c.Redirect("/")
-	return
+func VerifyRegisteredEmail(c *fiber.Ctx) error {
+	return c.Redirect("/")
 }
 
-func ResendConfirmEmail(c *fiber.Ctx) {
+func ResendConfirmEmail(c *fiber.Ctx) error {
 	user, _ := auth.User(c)
 	go SendConfirmationEmail(user.Email, c.BaseURL())
-	c.Redirect("/")
-	return
+	return c.Redirect("/")
 }
 
 func SendPasswordResetEmail(email string, baseURL string) {
@@ -55,50 +49,41 @@ func SendPasswordResetEmail(email string, baseURL string) {
 	config.Send(email, "You asked to reset? Please click here!", htmlBody, "", "")
 }
 
-func RequestPasswordReset(c *fiber.Ctx) {
-	if err := c.Render("auth/request-password-reset", fiber.Map{"Title": "Reset Password"}, "layouts/auth"); err != nil { //nolint:wsl
-		panic(err.Error())
-	}
+func RequestPasswordReset(c *fiber.Ctx) error {
+	return c.Render("auth/request-password-reset", fiber.Map{"Title": "Reset Password"}, "layouts/auth")
 }
 
-func RequestPasswordResetPost(c *fiber.Ctx) {
+func RequestPasswordResetPost(c *fiber.Ctx) error {
 	email := c.FormValue("email")
 	_, err := models.GetUserByEmail(email)
 	if err != nil {
-		c.Redirect("/request-password-reset")
-		return
+		return c.Redirect("/request-password-reset")
 	}
 	go SendPasswordResetEmail(email, c.BaseURL())
+	return nil
 }
 
-func PasswordReset(c *fiber.Ctx) {
+func PasswordReset(c *fiber.Ctx) error {
 	token := c.Query("t")
-	if err := c.Render("auth/password-reset", fiber.Map{
+	return c.Render("auth/password-reset", fiber.Map{
 		"Title": "Password Reset",
 		"Token": token,
-	}, "layouts/auth"); err != nil { //nolint:wsl
-		panic(err.Error())
-	}
+	}, "layouts/auth")
 }
 
-func PasswordResetPost(c *fiber.Ctx) {
+func PasswordResetPost(c *fiber.Ctx) error {
 	register := c.Locals("register").(models.RegisterForm)
 	email := c.Locals("email").(string)
 	user, err := models.GetUserByEmail(email)
 	if err != nil {
-		c.SendStatus(401)
-		c.Send("Invalid Password Reset Token")
-		return
+		return c.Status(401).SendString("Invalid Password Reset Token")
 	}
 	register.ID = user.ID
 	_, err = register.ResetPassword()
 	if err != nil {
-		c.SendStatus(400)
-		c.Send("Oops!! Can't update password at the moment")
-		return
+		return c.Status(400).SendString("Oops!! Can't update password at the moment")
 	}
-	c.Redirect("/login")
-	return
+	return c.Redirect("/login")
 }
 
 func SendConfirmationEmail(email string, baseURL string) {

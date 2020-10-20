@@ -2,7 +2,7 @@ package middlewares
 
 import (
 	"fmt"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"github.com/itsursujit/fiber-boilerplate/libraries"
@@ -12,7 +12,7 @@ import (
 )
 
 //Middleware requestid + logger + recover for request traceability
-func LogMiddleware(c *fiber.Ctx) {
+func LogMiddleware(c *fiber.Ctx) error {
 	start := time.Now()
 	rid := c.Get(fiber.HeaderXRequestID)
 	if rid == "" {
@@ -29,7 +29,7 @@ func LogMiddleware(c *fiber.Ctx) {
 		Protocol:  c.Protocol(),
 	}
 
-	defer func() {
+	defer func() error {
 		rvr := recover()
 
 		if rvr != nil {
@@ -40,14 +40,10 @@ func LogMiddleware(c *fiber.Ctx) {
 
 			fields.Error = err
 			fields.Stack = debug.Stack()
-
-			c.Status(http.StatusInternalServerError)
-			c.JSON(map[string]interface{}{
-				"status": http.StatusText(http.StatusInternalServerError),
-			})
+			fields.StatusCode = http.StatusInternalServerError
 		}
 
-		fields.StatusCode = c.Fasthttp.Response.StatusCode()
+		fields.StatusCode = c.Response().StatusCode()
 		fields.Latency = time.Since(start).Seconds()
 
 		switch {
@@ -66,6 +62,7 @@ func LogMiddleware(c *fiber.Ctx) {
 		default:
 			Log.Warn().EmbedObject(fields).Msg("unknown status")
 		}
+		return nil
 	}()
-	c.Next()
+	return c.Next()
 }

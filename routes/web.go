@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"github.com/itsursujit/fiber-boilerplate/auth"
 	"github.com/itsursujit/fiber-boilerplate/config"
@@ -20,9 +20,9 @@ func LandingRoutes(app fiber.Router) {
 	app.Use(middlewares.Authenticate(middlewares.AuthConfig{
 		SigningKey:  []byte(config.AuthConfig.App_Jwt_Secret),
 		TokenLookup: "cookie:fiber-boilerplate-Token",
-		ErrorHandler: func(ctx *fiber.Ctx, err error) {
+		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
 			auth.Logout(ctx)
-			ctx.Next()
+			return ctx.Next()
 		},
 	}))
 	app.Get("/", controllers.Landing)
@@ -33,10 +33,9 @@ func UserRoutes(app fiber.Router) {
 	account.Use(middlewares.Authenticate(middlewares.AuthConfig{
 		SigningKey:  []byte(config.AuthConfig.App_Jwt_Secret),
 		TokenLookup: "cookie:fiber-boilerplate-Token",
-		ErrorHandler: func(ctx *fiber.Ctx, err error) {
+		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
 			auth.Logout(ctx)
-			ctx.Redirect("/login")
-			return
+			return ctx.Redirect("/login")
 		},
 	}))
 	// account.Get("/users", controllers.Index)

@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	"github.com/itsursujit/fiber-boilerplate/auth"
 )
 
-func Landing(c *fiber.Ctx) {
+func Landing(c *fiber.Ctx) error {
 	user, _ := auth.User(c)
 	layout := "layouts/main"
 	view := "index"
@@ -14,10 +14,8 @@ func Landing(c *fiber.Ctx) {
 		view = "landing"
 	}
 
-	if err := c.Render(view, fiber.Map{
+	return c.Render(view, fiber.Map{
 		"auth": user != nil,
 		"user": user,
-	}, layout); err != nil {
-		panic(err.Error())
-	}
+	}, layout)
 }

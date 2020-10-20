@@ -2,7 +2,7 @@ package middlewares
 
 import (
 	"errors"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"github.com/itsursujit/fiber-boilerplate/config"
 	"github.com/itsursujit/fiber-boilerplate/libraries"
@@ -11,27 +11,26 @@ import (
 	"time"
 )
 
-func ValidatePasswordReset(c *fiber.Ctx) {
+func ValidatePasswordReset(c *fiber.Ctx) error {
 	token := c.Query("t")
 	err := _validatePasswordReset(c, token)
 	if err != nil {
-		Flash.WithError(c, fiber.Map{
+		return Flash.WithError(c, fiber.Map{
 			"message": err.Error(),
 		}).Redirect("/login")
-		return
 	}
-	c.Next()
+	return c.Next()
 }
 
-func ValidatePasswordResetPost(c *fiber.Ctx) {
+func ValidatePasswordResetPost(c *fiber.Ctx) error {
 	token := c.Params("token")
 	err := _validatePasswordReset(c, token)
 	if err != nil {
-		Flash.WithError(c, fiber.Map{
+		return Flash.WithError(c, fiber.Map{
 			"message": err.Error(),
 		}).Redirect("/login")
 	}
-	c.Next()
+	return c.Next()
 }
 
 func _validatePasswordReset(c *fiber.Ctx, t string) error {

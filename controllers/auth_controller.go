@@ -1,31 +1,27 @@
 package controllers
 
 import (
-	"github.com/gofiber/fiber" //nolint:goimports
+	"github.com/gofiber/fiber/v2" //nolint:goimports
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"github.com/itsursujit/fiber-boilerplate/auth"
 	"github.com/itsursujit/fiber-boilerplate/config"
 	"github.com/itsursujit/fiber-boilerplate/models"
 )
 
-func LoginGet(c *fiber.Ctx) {
+func LoginGet(c *fiber.Ctx) error {
 	Flash.Get(c)
-	if err := c.Render("auth/login", Flash.Data, "layouts/auth"); err != nil { //nolint:wsl
-		panic(err.Error())
-	}
+	return c.Render("auth/login", Flash.Data, "layouts/auth")
 }
 
-func LoginPost(c *fiber.Ctx) { //nolint:wsl
+func LoginPost(c *fiber.Ctx) error { //nolint:wsl
 	user := c.Locals("user").(*models.User)
-	auth.Login(c, user.ID, config.AuthConfig.App_Jwt_Secret) //nolint:wsl
-	c.Redirect("/")
-	return
+	_, _ = auth.Login(c, user.ID, config.AuthConfig.App_Jwt_Secret) //nolint:wsl
+	return c.Redirect("/")
 }
 
-func LogoutPost(c *fiber.Ctx) { //nolint:nolintlint,wsl
+func LogoutPost(c *fiber.Ctx) error { //nolint:nolintlint,wsl
 	if auth.IsLoggedIn(c) {
-		auth.Logout(c)
+		_ = auth.Logout(c)
 	}
-	c.Redirect("/login")
-	return
+	return c.Redirect("/login")
 }

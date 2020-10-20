@@ -1,44 +1,40 @@
 package middlewares
 
 import (
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	"github.com/gookit/validate"
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"github.com/itsursujit/fiber-boilerplate/auth"
 	"github.com/itsursujit/fiber-boilerplate/models"
 )
 
-func RedirectToHomePageOnLogin(c *fiber.Ctx) {
+func RedirectToHomePageOnLogin(c *fiber.Ctx) error {
 	if auth.IsLoggedIn(c) {
-		c.Redirect("/")
-		return
+		return c.Redirect("/")
 	}
-	c.Next()
+	return c.Next()
 }
 
-func ValidateLoginPost(c *fiber.Ctx) {
+func ValidateLoginPost(c *fiber.Ctx) error {
 	var login models.Login
 	if err := c.BodyParser(&login); err != nil {
-		Flash.WithError(c, fiber.Map{
+		return Flash.WithError(c, fiber.Map{
 			"message": err.Error(),
 		}).Redirect("/login")
-		return
 	}
 	v := validate.Struct(login)
 	if !v.Validate() {
-		Flash.WithError(c, fiber.Map{
+		return Flash.WithError(c, fiber.Map{
 			"message": v.Errors.One(),
 		}).Redirect("/login")
-		return
 	}
 	user, err := login.CheckLogin() //nolint:wsl
 
 	if err != nil {
-		Flash.WithError(c, fiber.Map{
+		return Flash.WithError(c, fiber.Map{
 			"message": err.Error(),
 		}).Redirect("/login")
-		return
 	}
 	c.Locals("user", user)
-	c.Next()
+	return c.Next()
 }

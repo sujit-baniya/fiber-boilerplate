@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	"github.com/gofiber/fiber" //nolint:goimports
+	"github.com/gofiber/fiber/v2" //nolint:goimports
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"github.com/itsursujit/fiber-boilerplate/models"
 )
 
-func Index(c *fiber.Ctx) {
+func Index(c *fiber.Ctx) error {
 	var users []models.User
 	DB.Find(&users)   //nolint:wsl
-	_ = c.JSON(users) //nolint:errcheck
+	return c.JSON(users) //nolint:errcheck
 }

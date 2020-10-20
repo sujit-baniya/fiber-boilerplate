@@ -3,7 +3,7 @@ package auth
 import (
 	"errors"
 	"fmt"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"github.com/itsursujit/fiber-boilerplate/config"
 	"github.com/itsursujit/fiber-boilerplate/models"
@@ -55,7 +55,7 @@ func Login(c *fiber.Ctx, userID uint, secret string) (config.Token, error) {
 	return token, err
 }
 
-func Logout(c *fiber.Ctx) {
+func Logout(c *fiber.Ctx) error {
 	store := Session.Get(c)
 	store.Delete("user_id")
 	err := store.Save()
@@ -63,11 +63,10 @@ func Logout(c *fiber.Ctx) {
 		panic(err)
 	}
 	c.ClearCookie()
-	c.Send("You are now logged out.")
-	return
+	return c.SendString("You are now logged out.")
 }
 
-func AuthCookie(c *fiber.Ctx) {
+func AuthCookie(c *fiber.Ctx) error {
 	IsLoggedIn(c)
-	c.Next()
+	return c.Next()
 }

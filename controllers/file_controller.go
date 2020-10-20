@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	"github.com/hashicorp/go-uuid"
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"github.com/itsursujit/fiber-boilerplate/auth"
@@ -21,7 +21,7 @@ import (
 	"time"
 )
 
-func FileIndex(c *fiber.Ctx) {
+func FileIndex(c *fiber.Ctx) error {
 	user, _ := auth.User(c)
 	layout := "layouts/main"
 	view := "file-manager"
@@ -30,15 +30,13 @@ func FileIndex(c *fiber.Ctx) {
 		view = "landing"
 	}
 
-	if err := c.Render(view, fiber.Map{
+	return c.Render(view, fiber.Map{
 		"auth": user != nil,
 		"user": user,
-	}, layout); err != nil {
-		// panic(err.Error())
-	}
+	}, layout)
 }
 
-func ViewFile(c *fiber.Ctx) {
+func ViewFile(c *fiber.Ctx) error {
 	user, _ := auth.User(c)
 	layout := "layouts/main"
 	view := "file-view"
@@ -46,16 +44,13 @@ func ViewFile(c *fiber.Ctx) {
 		layout = "layouts/auth"
 		view = "landing"
 	}
-
-	if err := c.Render(view, fiber.Map{
+	return c.Render(view, fiber.Map{
 		"auth": user != nil,
 		"user": user,
-	}, layout); err != nil {
-		// panic(err.Error())
-	}
+	}, layout)
 }
 
-func Upload(c *fiber.Ctx) {
+func Upload(c *fiber.Ctx) error {
 	start := time.Now()
 	log.SetOutput(ioutil.Discard)
 	// Parse the multipart form:
@@ -71,7 +66,7 @@ func Upload(c *fiber.Ctx) {
 		}
 	}
 	fmt.Printf("\n%2fs", time.Since(start).Seconds())
-
+	return c.JSON("Uploaded")
 }
 
 func LineCounter(r io.Reader) (int64, error) {
@@ -104,7 +99,7 @@ func LineCounter(r io.Reader) (int64, error) {
 	return count, nil
 }
 
-func handleUploadIndividualFile(c *fiber.Ctx, file *multipart.FileHeader, user *models.User) {
+func handleUploadIndividualFile(c *fiber.Ctx, file *multipart.FileHeader, user *models.User) error {
 	var f models.File
 	var uf models.UserFile
 	fmt.Println(file.Filename, file.Size, file.Header["Content-Type"][0])
@@ -115,8 +110,7 @@ func handleUploadIndividualFile(c *fiber.Ctx, file *multipart.FileHeader, user *
 	err := c.SaveFile(file, fileName)
 	// Check for errors
 	if err != nil {
-		c.Next(err)
-		return
+		return err
 		// c.Status(500).Send("Something went wrong 😭")
 	}
 	fileInfo, _ := os.Stat(fileName)
@@ -134,4 +128,5 @@ func handleUploadIndividualFile(c *fiber.Ctx, file *multipart.FileHeader, user *
 	uf.UserID = user.ID
 	uf.IsActive = true
 	DB.Save(&uf)
+	return c.Next()
 }

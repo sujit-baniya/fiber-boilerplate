@@ -5,7 +5,7 @@ import (
 
 	"github.com/casbin/casbin/v2"
 	gormadapter "github.com/casbin/gorm-adapter/v2"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
 // Config holds the configuration for the middleware
@@ -25,11 +25,11 @@ type PermissionMiddleware struct {
 
 	// Unauthorized defines the response body for unauthorized responses.
 	// Optional. Default: func(c *fiber.Ctx) string { c.SendStatus(401) }
-	Unauthorized func(*fiber.Ctx)
+	Unauthorized func(*fiber.Ctx) error
 
 	// Forbidden defines the response body for forbidden responses.
 	// Optional. Default: func(c *fiber.Ctx) string { c.SendStatus(403) }
-	Forbidden func(*fiber.Ctx)
+	Forbidden func(*fiber.Ctx) error
 }
 
 type validationRule int
@@ -77,7 +77,7 @@ type Options struct {
 
 // RequiresPermissions tries to find the current subject and determine if the
 // subject has the required permissions according to predefined Casbin policies.
-func (cm *PermissionMiddleware) RequiresPermissions(permissions []string, opts ...func(o *Options)) func(*fiber.Ctx) {
+func (cm *PermissionMiddleware) RequiresPermissions(permissions []string, opts ...func(o *Options)) func(*fiber.Ctx) error {
 
 	options := &Options{
 		ValidationRule:   matchAll,
@@ -88,76 +88,73 @@ func (cm *PermissionMiddleware) RequiresPermissions(permissions []string, opts .
 		o(options)
 	}
 
-	return func(c *fiber.Ctx) {
+	return func(c *fiber.Ctx) error {
 		if len(permissions) == 0 {
-			c.Next()
-			return
+			return c.Next()
 		}
 
 		sub := cm.Lookup(c)
 		if len(sub) == 0 {
-			cm.Unauthorized(c)
-			return
+			return cm.Unauthorized(c)
 		}
 
 		if options.ValidationRule == matchAll {
 			for _, permission := range permissions {
 				vals := append([]string{sub}, options.PermissionParser(permission)...)
 				if ok, err := cm.Enforcer.Enforce(convertToInterface(vals)...); err != nil {
-					c.SendStatus(fiber.StatusInternalServerError)
-					return
+					return c.SendStatus(fiber.StatusInternalServerError)
 				} else if !ok {
-					cm.Forbidden(c)
-					return
+					return cm.Forbidden(c)
+
 				}
 			}
-			c.Next()
-			return
+			return c.Next()
+
 		} else if options.ValidationRule == atLeastOne {
 			for _, permission := range permissions {
 				vals := append([]string{sub}, options.PermissionParser(permission)...)
 				if ok, err := cm.Enforcer.Enforce(convertToInterface(vals)...); err != nil {
-					c.SendStatus(fiber.StatusInternalServerError)
-					return
+					return c.SendStatus(fiber.StatusInternalServerError)
+
 				} else if ok {
-					c.Next()
-					return
+					return c.Next()
+
 				}
 			}
-			cm.Forbidden(c)
-			return
+			return cm.Forbidden(c)
+
 		}
 
-		c.Next()
+		return c.Next()
 	}
 }
 
 // RoutePermission tries to find the current subject and determine if the
 // subject has the required permissions according to predefined Casbin policies.
 // This method uses http Path and Method as object and action.
-func (cm *PermissionMiddleware) RoutePermission() func(*fiber.Ctx) {
-	return func(c *fiber.Ctx) {
+func (cm *PermissionMiddleware) RoutePermission() func(*fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
 		sub := cm.Lookup(c)
 		if len(sub) == 0 {
-			cm.Unauthorized(c)
-			return
+			return cm.Unauthorized(c)
+
 		}
 		if ok, err := cm.Enforcer.Enforce(sub, c.Path(), c.Method()); err != nil {
-			c.SendStatus(fiber.StatusInternalServerError)
-			return
+			return c.SendStatus(fiber.StatusInternalServerError)
+
 		} else if !ok {
-			cm.Forbidden(c)
-			return
+			return cm.Forbidden(c)
+
 		}
 
-		c.Next()
-		return
+		return c.Next()
+
 	}
 }
 
 // RequiresRoles tries to find the current subject and determine if the
 // subject has the required roles according to predefined Casbin policies.
-func (cm *PermissionMiddleware) RequiresRoles(roles []string, opts ...func(o *Options)) func(*fiber.Ctx) {
+func (cm *PermissionMiddleware) RequiresRoles(roles []string, opts ...func(o *Options)) func(*fiber.Ctx) error {
 	options := &Options{
 		ValidationRule:   matchAll,
 		PermissionParser: permissionParserWithSeperator(":"),
@@ -166,45 +163,44 @@ func (cm *PermissionMiddleware) RequiresRoles(roles []string, opts ...func(o *Op
 	for _, o := range opts {
 		o(options)
 	}
-	return func(c *fiber.Ctx) { //nolint:wsl
+	return func(c *fiber.Ctx) error { //nolint:wsl
 		if len(roles) == 0 {
-			c.Next()
-			return
+			return c.Next()
 		}
 
 		sub := cm.Lookup(c)
 		if len(sub) == 0 {
-			cm.Unauthorized(c)
-			return
+			return cm.Unauthorized(c)
+
 		}
 
 		userRoles, err := cm.Enforcer.GetRolesForUser(sub)
 		if err != nil {
-			c.SendStatus(fiber.StatusInternalServerError)
-			return
+			return c.SendStatus(fiber.StatusInternalServerError)
+
 		}
 
 		if options.ValidationRule == matchAll {
 			for _, role := range roles {
 				if !contains(userRoles, role) {
-					cm.Forbidden(c)
-					return
+					return cm.Forbidden(c)
+
 				}
 			}
-			c.Next() //nolint:wsl
-			return
+			return c.Next() //nolint:wsl
+
 		} else if options.ValidationRule == atLeastOne {
 			for _, role := range roles {
 				if contains(userRoles, role) {
-					c.Next()
-					return
+					return c.Next()
+
 				}
 			}
-			cm.Forbidden(c)
-			return
+			return cm.Forbidden(c)
+
 		}
 
-		c.Next()
+		return c.Next()
 	}
 }
 

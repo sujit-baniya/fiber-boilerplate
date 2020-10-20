@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/gofiber/session"
-	"github.com/gofiber/session/provider/redis"
+	"github.com/gofiber/session/v2"
+	"github.com/gofiber/session/v2/provider/redis"
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"time"
 )
@@ -28,7 +28,7 @@ func loadDefaultSessionConfig() {
 
 func LoadSession() {
 	LoadSessionConfig()
-	provider := redis.New(redis.Config{
+	provider, _ := redis.New(redis.Config{
 		KeyPrefix:   "fiber_boilerplate",
 		Addr:        SessionConfig.Session_DSN,
 		PoolSize:    8,                //nolint:gomnd

@@ -3,9 +3,10 @@ package config
 import (
 	"crypto/rand"
 	"fmt"
-	"github.com/gofiber/fiber"
-	"github.com/gofiber/fiber/middleware"
-	"github.com/gofiber/pprof"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/pprof"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/template/html"
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"github.com/itsursujit/flash"
@@ -62,7 +63,7 @@ func GenerateAppKey(length int) {
 func BootApp() {
 	LoadAppConfig()
 	TemplateEngine = html.NewFileSystem(pkger.Dir("/resources/views"), ".html")
-	App = fiber.New(&fiber.Settings{
+	App = fiber.New(fiber.Config{
 		ErrorHandler:          CustomErrorHandler,
 		ServerHeader:          "fiber-boilerplate",
 		Prefork:               true,
@@ -73,9 +74,11 @@ func BootApp() {
 
 	App.Use(pprof.New())
 	App.Use(LoadHeaders)
-	App.Use(middleware.Favicon())
-	App.Use(middleware.Recover())
-	App.Use(middleware.Compress(middleware.CompressLevelBestSpeed))
+	App.Use(recover.New())
+	App.Use(compress.New(compress.Config{
+		Next:  nil,
+		Level: compress.LevelBestSpeed,
+	}))
 	/*App.Use(csrf.New(csrf.Config{
 		CookieSecure:   true,
 	}))*/
@@ -97,7 +100,7 @@ func BootApp() {
 	}
 }
 
-func CustomErrorHandler(c *fiber.Ctx, err error) {
+func CustomErrorHandler(c *fiber.Ctx, err error) error {
 	// StatusCode defaults to 500
 	code := fiber.StatusInternalServerError
 	//nolint:misspell    // Retrieve the custom statuscode if it's an fiber.*Error
@@ -105,11 +108,9 @@ func CustomErrorHandler(c *fiber.Ctx, err error) {
 		code = e.Code
 	} //nolint:gofmt,wsl
 	if c.Is("json") {
-		c.SendStatus(code)
-		_ = c.JSON(err)
+		return c.Status(code).JSON(err)
 	} else {
-		c.SendStatus(code)
-		_ = c.Render(fmt.Sprintf("errors/%d", code), fiber.Map{ //nolint:nolintlint,errcheck
+		return c.Status(code).Render(fmt.Sprintf("errors/%d", code), fiber.Map{ //nolint:nolintlint,errcheck
 			"error": err,
 		})
 	}

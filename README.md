@@ -26,7 +26,7 @@ The features include:
 
 Thanks to following libraries:
 
-* [Fiber](https://github.com/gofiber/fiber)
+* [Fiber](https://github.com/gofiber/fiber/v2)
 * [Xopen](https://github.com/brentp/xopen)
 * [Gorm](https://github.com/go-gorm/gorm)
 * [Zerolog](https://github.com/edersohe/zflogger)

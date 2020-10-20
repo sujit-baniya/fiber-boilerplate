@@ -2,7 +2,7 @@ package libraries
 
 import (
 	fmt "fmt"
-	"github.com/gofiber/fiber" //nolint:goimports
+	"github.com/gofiber/fiber/v2" //nolint:goimports
 	"time"
 )
 
@@ -40,10 +40,12 @@ func (u *URL) TemporarySignedUrl(path string, config URLConfig) string {
 }
 
 func (u *URL) validateExistingRoute(path string) bool {
-	routes := u.App.Routes()
-	for _, r := range routes {
-		if r.Path == path {
-			return true
+	routes := u.App.Stack()
+	for _, paths := range routes {
+		for _, r := range paths {
+			if r.Path == path {
+				return true
+			}
 		}
 	}
 	return false

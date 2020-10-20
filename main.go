@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"github.com/itsursujit/fiber-boilerplate/config"
 	"github.com/itsursujit/fiber-boilerplate/libraries"
@@ -26,13 +26,13 @@ func Serve() {
 	Boot()
 	App.Use(middlewares.LogMiddleware)
 	routes.Load()
-	App.Use(func(c *fiber.Ctx) {
+	App.Use(func(c *fiber.Ctx) error {
 		var err fiber.Error
 		err.Code = fiber.StatusNotFound
-		config.CustomErrorHandler(c, &err)
+		return config.CustomErrorHandler(c, &err)
 	})
 	// go libraries.Consume("webhook-callback")               //nolint:wsl
-	err := App.Listen(config.AppConfig.App_Port) //nolint:wsl
+	err := App.Listen(":" + config.AppConfig.App_Port) //nolint:wsl
 	if err != nil {
 		panic("App not starting: " + err.Error() + "on Port: " + config.AppConfig.App_Port)
 	}

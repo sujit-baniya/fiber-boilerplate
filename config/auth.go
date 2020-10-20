@@ -7,7 +7,7 @@ import (
 	gormadapter "github.com/casbin/gorm-adapter/v2"
 	"github.com/dgrijalva/jwt-go"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	. "github.com/itsursujit/fiber-boilerplate/app"
 	"time"
 )
@@ -54,15 +54,15 @@ func SetupPermission() { //nolint:whitespace
 		Lookup: func(ctx *fiber.Ctx) string {
 			return "sujit"
 		},
-		Unauthorized: func(c *fiber.Ctx) {
+		Unauthorized: func(c *fiber.Ctx) error {
 			var err fiber.Error
 			err.Code = fiber.StatusUnauthorized
-			CustomErrorHandler(c, &err)
+			return CustomErrorHandler(c, &err)
 		},
-		Forbidden: func(c *fiber.Ctx) {
+		Forbidden: func(c *fiber.Ctx) error {
 			var err fiber.Error
 			err.Code = fiber.StatusForbidden
-			CustomErrorHandler(c, &err)
+			return CustomErrorHandler(c, &err)
 		},
 	}
 }
@@ -127,12 +127,13 @@ func DeleteToken(c *fiber.Ctx) {
 }
 
 //RefreshToken refreshes the token
-func RefreshToken(c *fiber.Ctx, secret string) {
+func RefreshToken(c *fiber.Ctx, secret string) (Token, error) {
+	var t Token
 	u, err := ParseToken(c, secret)
 
 	if err != nil {
-		return
+		return t, err
 	}
 
-	CreateToken(c, u, secret)
+	return CreateToken(c, u, secret)
 }

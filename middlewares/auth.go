@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
 // Config defines the config for BasicAuth middleware
@@ -20,12 +20,12 @@ type AuthConfig struct {
 
 	// SuccessHandler defines a function which is executed for a valid token.
 	// Optional. Default: nil
-	SuccessHandler func(*fiber.Ctx)
+	SuccessHandler func(*fiber.Ctx) error
 
 	// ErrorHandler defines a function which is executed for an invalid token.
 	// It may be used to define a custom JWT error.
 	// Optional. Default: 401 Invalid or expired JWT
-	ErrorHandler func(*fiber.Ctx, error)
+	ErrorHandler func(*fiber.Ctx, error) error
 
 	// Signing key to validate token. Used as fallback if SigningKeys has length 0.
 	// Required. This or SigningKeys.
@@ -66,28 +66,28 @@ type AuthConfig struct {
 }
 
 // New ...
-func Authenticate(config ...AuthConfig) func(*fiber.Ctx) {
+func Authenticate(config ...AuthConfig) func(*fiber.Ctx) error {
 	// Init config
 	var cfg AuthConfig
 	if len(config) > 0 {
 		cfg = config[0]
 	}
 	if cfg.SuccessHandler == nil {
-		cfg.SuccessHandler = func(c *fiber.Ctx) {
-			c.Next()
+		cfg.SuccessHandler = func(c *fiber.Ctx) error {
+			return c.Next()
 		}
 	}
 	if cfg.ErrorHandler == nil {
-		cfg.ErrorHandler = func(c *fiber.Ctx, err error) {
+		cfg.ErrorHandler = func(c *fiber.Ctx, err error) error {
 			var er fiber.Error
 			if err.Error() == "Missing or malformed JWT" {
 				er.Code = fiber.StatusBadRequest
 			} else {
 				er.Code = fiber.StatusUnauthorized
-				c.SendString("Invalid or expired JWT")
+				return c.SendString("Invalid or expired JWT")
 			}
 			er.Message = err.Error()
-			config2.CustomErrorHandler(c, &er)
+			return config2.CustomErrorHandler(c, &er)
 			/*if err.Error() == "Missing or malformed JWT" {
 				c.Status(fiber.StatusBadRequest)
 				c.SendString("Missing or malformed JWT")
@@ -142,16 +142,14 @@ func Authenticate(config ...AuthConfig) func(*fiber.Ctx) {
 		extractor = jwtFromCookie(parts[1])
 	}
 	// Return middleware handler
-	return func(c *fiber.Ctx) {
+	return func(c *fiber.Ctx) error {
 		// Filter request to skip middleware
 		if cfg.Filter != nil && cfg.Filter(c) {
-			c.Next()
-			return
+			return c.Next()
 		}
 		auth, err := extractor(c)
 		if err != nil {
-			cfg.ErrorHandler(c, err)
-			return
+			return cfg.ErrorHandler(c, err)
 		}
 		token := new(jwt.Token)
 		if _, ok := cfg.Claims.(jwt.MapClaims); ok {
@@ -164,11 +162,9 @@ func Authenticate(config ...AuthConfig) func(*fiber.Ctx) {
 		if err == nil && token.Valid {
 			// Store user information from token into context.
 			c.Locals(cfg.ContextKey, token)
-			cfg.SuccessHandler(c)
-			return
+			return cfg.SuccessHandler(c)
 		}
-		cfg.ErrorHandler(c, err)
-		return
+		return cfg.ErrorHandler(c, err)
 	}
 }
 
