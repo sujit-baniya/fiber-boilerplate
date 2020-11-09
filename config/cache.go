@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 	"github.com/go-redis/redis"
-	. "github.com/itsursujit/fiber-boilerplate/app"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
 )
 
 type CacheConfiguration struct {

@@ -3,7 +3,7 @@ package config
 import (
 	"github.com/gofiber/session/v2"
 	"github.com/gofiber/session/v2/provider/redis"
-	. "github.com/itsursujit/fiber-boilerplate/app"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
 	"time"
 )
 

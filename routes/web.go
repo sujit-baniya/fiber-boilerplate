@@ -2,11 +2,11 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	. "github.com/itsursujit/fiber-boilerplate/app"
-	"github.com/itsursujit/fiber-boilerplate/auth"
-	"github.com/itsursujit/fiber-boilerplate/config"
-	"github.com/itsursujit/fiber-boilerplate/controllers"
-	"github.com/itsursujit/fiber-boilerplate/middlewares"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/sujit-baniya/fiber-boilerplate/auth"
+	"github.com/sujit-baniya/fiber-boilerplate/config"
+	"github.com/sujit-baniya/fiber-boilerplate/controllers"
+	"github.com/sujit-baniya/fiber-boilerplate/middlewares"
 )
 
 func WebRoutes() {

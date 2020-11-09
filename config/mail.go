@@ -2,8 +2,8 @@ package config
 
 import (
 	"github.com/gofiber/fiber/v2"
-	. "github.com/itsursujit/fiber-boilerplate/app"
-	"github.com/itsursujit/fiber-boilerplate/mail"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/sujit-baniya/fiber-boilerplate/mail"
 	"github.com/valyala/bytebufferpool"
 	"log"
 	"time"

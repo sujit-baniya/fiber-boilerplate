@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"github.com/gofiber/fiber/v2" //nolint:goimports
-	. "github.com/itsursujit/fiber-boilerplate/app"
-	"github.com/itsursujit/fiber-boilerplate/auth"
-	"github.com/itsursujit/fiber-boilerplate/config"
-	"github.com/itsursujit/fiber-boilerplate/models"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/sujit-baniya/fiber-boilerplate/auth"
+	"github.com/sujit-baniya/fiber-boilerplate/config"
+	"github.com/sujit-baniya/fiber-boilerplate/models"
 )
 
 func LoginGet(c *fiber.Ctx) error {

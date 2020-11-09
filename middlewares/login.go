@@ -3,9 +3,9 @@ package middlewares
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gookit/validate"
-	. "github.com/itsursujit/fiber-boilerplate/app"
-	"github.com/itsursujit/fiber-boilerplate/auth"
-	"github.com/itsursujit/fiber-boilerplate/models"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/sujit-baniya/fiber-boilerplate/auth"
+	"github.com/sujit-baniya/fiber-boilerplate/models"
 )
 
 func RedirectToHomePageOnLogin(c *fiber.Ctx) error {

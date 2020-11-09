@@ -3,7 +3,7 @@ package models
 import (
 	"errors"
 	"github.com/gookit/validate"
-	. "github.com/itsursujit/fiber-boilerplate/app"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
 )
 
 type Login struct {

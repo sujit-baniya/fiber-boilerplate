@@ -2,7 +2,7 @@ package libraries
 
 import (
 	"fmt"
-	. "github.com/itsursujit/fiber-boilerplate/app"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/diode"
 	"github.com/rs/zerolog/log"

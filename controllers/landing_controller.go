@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/itsursujit/fiber-boilerplate/auth"
+	"github.com/sujit-baniya/fiber-boilerplate/auth"
 )
 
 func Landing(c *fiber.Ctx) error {

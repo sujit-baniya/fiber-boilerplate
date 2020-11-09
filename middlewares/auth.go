@@ -3,7 +3,7 @@ package middlewares
 import (
 	"errors"
 	"fmt"
-	config2 "github.com/itsursujit/fiber-boilerplate/config"
+	config2 "github.com/sujit-baniya/fiber-boilerplate/config"
 	"log"
 	"reflect"
 	"strings"

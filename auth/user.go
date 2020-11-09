@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
-	. "github.com/itsursujit/fiber-boilerplate/app"
-	"github.com/itsursujit/fiber-boilerplate/config"
-	"github.com/itsursujit/fiber-boilerplate/models"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/sujit-baniya/fiber-boilerplate/config"
+	"github.com/sujit-baniya/fiber-boilerplate/models"
 )
 
 func User(c *fiber.Ctx) (*models.User, error) {

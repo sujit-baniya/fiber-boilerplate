@@ -2,9 +2,9 @@ package libraries
 
 import (
 	"fmt"
-	. "github.com/itsursujit/fiber-boilerplate/app"
-	"github.com/itsursujit/fiber-boilerplate/config"
-	"github.com/itsursujit/fiber-boilerplate/models"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/sujit-baniya/fiber-boilerplate/config"
+	"github.com/sujit-baniya/fiber-boilerplate/models"
 	"github.com/plutov/paypal/v3"
 )
 

@@ -2,8 +2,8 @@ package services
 
 import (
 	"fmt"
-	. "github.com/itsursujit/fiber-boilerplate/app"
-	"github.com/itsursujit/fiber-boilerplate/http"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/sujit-baniya/fiber-boilerplate/http"
 	"io/ioutil"
 )
 

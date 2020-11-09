@@ -3,9 +3,9 @@ package libraries
 import (
 	"encoding/json"
 	"fmt"
-	. "github.com/itsursujit/fiber-boilerplate/app"
-	"github.com/itsursujit/fiber-boilerplate/config"
-	"github.com/itsursujit/fiber-boilerplate/services"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/sujit-baniya/fiber-boilerplate/config"
+	"github.com/sujit-baniya/fiber-boilerplate/services"
 	"github.com/streadway/amqp"
 )
 

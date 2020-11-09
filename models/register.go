@@ -2,7 +2,7 @@ package models
 
 import (
 	"errors"
-	. "github.com/itsursujit/fiber-boilerplate/app"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
 	"github.com/jinzhu/gorm"
 )
 

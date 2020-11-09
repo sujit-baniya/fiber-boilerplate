@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	. "github.com/itsursujit/fiber-boilerplate/app"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
 	"github.com/jinzhu/gorm"
 	"time"
 )

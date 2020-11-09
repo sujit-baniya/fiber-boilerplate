@@ -3,9 +3,9 @@ package controllers
 import (
 	"github.com/gofiber/fiber/v2" //nolint:goimports
 	"github.com/gookit/validate"
-	"github.com/itsursujit/fiber-boilerplate/auth"
-	"github.com/itsursujit/fiber-boilerplate/config"
-	"github.com/itsursujit/fiber-boilerplate/models"
+	"github.com/sujit-baniya/fiber-boilerplate/auth"
+	"github.com/sujit-baniya/fiber-boilerplate/config"
+	"github.com/sujit-baniya/fiber-boilerplate/models"
 )
 
 func OAuthToken(c *fiber.Ctx) error { //nolint:wsl

@@ -8,12 +8,12 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/session/v2"
 	"github.com/gofiber/template/html"
-	"github.com/itsursujit/fiber-boilerplate/mail"
-	"github.com/itsursujit/flash"
 	"github.com/jinzhu/gorm"
 	"github.com/plutov/paypal/v3"
 	"github.com/rs/zerolog"
 	"github.com/streadway/amqp"
+	"github.com/sujit-baniya/fiber-boilerplate/mail"
+	"github.com/sujit-baniya/flash"
 )
 
 var App *fiber.App //nolint:gochecknoglobals

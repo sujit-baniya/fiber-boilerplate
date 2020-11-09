@@ -3,9 +3,9 @@ package middlewares
 import (
 	"errors"
 	"github.com/gofiber/fiber/v2"
-	. "github.com/itsursujit/fiber-boilerplate/app"
-	"github.com/itsursujit/fiber-boilerplate/config"
-	"github.com/itsursujit/fiber-boilerplate/libraries"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/sujit-baniya/fiber-boilerplate/config"
+	"github.com/sujit-baniya/fiber-boilerplate/libraries"
 	"strconv"
 	"strings"
 	"time"
