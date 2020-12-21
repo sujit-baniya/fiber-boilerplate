@@ -6,7 +6,6 @@ import (
 	"github.com/casbin/casbin/v2"
 	gormadapter "github.com/casbin/gorm-adapter/v3"
 	"github.com/dgrijalva/jwt-go"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/gofiber/fiber/v2"
 	. "github.com/sujit-baniya/fiber-boilerplate/app"
 	"time"
@@ -41,7 +40,13 @@ func loadDefaultAuthConfig() {
 func SetupPermission() { //nolint:whitespace
 	LoadAuthConfig()
 	var err error
-	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%d)/", DBConfig.DB_User, DBConfig.DB_Pass, DBConfig.DB_Host, DBConfig.DB_Port) //nolint:wsl,lll
+	connectionString := ""
+	switch DBConfig.DB_Driver {
+	case "postgres":
+		connectionString = fmt.Sprintf("host=%s port=%d user=%s dbname=%s password=%s sslmode=disable", DBConfig.DB_Host, DBConfig.DB_Port, DBConfig.DB_User, DBConfig.DB_Name, DBConfig.DB_Pass)
+	default:
+		connectionString = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", DBConfig.DB_User, DBConfig.DB_Pass, DBConfig.DB_Host, DBConfig.DB_Port, DBConfig.DB_Name)
+	}
 	PermissionAdapter, err = gormadapter.NewAdapter(DBConfig.DB_Driver, connectionString)
 
 	if err != nil {
@@ -65,6 +70,7 @@ func SetupPermission() { //nolint:whitespace
 			return CustomErrorHandler(c, &err)
 		},
 	}
+	fmt.Println("Casbin is loading")
 }
 
 //CreateToken authenticates the user

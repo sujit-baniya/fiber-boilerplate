@@ -2,8 +2,9 @@ package config
 
 import (
 	"fmt"
-	. "github.com/sujit-baniya/fiber-boilerplate/app"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+	. "github.com/sujit-baniya/fiber-boilerplate/app"
 	"time"
 )
 
@@ -40,7 +41,7 @@ func SetupDB() (*gorm.DB, error) {
 	}
 	switch DBConfig.DB_Driver {
 	case "postgres":
-		connectionString = fmt.Sprintf("host=%s port=%d user=%s dbname=%s password=%s", DBConfig.DB_Host, DBConfig.DB_Port, DBConfig.DB_User, DBConfig.DB_Name, DBConfig.DB_Pass)
+		connectionString = fmt.Sprintf("host=%s port=%d user=%s dbname=%s password=%s sslmode=disable", DBConfig.DB_Host, DBConfig.DB_Port, DBConfig.DB_User, DBConfig.DB_Name, DBConfig.DB_Pass)
 	default:
 		connectionString = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", DBConfig.DB_User, DBConfig.DB_Pass, DBConfig.DB_Host, DBConfig.DB_Port, DBConfig.DB_Name)
 	}

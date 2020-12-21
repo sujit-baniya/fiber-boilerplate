@@ -5,7 +5,7 @@ go 1.15
 require (
 	github.com/alexedwards/argon2id v0.0.0-20200802152012-2464efd3196b
 	github.com/casbin/casbin/v2 v2.19.4
-	github.com/casbin/gorm-adapter/v2 v2.1.0
+	github.com/casbin/gorm-adapter/v2 v2.1.0 // indirect
 	github.com/casbin/gorm-adapter/v3 v3.0.4
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fasthttp/session/v2 v2.2.5 // indirect
