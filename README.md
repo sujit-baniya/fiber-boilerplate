@@ -24,6 +24,15 @@ The features include:
 * Easy Config Settings based on .env
 * Setup for Docker
 
+# Installation
+* Clone the repo `git clone https://github.com/sujit-baniya/fiber-boilerplate.git`
+* Make sure you have installed: Redis, MySQL or Postgres, RabbitMQ (Optional)
+* If you're not using RabbitMQ, comment line:50 and line:52 on main.go
+* To build the frontend, install nodejs
+* Then run `npm install` and `npm run prod`
+* Your server should be up now
+
+
 Thanks to following libraries:
 
 * [Fiber](https://github.com/gofiber/fiber/v2)
