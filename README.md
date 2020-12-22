@@ -27,6 +27,7 @@ The features include:
 # Installation
 * Clone the repo `git clone https://github.com/sujit-baniya/fiber-boilerplate.git`
 * Make sure you have installed: Redis, MySQL or Postgres, RabbitMQ (Optional)
+* Copy .env.sample to .env
 * If you're not using RabbitMQ, comment line:50 and line:52 on main.go
 * To build the frontend, install nodejs
 * Then run `npm install` and `npm run prod`
