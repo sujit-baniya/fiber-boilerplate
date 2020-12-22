@@ -5,3 +5,4 @@ storage
 uploads
 tmp/
 .env
+*.fiber.gz
