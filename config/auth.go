@@ -38,7 +38,6 @@ func loadDefaultAuthConfig() {
 }
 
 func SetupPermission() { //nolint:whitespace
-	LoadAuthConfig()
 	var err error
 	connectionString := ""
 	switch DBConfig.DB_Driver {

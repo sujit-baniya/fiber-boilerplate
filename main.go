@@ -44,10 +44,11 @@ func Boot() {
 	config.LoadEnv()
 	config.BootApp()
 	LoadComponents()
+	config.LoadAuthConfig()
 }
 
 func LoadComponents() {
-	config.LoadQueueConfig()
+	// config.LoadQueueConfig()
 	config.LoadPaypalConfig()
-	Queue = libraries.SetupQueue() //nolint:wsl
+	// Queue = libraries.SetupQueue() //nolint:wsl
 }

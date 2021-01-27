@@ -8,9 +8,9 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/pprof"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/template/html"
+	"github.com/markbates/pkger"
 	. "github.com/sujit-baniya/fiber-boilerplate/app"
 	"github.com/sujit-baniya/flash"
-	"github.com/markbates/pkger"
 	"os"
 	"path/filepath"
 )
@@ -93,7 +93,7 @@ func BootApp() {
 	if err != nil {
 		panic(err)
 	}
-	SetupPermission()
+	// SetupPermission()
 	LoadSession()
 	Flash = &flash.Flash{
 		CookiePrefix: "fiber-boilerplate",

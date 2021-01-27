@@ -17,14 +17,6 @@ func WebRoutes() {
 }
 
 func LandingRoutes(app fiber.Router) {
-	app.Use(middlewares.Authenticate(middlewares.AuthConfig{
-		SigningKey:  []byte(config.AuthConfig.App_Jwt_Secret),
-		TokenLookup: "cookie:fiber-boilerplate-Token",
-		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
-			auth.Logout(ctx)
-			return ctx.Next()
-		},
-	}))
 	app.Get("/", controllers.Landing)
 }
 
