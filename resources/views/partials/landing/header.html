@@ -1,0 +1,44 @@
+<!---Global Header-->
+<header class="text-gray-700 body-font border-b border-gray-300 fixed w-full z-10 bg-white">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a href="/" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <img src="/img/logo.svg" alt="" style="height:50px;"> &nbsp;
+        </a>
+        <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center hidden md:block">
+            <a class="mr-5 hover:text-indigo-700 font-mono" href="/#validate-block">Validate</a>
+            <a class="mr-5 hover:text-indigo-700 font-mono" href="/#feature-block">Features</a>
+            <a class="mr-5 hover:text-indigo-700 font-mono" href="/#price-block">Price</a>
+            <a class="mr-5 hover:text-indigo-700 font-mono" href="/#contact-block">Contact Us</a>
+        </nav>
+        {{if not .auth}}
+        <a href="/login">
+            <button
+                    class="inline-flex hero_button items-center global-header border-0 py-1 px-3 focus:outline-none hover:bg-indigo-700 rounded text-white mt-4 md:mt-0">
+                Login
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                     class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </a>
+        <a href="/register" class="ml-3">
+            <button
+                    class="inline-flex hero_button items-center global-header border-0 py-1 px-3 focus:outline-none hover:bg-indigo-700 rounded text-white mt-4 md:mt-0">
+                Register
+            </button>
+        </a>
+        {{else}}
+        <a href="/app" class="ml-3">
+            <button
+                    class="inline-flex hero_button items-center global-header border-0 py-1 px-3 focus:outline-none hover:bg-indigo-700 rounded text-white mt-4 md:mt-0">
+                Dashboard
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                     class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </a>
+        {{end}}
+    </div>
+</header>
+<!---End Global Header-->

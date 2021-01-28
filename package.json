@@ -1,38 +1,76 @@
 {
-    "name": "go-service-toolkit",
+    "name": "vue-boilerplate",
     "version": "1.0.0",
-    "repository": "https://gitlab.com/itsursujit/go-service-toolkit.git",
-    "author": "Sujit <itsursujit@gmail.com>",
-    "license": "MIT",
+    "description": "",
+    "main": "index.js",
     "scripts": {
-        "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "npm run dev -- --watch",
-        "prod": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "development": "mix",
+        "dev": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "production": "mix --production",
+        "prod": "mix --production"
     },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
     "devDependencies": {
-        "@vue/babel-preset-app": "^4.4.1",
-        "axios": "^0.19.2",
-        "babel-polyfill": "^6.26.0",
-        "browser-sync": "^2.26.7",
-        "browser-sync-webpack-plugin": "^2.0.1",
-        "cross-env": "^7.0.2",
-        "laravel-mix": "^5.0.4",
-        "lodash": "^4.17.15",
-        "resolve-url-loader": "^3.1.0",
-        "sass": "^1.26.7",
+        "@fortawesome/fontawesome-svg-core": "^1.2.34",
+        "@fortawesome/free-solid-svg-icons": "^5.15.2",
+        "@fortawesome/vue-fontawesome": "^2.0.2",
+        "@vue/composition-api": "^1.0.0-beta.25",
+        "autoprefixer": "^10.0.4",
+        "babel-eslint": "^10.1.0",
+        "babel-plugin-syntax-dynamic-import": "^6.18.0",
+        "browser-sync": "^2.26.14",
+        "browser-sync-webpack-plugin": "2.2.2",
+        "chart.js": "^2.9.4",
+        "core-js": "^3.8.2",
+        "del": "^6.0.0",
+        "eslint": "^6.8.0",
+        "eslint-plugin-vue": "^6.2.2",
+        "gridjs-vue": "^0.5.2",
+        "laravel-mix": "^6.0.0-beta.17",
+        "postcss": "^8.1.14",
+        "resolve-url-loader": "^3.1.2",
+        "sass": "^1.29.0",
         "sass-loader": "^8.0.2",
-        "vue": "^2.6.11",
-        "vue-template-compiler": "^2.6.11"
-    },
-    "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^1.2.28",
-        "@fortawesome/free-solid-svg-icons": "^5.13.0",
-        "@fortawesome/vue-fontawesome": "^0.1.9",
-        "chart.js": "^2.9.3",
-        "prod": "^1.0.1",
-        "tailwindcss": "^1.4.6",
-        "vue-router": "^3.3.2",
+        "tailwindcss": "^2.0.2",
+        "vue": "^2.6.12",
+        "vue-chartjs": "^3.5.1",
+        "vue-clickaway": "^2.2.2",
+        "vue-loader": "^15.9.6",
+        "vue-router": "^3.4.9",
+        "vue-tabs-with-active-line": "^1.2.6",
+        "vue-template-compiler": "^2.6.12",
         "vuejs-datatable": "^2.0.0-alpha.7",
-        "vuex": "^3.4.0"
+        "vuex": "^3.6.0"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/essential",
+            "eslint:recommended"
+        ],
+        "parserOptions": {
+            "parser": "babel-eslint"
+        },
+        "rules": {}
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
+    ],
+    "dependencies": {
+        "axios": "^0.21.1",
+        "css-loader": "^5.0.1",
+        "flag-icon-css": "^3.5.0",
+        "lodash": "^4.17.20",
+        "webpack": "^5.17.0"
     }
 }

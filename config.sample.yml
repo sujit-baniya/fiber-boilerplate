@@ -1,0 +1,86 @@
+database:
+  drivers:
+    mysql: &mysql
+      driver: mysql
+      host: localhost
+      username: root
+      password: root
+      db_name: casbin
+      port: 3306
+    postgres: &postgres
+      driver: postgres
+      host: localhost
+      username: postgres
+      password: postgres
+      port: 5432
+      db_name: casbin
+  default: *postgres
+
+server:
+  name: "iSend.to"
+  host: localhost
+  port: 8080
+
+paypal: &paypal
+  client_id:
+  secret:
+  mode: live
+  account:
+
+redis:
+  instances:
+    redis: &redis
+      driver: redis
+      name: redis
+      host: "localhost"
+      port: 6379
+      db: 0
+  default: *redis
+
+cache: *redis
+session: *redis
+storage: *redis
+queue: *redis
+
+mail:
+  host:
+  port:
+  username:
+  password:
+  encryption: tls
+  from_address: "itsursujit@gmail.com"
+  from_name: "Sujit Baniya"
+
+token:
+  app_jwt_secret: SECRET_APP
+  api_jwt_secret: SECRET_API
+  expires_in: 3600
+jwt:
+  app:
+    secret: SECRET_APP
+    expire: 3600
+  api:
+    secret: SECRET_API
+    expire: 3600
+
+template:
+  path: "resources/view"
+  extension: ".html"
+
+log:
+  timefield: "timestamp"
+  timeformat: "2006-01-02 15:04:05"
+  graylog: &graylog
+    host: localhost
+    port: 12201
+  file: &file
+    path: "storage/logs"
+    timeformat: "2006-01-02"
+  console: &console
+    level: "error"
+    show: false
+  info: *file
+  warn: *file
+  error: *file
+  monitor: *graylog
+

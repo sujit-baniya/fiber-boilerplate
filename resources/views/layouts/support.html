@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{.title}} Verify.Rest | Validate, Clean and Analyze </title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="short icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+</head>
+<body class="flex flex-col min-h-screen ">
+{{template "partials/landing/header" .}}
+<div id="body-wrapper" class="flex-grow min-h-screen mt-32">
+    {{embed}}
+</div>
+
+{{template "partials/landing/footer" .}}
+<link rel="stylesheet" href="/css/vendor.css">
+<link rel="stylesheet" href="/css/landing.css">
+<script defer id="slcLiveChat" src="https://widget.sonetel.com/SonetelWidget.min.js" data-account-id="207431552"></script>
+</body>
+</html>

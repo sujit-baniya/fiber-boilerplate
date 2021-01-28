@@ -1,8 +1,16 @@
-# Created by .ignore support plugin (hsz.mobi)
 .idea/
-node_modules/
-storage
-uploads
-tmp/
-.env
+fiber-app.iml
+main
+/tmp
+/node_modules/
 *.fiber.gz
+.env
+.DS_Store
+dump.rdb
+uploads
+/storage/
+build/
+awstats-icon
+awstatsicons
+icon/
+stats/

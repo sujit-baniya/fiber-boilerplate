@@ -1,41 +1,47 @@
 package config
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/gofiber/session/v2"
 	"github.com/gofiber/session/v2/provider/redis"
-	. "github.com/sujit-baniya/fiber-boilerplate/app"
-	"time"
 )
 
-type SessionConfiguration struct {
-	Session_DSN    string
-	Session_DB     int
-	Session_Lookup string
+type SessionConfig struct {
+	*session.Session
+	Driver string `yaml:"driver" env:"SESSION_DRIVER"`
+	Name   string `yaml:"name" env:"SESSION_NAME"`
+	Host   string `yaml:"host" env:"SESSION_HOST"`
+	Port   int    `yaml:"port" env:"SESSION_PORT"`
+	DB     int    `yaml:"db" env:"SESSION_DB"`
 }
 
-var SessionConfig *SessionConfiguration //nolint:gochecknoglobals
-
-func LoadSessionConfig() {
-	loadDefaultSessionConfig()
-	ViperConfig.Unmarshal(&SessionConfig)
-}
-
-func loadDefaultSessionConfig() {
-	ViperConfig.SetDefault("SESSION_DSN", "127.0.0.1:6379")
-	ViperConfig.SetDefault("SESSION_DB", 1)
-	ViperConfig.SetDefault("SESSION_LOOKUP", "cookie:fiber-boilerplate-session")
-}
-
-func LoadSession() {
-	LoadSessionConfig()
-	provider, _ := redis.New(redis.Config{
-		KeyPrefix:   "fiber_boilerplate",
-		Addr:        SessionConfig.Session_DSN,
+func (s *SessionConfig) Setup() error {
+	provider, err := redis.New(redis.Config{
+		KeyPrefix:   "verify_rest_",
+		Addr:        fmt.Sprintf("%s:%d", s.Host, s.Port),
 		PoolSize:    8,                //nolint:gomnd
 		IdleTimeout: 30 * time.Second, //nolint:gomnd
-		DB:          SessionConfig.Session_DB,
+		DB:          s.DB,
+		/*MaxRetries:         0,
+		MinRetryBackoff:    0,
+		MaxRetryBackoff:    0,
+		DialTimeout:        0,
+		ReadTimeout:        0,
+		WriteTimeout:       0,
+		MinIdleConns:       0,
+		MaxConnAge:         0,
+		PoolTimeout:        0,
+		IdleCheckFrequency: 0,
+		TLSConfig:          nil,*/
 	})
-	Session = session.New(session.Config{
+	if err != nil {
+		return err
+	}
+	s.Session = session.New(session.Config{
 		Provider: provider,
 	})
+	return nil
+
 }

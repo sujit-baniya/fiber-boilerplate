@@ -1,32 +1,27 @@
 package migrations
 
 import (
-	"fmt"
-	. "github.com/sujit-baniya/fiber-boilerplate/app"
-	"github.com/sujit-baniya/fiber-boilerplate/config"
-	"github.com/sujit-baniya/fiber-boilerplate/models"
+	"log"
+
+	"github.com/sujit-baniya/verify-rest/app"
+	"github.com/sujit-baniya/verify-rest/pkg/models"
 )
 
-func InitMigrate() {
-	fmt.Println("1")
-	config.LoadEnv()
-	_, err := config.SetupDB()
+func Migrate() {
+	log.Println("Initiating migration...")
+	err := app.Http.Database.DB.Migrator().AutoMigrate(
+		&models.User{},
+		&models.UserMeta{},
+		&models.UserSetting{},
+		&models.File{},
+		&models.PaymentMethod{},
+		&models.Payment{},
+		&models.UserFile{},
+		&models.Transaction{},
+		&models.UserTransactionLog{},
+	)
 	if err != nil {
 		panic(err)
 	}
-	Migrate()
-}
-
-func Migrate() {
-	fmt.Println("Migrating...")
-	Log.Info().Msg("Migrating")
-	DB.AutoMigrate(&models.User{})
-	DB.AutoMigrate(&models.PaymentMethod{})
-	DB.AutoMigrate(&models.Payment{})
-	DB.AutoMigrate(&models.Transaction{})
-	DB.AutoMigrate(&models.UserTransactionLog{})
-	DB.AutoMigrate(&models.File{})
-	DB.AutoMigrate(&models.UserFile{})
-	Log.Info().Msg("Migrated")
-	fmt.Println("Migrated...")
+	log.Println("Migration Completed...")
 }
