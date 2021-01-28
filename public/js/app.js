@@ -927,19 +927,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/src/sass/landing.scss":
-/*!*****************************************!*\
-  !*** ./resources/src/sass/landing.scss ***!
-  \*****************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./resources/src/sass/app.scss":
 /*!*************************************!*\
   !*** ./resources/src/sass/app.scss ***!
@@ -3214,5 +3201,5 @@ render._withStripped = true
 /***/ })
 
 },
-0,[["./resources/src/js/app.js","/js/manifest","/js/vendor"],["./resources/src/sass/vendor.scss","/js/manifest","/js/vendor"],["./resources/src/sass/landing.scss","/js/manifest","/js/vendor"],["./resources/src/sass/app.scss","/js/manifest","/js/vendor"]]]);
+0,[["./resources/src/js/app.js","/js/manifest","/js/vendor"],["./resources/src/sass/vendor.scss","/js/manifest","/js/vendor"],["./resources/src/sass/app.scss","/js/manifest","/js/vendor"]]]);
 //# sourceMappingURL=app.js.map
