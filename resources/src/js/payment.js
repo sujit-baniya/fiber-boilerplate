@@ -69,7 +69,7 @@ paypal.Buttons({
         formData.append('amount', amount);
 
         return fetch(
-            '/account/paypal/do/order',
+            '/app/paypal/do/order',
             {
                 method: 'POST',
                 body: formData
@@ -84,7 +84,7 @@ paypal.Buttons({
     // Wait for the payment to be authorized by the customer
     onApprove: function (data, actions) {
         return fetch(
-            '/account/paypal/success/' + data.orderID,
+            '/app/paypal/order/success/' + data.orderID,
             {
                 method: 'POST'
             }
@@ -100,7 +100,7 @@ paypal.Buttons({
     // Wait for the payment to be authorized by the customer
     onCancel: function (data, actions) {
         return fetch(
-            '/account/paypal/cancel/' + data.orderID,
+            '/app/paypal/order/cancel/' + data.orderID,
             {
                 method: 'POST'
             }

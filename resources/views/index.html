@@ -1,8 +1,7 @@
 <h1>{{.Title}}</h1>
 {{if .user}}
 Hello, {{.user.FirstName}}  - ID: {{.user.ID}}!
-{{end}}
-<div class=" float-right flex-row">
+<div class=" float-right flex-row right-0 absolute">
     <div class="bg-white rounded-lg w-full p-4 shadow">
         <span class="text-gray-900 relative inline-block date uppercase font-medium tracking-widest">ADD FUND <small>(Min. of $5)</small>
             <a class="text-blue-500 text-right" href="/account/payment/history">History</a></span>
@@ -33,7 +32,8 @@ Hello, {{.user.FirstName}}  - ID: {{.user.ID}}!
 <script>
     let paypal_env = "sandbox"
 </script>
-<script src="/assets/js/manifest.js"></script>
-<script src="/assets/js/vendor.js"></script>
-<script src="/assets/js/payment.js"></script>
+<script src="/js/payment.js"></script>
+{{end}}
+<script src="/js/manifest.js"></script>
+<script src="/js/vendor.js"></script>
 {{template "partials/footer" .}}

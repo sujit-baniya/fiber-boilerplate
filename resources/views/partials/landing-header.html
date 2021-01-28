@@ -29,8 +29,8 @@
                      alt="Your avatar">
             </button>
             <!-- dropdown menu -->
-            <div class="profile-action-dropdown absolute bg-gray-100 border border-t-0 shadow-xl text-gray-700 rounded-b-lg w-48 bottom-10 right-0 mr-6 hidden">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-200">Account</a>
+            <div class="profile-action-dropdown absolute bg-gray-100 border border-t-0 shadow-xl text-gray-700 rounded-b-lg w-48 z-10 right-0 mr-6 hidden">
+                <a href="/app/files" class="block px-4 py-2 hover:bg-gray-200">Files</a>
                 <a href="#" class="block px-4 py-2 hover:bg-gray-200">Settings</a>
                 {{if .auth}}
                 <a href="/do/logout" class="block px-4 py-2 hover:bg-gray-200"
