@@ -5,8 +5,10 @@ go 1.15
 require (
 	github.com/abadojack/whatlanggo v1.0.1
 	github.com/alexedwards/argon2id v0.0.0-20201228115903-cf543ebc1f7b
-	github.com/casbin/gorm-adapter/v3 v3.0.6 // indirect
+	github.com/casbin/casbin/v2 v2.22.0
+	github.com/casbin/gorm-adapter/v3 v3.0.6
 	github.com/csimplestring/go-csv v0.0.0-20180328183906-5b8b3cd94f2c
+	github.com/denisenkom/go-mssqldb v0.9.0 // indirect
 	github.com/fasthttp/session/v2 v2.2.6 // indirect
 	github.com/form3tech-oss/jwt-go v3.2.2+incompatible
 	github.com/go-redis/redis/v8 v8.4.11 // indirect
@@ -64,6 +66,7 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gorm.io/driver/mysql v1.0.4
 	gorm.io/driver/postgres v1.0.7
+	gorm.io/driver/sqlserver v1.0.6 // indirect
 	gorm.io/gorm v1.20.12
 	gorm.io/plugin/dbresolver v1.1.0
 	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 // indirect
