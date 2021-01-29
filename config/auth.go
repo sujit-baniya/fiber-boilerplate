@@ -4,26 +4,19 @@ import (
 	"fmt"
 	"github.com/casbin/casbin/v2"
 	gormadapter "github.com/casbin/gorm-adapter/v3"
+	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
 )
 
 type AuthConfig struct {
 	*gormadapter.Adapter
-	Type     string         `yaml:"type" env:"AUTH_TYPE" env-default:"simple"`
-	DB       DatabaseDriver `yaml:"driver"`
+	Type     string `yaml:"type" env:"AUTH_TYPE" env-default:"simple"`
 	Casbin   *Casbin
 	Enforcer *casbin.Enforcer
 }
 
-func (d *AuthConfig) Setup() {
-	var err error
-	connectionString := ""
-	switch d.DB.Driver {
-	case "postgres":
-		connectionString = fmt.Sprintf("host=%s port=%d user=%s dbname=%s password=%s", d.DB.Host, d.DB.Port, d.DB.Username, d.DB.DBName, d.DB.Password)
-	default:
-		connectionString = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", d.DB.Username, d.DB.Password, d.DB.Host, d.DB.Port, d.DB.DBName)
-	}
-	adapter, err := gormadapter.NewAdapter(d.DB.Driver, connectionString)
+func (d *AuthConfig) Setup(db *gorm.DB) {
+	adapter, err := gormadapter.NewAdapterByDB(db)
 
 	if err != nil {
 		panic(fmt.Sprintf("failed to initialize casbin adapter: %v", err))
@@ -36,4 +29,22 @@ func (d *AuthConfig) Setup() {
 	enforcer.SetAdapter(adapter)
 	_ = enforcer.LoadPolicy()
 	d.Enforcer = enforcer
+	authConf := CasbinAuthConfig{
+		Enforcer:      d.Enforcer,
+		PolicyAdapter: d.Adapter,
+		Lookup: func(ctx *fiber.Ctx) string {
+			return "sujit"
+		},
+		Unauthorized: func(c *fiber.Ctx) error {
+			var err fiber.Error
+			err.Code = fiber.StatusUnauthorized
+			return CustomErrorHandler(c, &err)
+		},
+		Forbidden: func(c *fiber.Ctx) error {
+			var err fiber.Error
+			err.Code = fiber.StatusForbidden
+			return CustomErrorHandler(c, &err)
+		},
+	}
+	d.Casbin = CasbinAuth(authConf)
 }

@@ -52,7 +52,7 @@ func (cfg *AppConfig) Setup() {
 	cfg.Server.Setup()
 	cfg.LoadComponents()
 	if cfg.Auth.Type == "casbin" {
-		cfg.Auth.Setup()
+		cfg.Auth.Setup(cfg.Database.DB)
 	}
 	path := MakeDir(filepath.Join(cfg.Server.AssetPath, "GeoLite2-City.mmdb"))
 	cfg.GeoIP = ip.NewGeoIpDB(path)

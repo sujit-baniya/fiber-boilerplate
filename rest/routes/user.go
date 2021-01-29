@@ -7,7 +7,7 @@ import (
 )
 
 func UserRoutes(web fiber.Router) {
-	// web.Use(middlewares.AuthWeb())
+	web.Use(middlewares.AuthWeb())
 	account := web.Group("/app")
 	account.Get("/", controllers.App)
 	account.Get("/me", controllers.Me)
