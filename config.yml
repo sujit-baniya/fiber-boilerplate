@@ -100,4 +100,3 @@ spam:
 
 auth:
   type: "casbin"
-  driver: *postgres

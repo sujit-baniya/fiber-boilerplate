@@ -16,7 +16,8 @@ import (
 
 // Config is a application configuration structure
 type AppConfig struct {
-	Mail       Mail `yaml:"mail"`
+	Auth       AuthConfig `yaml:"auth"`
+	Mail       Mail       `yaml:"mail"`
 	Hash       Hash
 	View       ViewConfig      `yaml:"view"`
 	Cache      CacheConfig     `yaml:"cache"`
@@ -50,6 +51,9 @@ func (cfg *AppConfig) Setup() {
 	cfg.Server.TemplateEngine = cfg.View.Template.TemplateEngine
 	cfg.Server.Setup()
 	cfg.LoadComponents()
+	if cfg.Auth.Type == "casbin" {
+		cfg.Auth.Setup()
+	}
 	path := MakeDir(filepath.Join(cfg.Server.AssetPath, "GeoLite2-City.mmdb"))
 	cfg.GeoIP = ip.NewGeoIpDB(path)
 }

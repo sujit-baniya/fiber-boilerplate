@@ -20,3 +20,7 @@ func AdminUserRoutes(a fiber.Router) {
 	services.Get("/:id/settings", controllers.UserSettings)
 	services.Post("/:id/settings", controllers.StoreUserSettings)
 }
+
+func CasbinRoutes(a fiber.Router) {
+
+}

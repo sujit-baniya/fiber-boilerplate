@@ -5,6 +5,7 @@ go 1.15
 require (
 	github.com/abadojack/whatlanggo v1.0.1
 	github.com/alexedwards/argon2id v0.0.0-20201228115903-cf543ebc1f7b
+	github.com/arsmn/fiber-casbin/v2 v2.3.0 // indirect
 	github.com/casbin/casbin/v2 v2.22.0
 	github.com/casbin/gorm-adapter/v3 v3.0.6
 	github.com/csimplestring/go-csv v0.0.0-20180328183906-5b8b3cd94f2c
@@ -33,6 +34,7 @@ require (
 	github.com/mind1949/googletrans v0.1.1
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
 	github.com/plutov/paypal/v3 v3.1.0
+	github.com/prongbang/fiber-casbinrest v1.0.1
 	github.com/pyroscope-io/pyroscope v0.0.17
 	github.com/rdleal/go-async v0.0.0-20201122195903-c89be9dc6e7a
 	github.com/savsgio/gotils v0.0.0-20210120114113-f9d780dcbd93 // indirect

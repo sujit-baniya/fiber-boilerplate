@@ -1,7 +1,6 @@
-package middlewares
+package config
 
 import (
-	"log"
 	"strings"
 
 	"github.com/casbin/casbin/v2"
@@ -13,7 +12,7 @@ import (
 type CasbinAuthConfig struct {
 	// ModelFilePath is path to model file for Casbin.
 	// Optional. Default: "./model.conf".
-	ModelFilePath string
+	Enforcer *casbin.Enforcer
 
 	// PolicyAdapter is an interface for different persistent providers.
 	// Optional. Default: fileadapter.NewAdapter("./policy.csv").
@@ -33,22 +32,18 @@ type CasbinAuthConfig struct {
 	Forbidden fiber.Handler
 }
 
-// CasbinMiddleware ...
-type CasbinMiddleware struct {
+// Casbin ...
+type Casbin struct {
 	config   CasbinAuthConfig
 	enforcer *casbin.Enforcer
 }
 
 // New creates an authorization middleware for use in Fiber
-func CasbinAuth(config ...CasbinAuthConfig) *CasbinMiddleware {
+func CasbinAuth(config ...CasbinAuthConfig) *Casbin {
 
 	var cfg CasbinAuthConfig
 	if len(config) > 0 {
 		cfg = config[0]
-	}
-
-	if cfg.ModelFilePath == "" {
-		cfg.ModelFilePath = "./model.conf"
 	}
 
 	if cfg.Lookup == nil {
@@ -67,14 +62,9 @@ func CasbinAuth(config ...CasbinAuthConfig) *CasbinMiddleware {
 		}
 	}
 
-	enforcer, err := casbin.NewEnforcer(cfg.ModelFilePath, cfg.PolicyAdapter)
-	if err != nil {
-		log.Fatalf("Fiber: Casbin middleware error -> %v", err)
-	}
-
-	return &CasbinMiddleware{
+	return &Casbin{
 		config:   cfg,
-		enforcer: enforcer,
+		enforcer: cfg.Enforcer,
 	}
 }
 
@@ -123,7 +113,7 @@ type Options struct {
 
 // RequiresPermissions tries to find the current subject and determine if the
 // subject has the required permissions according to predefined Casbin policies.
-func (cm *CasbinMiddleware) RequiresPermissions(permissions []string, opts ...func(o *Options)) fiber.Handler {
+func (cm *Casbin) RequiresPermissions(permissions []string, opts ...func(o *Options)) fiber.Handler {
 
 	options := &Options{
 		ValidationRule:   matchAll,
@@ -173,7 +163,7 @@ func (cm *CasbinMiddleware) RequiresPermissions(permissions []string, opts ...fu
 // RoutePermission tries to find the current subject and determine if the
 // subject has the required permissions according to predefined Casbin policies.
 // This method uses http Path and Method as object and action.
-func (cm *CasbinMiddleware) RoutePermission() fiber.Handler {
+func (cm *Casbin) RoutePermission() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		sub := cm.config.Lookup(c)
 		if len(sub) == 0 {
@@ -192,7 +182,7 @@ func (cm *CasbinMiddleware) RoutePermission() fiber.Handler {
 
 // RequiresRoles tries to find the current subject and determine if the
 // subject has the required roles according to predefined Casbin policies.
-func (cm *CasbinMiddleware) RequiresRoles(roles []string, opts ...func(o *Options)) fiber.Handler {
+func (cm *Casbin) RequiresRoles(roles []string, opts ...func(o *Options)) fiber.Handler {
 	options := &Options{
 		ValidationRule:   matchAll,
 		PermissionParser: permissionParserWithSeperator(":"),
@@ -216,7 +206,6 @@ func (cm *CasbinMiddleware) RequiresRoles(roles []string, opts ...func(o *Option
 		if err != nil {
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
-
 		if options.ValidationRule == matchAll {
 			for _, role := range roles {
 				if !contains(userRoles, role) {
