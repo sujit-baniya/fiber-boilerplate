@@ -3,10 +3,10 @@ package controllers
 import (
 	"github.com/gofiber/fiber/v2" //nolint:goimports
 	"github.com/gookit/validate"
-	"github.com/sujit-baniya/verify-rest/app"
-	"github.com/sujit-baniya/verify-rest/pkg/auth"
-	"github.com/sujit-baniya/verify-rest/pkg/models"
-	"github.com/sujit-baniya/verify-rest/pkg/services"
+	"github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/sujit-baniya/fiber-boilerplate/pkg/auth"
+	"github.com/sujit-baniya/fiber-boilerplate/pkg/models"
+	"github.com/sujit-baniya/fiber-boilerplate/pkg/services"
 )
 
 func OAuthToken(c *fiber.Ctx) error { //nolint:wsl

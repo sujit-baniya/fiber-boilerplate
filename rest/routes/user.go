@@ -2,8 +2,8 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/sujit-baniya/verify-rest/rest/controllers"
-	"github.com/sujit-baniya/verify-rest/rest/middlewares"
+	"github.com/sujit-baniya/fiber-boilerplate/rest/controllers"
+	"github.com/sujit-baniya/fiber-boilerplate/rest/middlewares"
 )
 
 func UserRoutes(web fiber.Router) {

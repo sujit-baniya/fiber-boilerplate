@@ -2,9 +2,9 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/sujit-baniya/verify-rest/rest/controllers"
-	apiControllers "github.com/sujit-baniya/verify-rest/rest/controllers/api"
-	"github.com/sujit-baniya/verify-rest/rest/middlewares"
+	"github.com/sujit-baniya/fiber-boilerplate/rest/controllers"
+	apiControllers "github.com/sujit-baniya/fiber-boilerplate/rest/controllers/api"
+	"github.com/sujit-baniya/fiber-boilerplate/rest/middlewares"
 )
 
 func WebAuthRoutes(App fiber.Router) {

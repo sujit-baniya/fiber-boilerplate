@@ -3,7 +3,7 @@ package middlewares
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gookit/validate"
-	"github.com/sujit-baniya/verify-rest/pkg/models"
+	"github.com/sujit-baniya/fiber-boilerplate/pkg/models"
 )
 
 func ValidateApiLoginPost(c *fiber.Ctx) error {

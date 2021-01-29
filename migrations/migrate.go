@@ -3,8 +3,8 @@ package migrations
 import (
 	"log"
 
-	"github.com/sujit-baniya/verify-rest/app"
-	"github.com/sujit-baniya/verify-rest/pkg/models"
+	"github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/sujit-baniya/fiber-boilerplate/pkg/models"
 )
 
 func Migrate() {

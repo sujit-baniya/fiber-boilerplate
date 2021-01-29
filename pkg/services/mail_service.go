@@ -3,8 +3,8 @@ package services
 import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"github.com/sujit-baniya/fiber-boilerplate/app"
 	"github.com/sujit-baniya/utils"
-	"github.com/sujit-baniya/verify-rest/app"
 	"time"
 )
 

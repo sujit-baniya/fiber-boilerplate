@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/sujit-baniya/verify-rest/app"
+	"github.com/sujit-baniya/fiber-boilerplate/app"
 	"gorm.io/gorm"
 )
 

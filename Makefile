@@ -22,7 +22,7 @@ ifneq ($(shell git status --porcelain),)
 	VERSION := $(VERSION)-dirty
 endif
 
-FLAGS := -ldflags "-X github.com/sujit-baniya/verify-rest/app.Version=$(VERSION)"
+FLAGS := -ldflags "-X github.com/sujit-baniya/fiber-boilerplate/app.Version=$(VERSION)"
 BUILD_PATH := $(shell pwd)/build
 RELEASE_PATH := $(BUILD_PATH)/releases
 SHARED_PATH := $(BUILD_PATH)/shared

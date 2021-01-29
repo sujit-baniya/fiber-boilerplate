@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	apiControllers "github.com/sujit-baniya/verify-rest/rest/controllers/api"
+	apiControllers "github.com/sujit-baniya/fiber-boilerplate/rest/controllers/api"
 )
 
 func ApiRoutes(api fiber.Router) {

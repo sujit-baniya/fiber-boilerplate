@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"github.com/gookit/validate"
-	"github.com/sujit-baniya/verify-rest/app"
+	"github.com/sujit-baniya/fiber-boilerplate/app"
 )
 
 type Login struct {

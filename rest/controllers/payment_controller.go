@@ -5,9 +5,9 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/sujit-baniya/verify-rest/app"
-	"github.com/sujit-baniya/verify-rest/pkg/auth"
-	"github.com/sujit-baniya/verify-rest/pkg/models"
+	"github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/sujit-baniya/fiber-boilerplate/pkg/auth"
+	"github.com/sujit-baniya/fiber-boilerplate/pkg/models"
 )
 
 func PlaceOrderFromPaypal(c *fiber.Ctx) error {

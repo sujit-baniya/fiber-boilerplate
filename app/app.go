@@ -6,8 +6,8 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/etag"
 	"github.com/gofiber/fiber/v2/middleware/pprof"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/sujit-baniya/fiber-boilerplate/config"
 	"github.com/sujit-baniya/validate"
-	"github.com/sujit-baniya/verify-rest/config"
 	"path/filepath"
 	"regexp"
 )

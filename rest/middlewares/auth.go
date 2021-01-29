@@ -3,10 +3,10 @@ package middlewares
 import (
 	"errors"
 	"fmt"
+	"github.com/sujit-baniya/fiber-boilerplate/app"
+	config2 "github.com/sujit-baniya/fiber-boilerplate/config"
+	"github.com/sujit-baniya/fiber-boilerplate/pkg/auth"
 	"github.com/sujit-baniya/log"
-	"github.com/sujit-baniya/verify-rest/app"
-	config2 "github.com/sujit-baniya/verify-rest/config"
-	"github.com/sujit-baniya/verify-rest/pkg/auth"
 	"reflect"
 	"strings"
 

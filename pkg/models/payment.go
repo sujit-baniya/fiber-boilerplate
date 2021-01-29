@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/plutov/paypal/v3"
-	"github.com/sujit-baniya/verify-rest/app"
+	"github.com/sujit-baniya/fiber-boilerplate/app"
 	"gorm.io/gorm"
 )
 

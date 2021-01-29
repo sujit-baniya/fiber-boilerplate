@@ -2,10 +2,10 @@ package models
 
 import (
 	"fmt"
-	"github.com/sujit-baniya/verify-rest/config"
+	"github.com/sujit-baniya/fiber-boilerplate/config"
 
 	"github.com/plutov/paypal/v3"
-	"github.com/sujit-baniya/verify-rest/app"
+	"github.com/sujit-baniya/fiber-boilerplate/app"
 )
 
 type PayPal struct {
