@@ -10,6 +10,8 @@ func AdminRoutes(web fiber.Router) {
 	admin.Get("/", controllers.Admin)
 	admin.Get("/users", controllers.UserList)
 	AdminUserRoutes(admin)
+	RolesRoutes(admin)
+	PermissionRoutes(admin)
 }
 
 func AdminUserRoutes(a fiber.Router) {
@@ -21,6 +23,18 @@ func AdminUserRoutes(a fiber.Router) {
 	services.Post("/:id/settings", controllers.StoreUserSettings)
 }
 
-func CasbinRoutes(a fiber.Router) {
+func RolesRoutes(r fiber.Router) {
+	roles := r.Group("roles")
+	roles.Post("/create", controllers.CreateNewRole)
+	roles.Post("/remove", controllers.RemoveRole)
+	roles.Post("/assign", controllers.AssignRoleToUser)
+	roles.Post("/revoke", controllers.RevokeRoleFromUser)
+	roles.Post("/change", controllers.ChangeRoleForUser)
+}
 
+func PermissionRoutes(r fiber.Router) {
+	roles := r.Group("permissions")
+	roles.Post("/add", controllers.AddPermissionOnRole)
+	roles.Post("/remove", controllers.RemovePermissionFromRole)
+	roles.Post("/change", controllers.ChangePermissionOnRole)
 }

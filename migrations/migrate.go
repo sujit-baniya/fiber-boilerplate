@@ -10,6 +10,8 @@ import (
 func Migrate() {
 	log.Println("Initiating migration...")
 	err := app.Http.Database.DB.Migrator().AutoMigrate(
+		&models.Role{},
+		&models.RoleAndPermission{},
 		&models.User{},
 		&models.UserMeta{},
 		&models.UserSetting{},

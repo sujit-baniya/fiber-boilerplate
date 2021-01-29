@@ -26,6 +26,16 @@ type User struct {
 	UserSetting   UserSetting    `gorm:"-" json:"settings,omitempty"`
 }
 
+type Role struct {
+	ID          uint   `gorm:"primarykey"`
+	Name        string `json:"name" gorm:"name"`               //nolint:gofmt
+	Slug        string `json:"slug" gorm:"slug"`               //nolint:gofmt
+	Description string `json:"description" gorm:"description"` //nolint:gofmt
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	DeletedAt   gorm.DeletedAt `gorm:"index"`
+}
+
 func AllUsers() []User {
 	var users []User
 	app.Http.Database.Find(&users)

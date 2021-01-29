@@ -7,8 +7,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/pprof"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/sujit-baniya/fiber-boilerplate/config"
-	"github.com/sujit-baniya/validate"
-	"path/filepath"
 	"regexp"
 )
 
@@ -21,8 +19,6 @@ func Load(configFile string) {
 	Http.Setup()
 	LoadBuiltInMiddlewares(Http)
 	Http.PayPal.Connect(Http.Server.Env)
-	path := filepath.Join(Http.Server.AssetPath, "network-map.json")
-	go validate.LoadNetworks(path)
 }
 
 func LoadBuiltInMiddlewares(app *config.AppConfig) {

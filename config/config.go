@@ -50,7 +50,8 @@ func (cfg *AppConfig) Setup() {
 	cfg.Server.Setup()
 	cfg.LoadComponents()
 	if cfg.Auth.Type == "casbin" {
-		cfg.Auth.Setup(cfg.Database.DB)
+		modelFile := filepath.Join(cfg.Server.AssetPath, "rbac_model.conf")
+		cfg.Auth.Setup(cfg.Database.DB, modelFile)
 	}
 	path := MakeDir(filepath.Join(cfg.Server.AssetPath, "GeoLite2-City.mmdb"))
 	cfg.GeoIP = ip.NewGeoIpDB(path)

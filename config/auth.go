@@ -15,14 +15,14 @@ type AuthConfig struct {
 	Enforcer *casbin.Enforcer
 }
 
-func (d *AuthConfig) Setup(db *gorm.DB) {
+func (d *AuthConfig) Setup(db *gorm.DB, file string) {
 	adapter, err := gormadapter.NewAdapterByDB(db)
 
 	if err != nil {
 		panic(fmt.Sprintf("failed to initialize casbin adapter: %v", err))
 	}
 	d.Adapter = adapter
-	enforcer, err := casbin.NewEnforcer("rbac_model.conf")
+	enforcer, err := casbin.NewEnforcer(file)
 	if err != nil {
 		panic(err)
 	}
@@ -33,7 +33,7 @@ func (d *AuthConfig) Setup(db *gorm.DB) {
 		Enforcer:      d.Enforcer,
 		PolicyAdapter: d.Adapter,
 		Lookup: func(ctx *fiber.Ctx) string {
-			return "sujit"
+			return "2"
 		},
 		Unauthorized: func(c *fiber.Ctx) error {
 			var err fiber.Error
