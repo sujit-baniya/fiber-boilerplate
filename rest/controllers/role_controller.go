@@ -90,7 +90,6 @@ func AddPermissionOnRole(c *fiber.Ctx) error {
 		err := app.Http.Database.Unscoped().First(&role1, models.RoleAndPermission{PType: role.PType,V0: role.V0, V1: role.V1, V2: role.V2}).Error
 		if err != nil {
 			app.Http.Database.Create(&role)
-			return c.JSON(role)
 		}
 		role1.DeletedAt = gorm.DeletedAt{Valid: false}
 		app.Http.Database.Unscoped().Save(role1)
@@ -107,7 +106,6 @@ func AddPermissionOnRole(c *fiber.Ctx) error {
 		err := app.Http.Database.Unscoped().First(&role1, models.RoleAndPermission{PType: role.PType,V0: role.V0, V1: role.V1, V2: role.V2}).Error
 		if err != nil {
 			app.Http.Database.Create(&role)
-			return c.JSON(role)
 		}
 		role1.DeletedAt = gorm.DeletedAt{Valid: false}
 		app.Http.Database.Unscoped().Save(role1)
