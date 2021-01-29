@@ -2,12 +2,17 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/sujit-baniya/fiber-boilerplate/app"
 	"github.com/sujit-baniya/fiber-boilerplate/rest/controllers"
 	"github.com/sujit-baniya/fiber-boilerplate/rest/middlewares"
 )
 
 func UserRoutes(web fiber.Router) {
-	// web.Use(middlewares.AuthWeb())
+	if app.Http.Auth.Type == "casbin" {
+		web.Use(app.Http.Auth.Casbin.RequiresRoles([]string{"user"}))
+	} else {
+		web.Use(middlewares.AuthWeb())
+	}
 	account := web.Group("/app")
 	account.Get("/", controllers.App)
 	account.Get("/me", controllers.Me)

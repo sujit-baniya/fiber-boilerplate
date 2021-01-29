@@ -8,9 +8,6 @@ import (
 )
 
 func LandingRoutes(web fiber.Router) {
-
-	// app.Http.Auth.Casbin.RequiresRoles([]string{"admin"})
-	web.Use(app.Http.Auth.Casbin.RoutePermission())
 	web.Get("/", controllers.Landing)
 	web.Get("/ping", Pong)
 	web.Get("/all-routes", AllRoutes)
