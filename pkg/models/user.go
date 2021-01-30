@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+	"github.com/sujit-baniya/fiber-boilerplate/config"
 	"strconv"
 	"time"
 
@@ -106,4 +108,8 @@ func (u *User) Settings() (UserSetting, error) {
 	}
 	u.UserSetting = userSettings
 	return userSettings, nil
+}
+
+func (u *User) Can(permission string) bool {
+	return app.Http.Auth.Casbin.Can(fmt.Sprintf("%d", u.ID), permission, config.MatchAll)
 }

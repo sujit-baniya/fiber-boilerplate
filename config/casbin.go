@@ -160,6 +160,50 @@ func (cm *Casbin) RequiresPermissions(permissions []string, opts ...func(o *Opti
 	}
 }
 
+// RequiresPermissions tries to find the current subject and determine if the
+// subject has the required permissions according to predefined Casbin policies.
+func (cm *Casbin) Can(sub string, perm string, opts ...func(o *Options)) bool {
+	permissions := []string{perm}
+	options := &Options{
+		ValidationRule:   matchAll,
+		PermissionParser: permissionParserWithSeperator(":"),
+	}
+
+	for _, o := range opts {
+		o(options)
+	}
+	if len(permissions) == 0 {
+		return false
+	}
+
+	if len(sub) == 0 {
+		return false
+	}
+
+	if options.ValidationRule == matchAll {
+		for _, permission := range permissions {
+			vals := append([]string{sub}, options.PermissionParser(permission)...)
+			if ok, err := cm.enforcer.Enforce(convertToInterface(vals)...); err != nil {
+				return false
+			} else if !ok {
+				return false
+			}
+		}
+		return true
+	} else if options.ValidationRule == atLeastOne {
+		for _, permission := range permissions {
+			vals := append([]string{sub}, options.PermissionParser(permission)...)
+			if ok, err := cm.enforcer.Enforce(convertToInterface(vals)...); err != nil {
+				return false
+			} else if ok {
+				return true
+			}
+		}
+		return false
+	}
+	return false
+}
+
 // RoutePermission tries to find the current subject and determine if the
 // subject has the required permissions according to predefined Casbin policies.
 // This method uses http Path and Method as object and action.
