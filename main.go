@@ -2,53 +2,33 @@ package main
 
 import (
 	"flag"
-	"github.com/gofiber/fiber/v2"
-	. "github.com/sujit-baniya/fiber-boilerplate/app"
-	"github.com/sujit-baniya/fiber-boilerplate/config"
-	"github.com/sujit-baniya/fiber-boilerplate/libraries"
-	"github.com/sujit-baniya/fiber-boilerplate/middlewares"
-	. "github.com/sujit-baniya/fiber-boilerplate/migrations"
-	"github.com/sujit-baniya/fiber-boilerplate/routes"
+	"log"
+
+	"github.com/pyroscope-io/pyroscope/pkg/agent/profiler"
+	"github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/sujit-baniya/fiber-boilerplate/migrations"
+	"github.com/sujit-baniya/fiber-boilerplate/rest/routes"
 )
 
 func main() {
-	Log = libraries.SetupZeroLog()
-	migrate := flag.Bool("migrate", false, "Migrate the pending migration files")
+	configFile := flag.String("config", "config.yml", "User Config file from user")
+	migrate := flag.Bool("migrate", false, "Update db structure")
 	flag.Parse()
+	app.Load(*configFile)
+	if app.Http.Profiler.Enabled {
+		_, _ = profiler.Start(profiler.Config{
+			ApplicationName: app.Http.Server.Name,
+			ServerAddress:   app.Http.Profiler.Server,
+		})
+	}
+
+	app.Http.Server.Version = app.Version
 	if *migrate {
-		InitMigrate()
-		return
-	}
-	Serve()
-}
-
-func Serve() {
-	Boot()
-	App.Use(middlewares.LogMiddleware)
-	routes.Load()
-	App.Use(func(c *fiber.Ctx) error {
-		var err fiber.Error
-		err.Code = fiber.StatusNotFound
-		return config.CustomErrorHandler(c, &err)
-	})
-	// go libraries.Consume("webhook-callback")               //nolint:wsl
-	err := App.Listen(":" + config.AppConfig.App_Port) //nolint:wsl
-	if err != nil {
-		panic("App not starting: " + err.Error() + "on Port: " + config.AppConfig.App_Port)
+		migrations.Migrate()
+	} else {
+		routes.LoadRoutes(app.Http.Server.App)
+		app.Http.Route404()
+		log.Fatal(app.Http.Server.ServeWithGraceFullShutdown())
 	}
 
-	defer DB.Close()
-}
-
-func Boot() {
-	config.LoadEnv()
-	config.BootApp()
-	LoadComponents()
-	config.LoadAuthConfig()
-}
-
-func LoadComponents() {
-	// config.LoadQueueConfig()
-	config.LoadPaypalConfig()
-	// Queue = libraries.SetupQueue() //nolint:wsl
 }

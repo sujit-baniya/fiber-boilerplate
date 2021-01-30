@@ -1,5 +1,96 @@
-@import "~tailwindcss/base";
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400;500;600;700;800;900&display=swap");
 
-@import "~tailwindcss/components";
+@tailwind base;
 
-@import "~tailwindcss/utilities";
+@tailwind components;
+
+.bg-accent {
+  background-color: #f3f5f9;
+}
+
+.bg-primary {
+  background-color: #006aff;
+}
+
+.transition-basic {
+  @apply transition-colors duration-200 ease-in;
+}
+
+.shadow-primary {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+  0 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+
+.shadow-dropdown {
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 4px 1px rgba(0, 0, 0, 0.15);
+}
+
+@tailwind utilities;
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.2s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+/* used for dropdown */
+.slide-in-up-enter-active,
+.slide-in-up-leave-active {
+  transition-duration: 250ms;
+  transition-property: transform, visibility, opacity;
+  transition-timing-function: ease-in;
+  transform: translate3d(0, 0, 0);
+}
+
+.slide-in-up-enter,
+.slide-in-up-leave-active {
+  transform: translate3d(0, 50%, 0);
+  opacity: 0;
+}
+
+/* bounce in up */
+.bounce-in-up-enter-active {
+  animation: bounceInUp 1s;
+}
+
+/* .bounce-in-up-leave-active { */
+/*   animation: bounceInUp 0.5s reverse; */
+/* } */
+
+@keyframes bounceInUp {
+  from,
+  60%,
+  75%,
+  90%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  from {
+    opacity: 0;
+    transform: translate3d(0, 3000px, 0) scaleY(5);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0) scaleY(0.9);
+  }
+
+  75% {
+    transform: translate3d(0, 10px, 0) scaleY(0.95);
+  }
+
+  90% {
+    transform: translate3d(0, -5px, 0) scaleY(0.985);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}

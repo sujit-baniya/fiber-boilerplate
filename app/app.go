@@ -1,78 +1,78 @@
 package app
 
 import (
-	"github.com/alexedwards/argon2id"
-	"github.com/casbin/casbin/v2"
-	gormadapter "github.com/casbin/gorm-adapter/v3"
-	"github.com/go-redis/redis"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/session/v2"
-	"github.com/gofiber/template/html"
-	"github.com/jinzhu/gorm"
-	"github.com/plutov/paypal/v3"
-	"github.com/rs/zerolog"
-	"github.com/streadway/amqp"
-	"github.com/sujit-baniya/fiber-boilerplate/mail"
-	"github.com/sujit-baniya/flash"
+	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/etag"
+	"github.com/gofiber/fiber/v2/middleware/pprof"
+	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/sujit-baniya/fiber-boilerplate/config"
+	"regexp"
 )
 
-var App *fiber.App //nolint:gochecknoglobals
+var Http *config.AppConfig
 
-var TemplateEngine *html.Engine
+var Version = "develop"
 
-var Ctx *fiber.Ctx
-
-var Hash *HashDriver //nolint:gochecknoglobals
-
-var Flash *flash.Flash
-
-var Session *session.Session
-
-var MailerServer *mail.SMTPServer
-
-var Mailer *mail.SMTPClient
-
-var Paypal *paypal.Client
-
-var DB *gorm.DB //nolint:gochecknoglobals
-
-var RedisClient *redis.Client
-
-var PermissionAdapter *gormadapter.Adapter //nolint:gochecknoglobals
-
-var Enforcer *casbin.Enforcer //nolint:gochecknoglobals
-
-var Queue *amqp.Connection
-
-var Log *Logger
-
-type HashConfig struct {
-	// Argon2id configuration
-	Params *argon2id.Params
+func Load(configFile string) {
+	Http = &config.AppConfig{ConfigFile: configFile}
+	Http.Setup()
+	LoadBuiltInMiddlewares(Http)
+	Http.PayPal.Connect(Http.Server.Env)
 }
 
-type HashDriver struct {
-	// Configuration for the argon2id driver
-	Config *HashConfig
-}
-
-type Logger struct {
-	*zerolog.Logger
-}
-
-func NewHashDriver(config ...HashConfig) *HashDriver {
-	var cfg HashConfig
-	cfg.Params = argon2id.DefaultParams
-	if len(config) > 0 {
-		cfg = config[0]
+func LoadBuiltInMiddlewares(app *config.AppConfig) {
+	app.Server.Use(recover.New())
+	app.Server.Use(etag.New())
+	app.Server.Use(compress.New(compress.Config{
+		Level: 1,
+	}))
+	if app.Server.Debug {
+		app.Server.Use(pprof.New())
 	}
-	return &HashDriver{Config: &cfg}
 }
 
-func (d *HashDriver) Create(password string) (hash string, err error) {
-	return argon2id.CreateHash(password, d.Config.Params)
+func Location(c *fiber.Ctx) (string, error) {
+	ip := IP(c)
+	loc, err := Http.GeoIP.GetLocation(ip)
+	if err != nil {
+		return "127.0.0.1", err
+	}
+	if loc.Country.IsoCode == "" {
+		return "127.0.0.1", err
+	}
+	return loc.Country.IsoCode, nil
 }
 
-func (d *HashDriver) Match(password string, hash string) (match bool, err error) {
-	return argon2id.ComparePasswordAndHash(password, hash)
+var fetchIpFromString = regexp.MustCompile(`(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})`)
+var possibleHeaderes = []string{
+	"X-Original-Forwarded-For",
+	"X-Forwarded-For",
+	"X-Real-Ip",
+	"X-Client-Ip",
+	"Forwarded-For",
+	"Forwarded",
+	"Remote-Addr",
+	"Client-Ip",
+	"CF-Connecting-IP",
+}
+
+// determine user ip
+func IP(c *fiber.Ctx) string {
+	headerValue := []byte{}
+	if Http.Server.Config().ProxyHeader == "*" {
+		for _, headerName := range possibleHeaderes {
+			headerValue = c.Request().Header.Peek(headerName)
+			if len(headerValue) > 3 {
+				return string(fetchIpFromString.Find(headerValue))
+			}
+		}
+	}
+	headerValue = []byte(c.IP())
+	if len(headerValue) <= 3 {
+		headerValue = []byte("0.0.0.0")
+	}
+
+	// find ip address in string
+	return string(fetchIpFromString.Find(headerValue))
 }

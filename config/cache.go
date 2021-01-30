@@ -1,29 +1,29 @@
 package config
 
 import (
-	"fmt"
-	"github.com/go-redis/redis"
-	. "github.com/sujit-baniya/fiber-boilerplate/app"
+	"github.com/gofiber/storage/redis"
 )
 
-type CacheConfiguration struct {
-	Cache_DSN string
-	Cache_DB  int
+type CacheConfig struct {
+	*redis.Storage
+	Driver string `yaml:"driver" env:"CACHE_DRIVER"`
+	Name   string `yaml:"name" env:"CACHE_NAME"`
+	Host   string `yaml:"host" env:"CACHE_HOST"`
+	Port   int    `yaml:"port" env:"CACHE_PORT"`
+	DB     int    `yaml:"db" env:"CACHE_DB"`
 }
 
-var CacheConfig *CacheConfiguration //nolint:gochecknoglobals
-
-func LoadCacheConfig() {
-	loadDefaultCacheConfig()
-	ViperConfig.Unmarshal(&CacheConfig)
-	option, err := redis.ParseURL(fmt.Sprintf("redis://%s/%d", CacheConfig.Cache_DSN, CacheConfig.Cache_DB))
-	if err != nil {
-		panic(err)
+func (c *CacheConfig) Setup() {
+	switch c.Driver {
+	case "memcache":
+	default:
+		// Initialize custom config
+		store := redis.New(redis.Config{
+			Host:     c.Host,
+			Port:     c.Port,
+			Database: c.DB,
+		})
+		c.Storage = store
 	}
-	RedisClient = redis.NewClient(option)
-}
 
-func loadDefaultCacheConfig() {
-	ViperConfig.SetDefault("CACHE_DSN", "127.0.0.1:6379")
-	ViperConfig.SetDefault("CACHE_DB", 0)
 }
