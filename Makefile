@@ -24,6 +24,7 @@ endif
 
 FLAGS := -ldflags "-X github.com/sujit-baniya/fiber-boilerplate/app.Version=$(VERSION)"
 BUILD_PATH := $(shell pwd)/build
+PID := $(shell lsof -t -i:$(APP_PORT))
 RELEASE_PATH := $(BUILD_PATH)/releases
 SHARED_PATH := $(BUILD_PATH)/shared
 CURRENT_PATH := $(BUILD_PATH)/current
@@ -113,9 +114,11 @@ start:
 	cd $(CURRENT_PATH) && ./$(APPLICATION_NAME) </dev/null &>/dev/null &
 
 kill:
-	$(info $(GREEN)Stopping application$(RESET))
-ifneq ($(lsof -t -i:8080),)
-	kill -9 $(lsof -t -i:8080)
+ifneq ($(PID),)
+	$(info $(RED)Stopping application on port $(APP_PORT)$(RESET))
+	kill -9 $(PID)
+else
+	$(info $(YELLOW)Application not found on port $(APP_PORT)$(RESET))
 endif
 
 restart: kill start
