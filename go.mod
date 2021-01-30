@@ -21,7 +21,6 @@ require (
 	github.com/mattn/go-isatty v0.0.12
 	github.com/plutov/paypal/v3 v3.1.0
 	github.com/pyroscope-io/pyroscope v0.0.17
-	github.com/spf13/viper v1.7.1
 	github.com/sujit-baniya/flash v0.0.5
 	github.com/sujit-baniya/ip v0.0.1
 	github.com/sujit-baniya/log v1.0.56
