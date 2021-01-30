@@ -2,7 +2,7 @@ package middlewares
 
 import (
 	"errors"
-	"github.com/sujit-baniya/utils"
+	"github.com/sujit-baniya/fiber-boilerplate/utils"
 	"strconv"
 	"strings"
 	"time"

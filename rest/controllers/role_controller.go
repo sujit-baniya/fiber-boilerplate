@@ -33,11 +33,11 @@ func AssignRoleToUser(c *fiber.Ctx) error {
 	var role1 models.RoleAndPermission
 	c.BodyParser(&roleRequest)
 	role := models.RoleAndPermission{
-		PType: "g",
+		Ptype: "g",
 		V0: fmt.Sprintf("%d", roleRequest.UserID),
 		V1: roleRequest.Role,
 	}
-	err := app.Http.Database.Unscoped().First(&role1, models.RoleAndPermission{PType: role.PType,V0: role.V0, V1: role.V1}).Error
+	err := app.Http.Database.Unscoped().First(&role1, models.RoleAndPermission{Ptype: role.Ptype,V0: role.V0, V1: role.V1}).Error
 	if err != nil {
 		app.Http.Database.Create(&role)
 		app.Http.Auth.Enforcer.LoadPolicy()
@@ -64,7 +64,7 @@ func ChangeRoleForUser(c *fiber.Ctx) error {
 	var role models.RoleRequest
 	var role1 models.RoleAndPermission
 	c.BodyParser(&role)
-	err := app.Http.Database.Unscoped().First(&role1, models.RoleAndPermission{PType: "g",V0: fmt.Sprintf("%d", role.UserID), V1: role.OldRole}).Error
+	err := app.Http.Database.Unscoped().First(&role1, models.RoleAndPermission{Ptype: "g",V0: fmt.Sprintf("%d", role.UserID), V1: role.OldRole}).Error
 	if err == nil {
 		role1.V1 = role.Role
 		role1.DeletedAt = gorm.DeletedAt{Valid: false}
@@ -81,13 +81,13 @@ func AddPermissionOnRole(c *fiber.Ctx) error {
 	c.BodyParser(&permission)
 	if permission.Role != "" && permission.Module != "" && permission.Action != "" {
 		role := models.RoleAndPermission{
-			PType: "p",
+			Ptype: "p",
 			V0: permission.Role,
 			V1: permission.Module,
 			V2: permission.Action,
 			Category: "permission",
 		}
-		err := app.Http.Database.Unscoped().First(&role1, models.RoleAndPermission{PType: role.PType,V0: role.V0, V1: role.V1, V2: role.V2}).Error
+		err := app.Http.Database.Unscoped().First(&role1, models.RoleAndPermission{Ptype: role.Ptype,V0: role.V0, V1: role.V1, V2: role.V2}).Error
 		if err != nil {
 			app.Http.Database.Create(&role)
 		}
@@ -97,13 +97,13 @@ func AddPermissionOnRole(c *fiber.Ctx) error {
 	if permission.Role != "" && permission.Route != "" && permission.Method != "" {
 		fmt.Println(1)
 		role := models.RoleAndPermission{
-			PType: "p",
+			Ptype: "p",
 			V0: permission.Role,
 			V1: permission.Route,
 			V2: permission.Method,
 			Category: "route",
 		}
-		err := app.Http.Database.Unscoped().First(&role1, models.RoleAndPermission{PType: role.PType,V0: role.V0, V1: role.V1, V2: role.V2}).Error
+		err := app.Http.Database.Unscoped().First(&role1, models.RoleAndPermission{Ptype: role.Ptype,V0: role.V0, V1: role.V1, V2: role.V2}).Error
 		if err != nil {
 			app.Http.Database.Create(&role)
 		}

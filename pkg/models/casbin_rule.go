@@ -6,17 +6,17 @@ import (
 )
 
 type RoleAndPermission struct {
-	ID        uint `gorm:"primarykey"`
+	ID        uint `gorm:"primaryKey;autoIncrement"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
-	PType     string         `gorm:"p_type" json:"p_type"`
-	V0        string         `gorm:"v0" json:"v0"`
-	V1        string         `gorm:"v1" json:"v1"`
-	V2        string         `gorm:"v2" json:"v2"`
-	V3        string         `gorm:"v3" json:"v3"`
-	V4        string         `gorm:"v4" json:"v4"`
-	V5        string         `gorm:"v5" json:"v5"`
+	Ptype     string         `gorm:"size:100;uniqueIndex:unique_index"`
+	V0        string         `gorm:"size:100;uniqueIndex:unique_index"`
+	V1        string         `gorm:"size:100;uniqueIndex:unique_index"`
+	V2        string         `gorm:"size:100;uniqueIndex:unique_index"`
+	V3        string         `gorm:"size:100;uniqueIndex:unique_index"`
+	V4        string         `gorm:"size:100;uniqueIndex:unique_index"`
+	V5        string         `gorm:"size:100;uniqueIndex:unique_index"`
 	Category  string         `gorm:"category" json:"category"`
 }
 

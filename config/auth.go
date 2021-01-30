@@ -27,7 +27,10 @@ func (d *AuthConfig) Setup(db *gorm.DB, file string) {
 		panic(err)
 	}
 	enforcer.SetAdapter(adapter)
-	_ = enforcer.LoadPolicy()
+	err = enforcer.LoadPolicy()
+	if err != nil {
+		panic(err)
+	}
 	d.Enforcer = enforcer
 	authConf := CasbinAuthConfig{
 		Enforcer:      d.Enforcer,
