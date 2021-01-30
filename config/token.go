@@ -6,11 +6,9 @@ import (
 
 	"github.com/form3tech-oss/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	"github.com/spf13/viper"
 )
 
 type Token struct {
-	config       *viper.Viper
 	Hash         string `json:"token"`
 	Expire       int64  `mapstructure:"JWT_EXPIRE" json:"expires_in" yaml:"expires_in"`
 	AppJwtSecret string `mapstructure:"APP_JWT_SECRET" yaml:"app_jwt_secret"`

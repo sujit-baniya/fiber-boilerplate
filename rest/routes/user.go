@@ -8,10 +8,10 @@ import (
 )
 
 func UserRoutes(web fiber.Router) {
+
+	web.Use(middlewares.AuthWeb())
 	if app.Http.Auth.Type == "casbin" {
-		web.Use(app.Http.Auth.Casbin.RequiresRoles([]string{"user"}))
-	} else {
-		web.Use(middlewares.AuthWeb())
+		web.Use(app.Http.Auth.Casbin.RoutePermission())
 	}
 	account := web.Group("/app")
 	account.Get("/", controllers.App)
