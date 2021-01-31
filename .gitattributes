@@ -1,1 +1,6 @@
-*.go -text diff=golang
+*.css linguist-detectable=false
+*.js linguist-detectable=false
+*.html linguist-detectable=false
+*.vue linguist-detectable=false
+*.scss linguist-detectable=false
+*.go linguist-detectable=true
