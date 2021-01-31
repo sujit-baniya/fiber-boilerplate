@@ -6,9 +6,10 @@ import (
 	"time"
 )
 
-func MaxBodySize(size int) fiber.Handler {
+func MaxBodySize(sizeInMB int) fiber.Handler {
+	sizeInMB = sizeInMB * 1024 * 1024
 	return func(c *fiber.Ctx) error {
-		if len(c.Body()) >= size {
+		if len(c.Body()) >= sizeInMB {
 			// custom response here
 			return fiber.ErrRequestEntityTooLarge
 		}

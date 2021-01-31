@@ -2,7 +2,7 @@ package middlewares
 
 import (
 	"fmt"
-	"github.com/sujit-baniya/utils"
+	"github.com/sujit-baniya/fiber-boilerplate/utils"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gookit/validate"

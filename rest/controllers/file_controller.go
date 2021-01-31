@@ -17,7 +17,7 @@ import (
 	"github.com/sujit-baniya/fiber-boilerplate/app"
 	"github.com/sujit-baniya/fiber-boilerplate/pkg/auth"
 	"github.com/sujit-baniya/fiber-boilerplate/pkg/models"
-	"github.com/sujit-baniya/utils/xopen"
+	"github.com/sujit-baniya/fiber-boilerplate/utils/xopen"
 	"github.com/sujit-baniya/xid"
 )
 
