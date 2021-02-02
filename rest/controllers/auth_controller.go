@@ -22,10 +22,7 @@ func LoginPost(c *fiber.Ctx) error { //nolint:wsl
 			"message": err.Error(),
 		}).Redirect("/login")
 	}
-	if user.IsAdmin {
-		return c.Redirect("/app/admin")
-	}
-	return c.Redirect("/app")
+	return c.Redirect("/")
 }
 
 func LogoutPost(c *fiber.Ctx) error { //nolint:nolintlint,wsl

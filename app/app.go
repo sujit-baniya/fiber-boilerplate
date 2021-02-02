@@ -34,14 +34,11 @@ func LoadBuiltInMiddlewares(app *config.AppConfig) {
 
 func Location(c *fiber.Ctx) (string, error) {
 	ip := IP(c)
-	loc, err := Http.GeoIP.GetLocation(ip)
+	_, err := Http.GeoIP.GetLocation(ip)
 	if err != nil {
 		return "127.0.0.1", err
 	}
-	if loc.Country.IsoCode == "" {
-		return "127.0.0.1", err
-	}
-	return loc.Country.IsoCode, nil
+	return "127.0.0.1", err
 }
 
 var fetchIpFromString = regexp.MustCompile(`(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})`)
