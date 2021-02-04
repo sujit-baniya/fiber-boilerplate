@@ -36,7 +36,12 @@ func (d *AuthConfig) Setup(db *gorm.DB, file string) {
 		Enforcer:      d.Enforcer,
 		PolicyAdapter: d.Adapter,
 		Lookup: func(ctx *fiber.Ctx) string {
-			return ctx.Locals("user_id").(string)
+			userId := ctx.Locals("user_id")
+			if userId != nil {
+				return userId.(string)
+			}
+
+			return ""
 		},
 		Unauthorized: func(c *fiber.Ctx) error {
 			var err fiber.Error

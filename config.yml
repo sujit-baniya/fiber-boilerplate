@@ -99,4 +99,4 @@ spam:
   train_file: "spam.csv"
 
 auth:
-  type: "casbin"
+  type: "simple"
