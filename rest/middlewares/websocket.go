@@ -2,8 +2,9 @@ package middlewares
 
 import (
 	"errors"
-	"github.com/sujit-baniya/xid"
 	"time"
+
+	"github.com/sujit-baniya/xid"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/websocket/v2"
@@ -121,19 +122,11 @@ func New(callback func(kws *Websocket)) func(*fiber.Ctx) error {
 	return websocket.New(func(c *websocket.Conn) {
 
 		kws := &Websocket{
-			ws: c,
-			Locals: func(key string) interface{} {
-				return c.Locals(key)
-			},
-			Params: func(key string, defaultValue ...string) string {
-				return c.Params(key, defaultValue...)
-			},
-			Query: func(key string, defaultValue ...string) string {
-				return c.Query(key, defaultValue...)
-			},
-			Cookies: func(key string, defaultValue ...string) string {
-				return c.Cookies(key, defaultValue...)
-			},
+			ws:         c,
+			Locals:     c.Locals,
+			Params:     c.Params,
+			Query:      c.Query,
+			Cookies:    c.Cookies,
 			queue:      make(map[string]message),
 			attributes: make(map[string]string),
 			isAlive:    true,
