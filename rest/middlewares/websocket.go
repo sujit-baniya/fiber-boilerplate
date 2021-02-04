@@ -192,7 +192,7 @@ func (kws *Websocket) EmitTo(uuid string, message []byte) error {
 // except avoid broadcasting the message to itself
 func (kws *Websocket) Broadcast(message []byte, except bool) {
 
-	for uuid, _ := range pool {
+	for uuid := range pool {
 		if except && kws.UUID == uuid {
 			continue
 		}
