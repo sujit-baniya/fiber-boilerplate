@@ -2,11 +2,6 @@ package config
 
 import (
 	"fmt"
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/template/html"
-	"github.com/mattn/go-colorable"
-	"github.com/mattn/go-isatty"
-	"github.com/sujit-baniya/log"
 	"os"
 	"os/signal"
 	"path/filepath"
@@ -14,6 +9,12 @@ import (
 	"strconv"
 	"strings"
 	"syscall"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/template/html"
+	"github.com/mattn/go-colorable"
+	"github.com/mattn/go-isatty"
+	"github.com/sujit-baniya/log"
 )
 
 type ServerConfig struct {
@@ -99,7 +100,6 @@ func (s *ServerConfig) ServeWithGraceFullShutdown(addr ...string) error {
 		syscall.SIGTERM,
 		syscall.SIGABRT,
 		syscall.SIGQUIT,
-		syscall.SIGKILL,
 	) // When an interrupt is sent, notify the channel
 	<-c // This blocks the main thread until an interrupt is received
 	fmt.Println("I'm shutting down")
