@@ -130,7 +130,7 @@ func (cm *Casbin) RequiresPermissions(permissions []string, opts ...func(o *Opti
 		}
 
 		sub := cm.config.Lookup(c)
-		if len(sub) == 0 {
+		if sub == "" {
 			return cm.config.Unauthorized(c)
 		}
 
@@ -176,7 +176,7 @@ func (cm *Casbin) Can(sub string, perm string, opts ...func(o *Options)) bool {
 		return false
 	}
 
-	if len(sub) == 0 {
+	if sub == "" {
 		return false
 	}
 
@@ -210,7 +210,7 @@ func (cm *Casbin) Can(sub string, perm string, opts ...func(o *Options)) bool {
 func (cm *Casbin) RoutePermission() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		sub := cm.config.Lookup(c)
-		if len(sub) == 0 {
+		if sub == "" {
 			return cm.config.Unauthorized(c)
 		}
 
@@ -242,7 +242,7 @@ func (cm *Casbin) RequiresRoles(roles []string, opts ...func(o *Options)) fiber.
 		}
 
 		sub := cm.config.Lookup(c)
-		if len(sub) == 0 {
+		if sub == "" {
 			return cm.config.Unauthorized(c)
 		}
 
