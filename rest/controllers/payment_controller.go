@@ -29,7 +29,7 @@ func PlaceOrderFromPaypal(c *fiber.Ctx) error {
 		return c.Redirect("/")
 	}
 	user, _ := auth.User(c)
-	if user.EmailVerified != true {
+	if !user.EmailVerified {
 		c.Status(400)
 		return c.JSON(fiber.Map{
 			"validationError": true,
