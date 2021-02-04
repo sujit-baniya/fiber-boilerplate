@@ -5,11 +5,11 @@ go 1.15
 require (
 	github.com/alexedwards/argon2id v0.0.0-20201228115903-cf543ebc1f7b
 	github.com/casbin/casbin/v2 v2.23.0
-	github.com/casbin/gorm-adapter/v3 v3.1.0
+	github.com/casbin/gorm-adapter/v3 v3.2.0
 	github.com/denisenkom/go-mssqldb v0.9.0 // indirect
 	github.com/fasthttp/session/v2 v2.2.6 // indirect
 	github.com/form3tech-oss/jwt-go v3.2.2+incompatible
-	github.com/go-redis/redis/v8 v8.4.11 // indirect
+	github.com/go-redis/redis/v8 v8.5.0 // indirect
 	github.com/gobuffalo/here v0.6.2 // indirect
 	github.com/gofiber/fiber/v2 v2.4.1
 	github.com/gofiber/session/v2 v2.0.2
@@ -26,12 +26,13 @@ require (
 	github.com/markbates/pkger v0.17.1
 	github.com/mattn/go-colorable v0.1.8
 	github.com/mattn/go-isatty v0.0.12
+	github.com/pkg/errors v0.9.1
 	github.com/plutov/paypal/v3 v3.1.0
-	github.com/pyroscope-io/pyroscope v0.0.17
-	github.com/savsgio/gotils v0.0.0-20210120114113-f9d780dcbd93 // indirect
+	github.com/pyroscope-io/pyroscope v0.0.18
+	github.com/savsgio/dictpool v0.0.0-20210204105106-48283dc86d9d // indirect
 	github.com/sujit-baniya/flash v0.0.5
 	github.com/sujit-baniya/ip v0.0.2
-	github.com/sujit-baniya/log v1.0.56
+	github.com/sujit-baniya/log v1.0.57
 	github.com/sujit-baniya/sblogger v0.0.9
 	github.com/sujit-baniya/xid v1.2.2
 	github.com/valyala/bytebufferpool v1.0.0

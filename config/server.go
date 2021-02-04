@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 	"os"
 	"os/signal"
 	"path/filepath"
@@ -330,6 +331,9 @@ func CustomErrorHandler(c *fiber.Ctx, err error) error {
 	if e, ok := err.(*fiber.Error); ok {
 		code = e.Code
 	} //nolint:gofmt,wsl
+	er := errors.WithStack(err)
+	fmt.Printf("%+v", er)
+	fmt.Printf("%+v", err)
 	if c.Is("json") {
 		return c.Status(code).JSON(err)
 	}
