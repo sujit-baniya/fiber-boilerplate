@@ -28,6 +28,7 @@ require (
 	github.com/markbates/pkger v0.17.1
 	github.com/mattn/go-colorable v0.1.8
 	github.com/mattn/go-isatty v0.0.12
+	github.com/pkg/errors v0.9.1
 	github.com/plutov/paypal/v3 v3.1.0
 	github.com/pyroscope-io/pyroscope v0.0.23
 	github.com/sirupsen/logrus v1.8.0 // indirect
