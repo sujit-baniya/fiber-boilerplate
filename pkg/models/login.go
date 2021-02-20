@@ -13,7 +13,7 @@ type Login struct {
 }
 
 // Messages you can custom validator error messages.
-func (f Login) Messages() map[string]string {
+func (l Login) Messages() map[string]string {
 	return validate.MS{
 		"required": "oh! the {field} is required",
 		"email":    "Invalid email format",
