@@ -63,6 +63,7 @@ func IsLoggedIn(c *fiber.Ctx) bool {
 func Login(c *fiber.Ctx, userID uint, secret string) (*config.Token, error) {
 	store := app.Http.Session.Get(c) // get/create new session
 	store.Set("user_id", userID)     // save to storage
+	c.Locals("user_id", userID)
 	token, err := app.Http.Token.CreateToken(c, userID, secret)
 	if err == nil {
 		store.Set("user_token", token.Hash)
