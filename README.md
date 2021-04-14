@@ -1,3 +1,6 @@
+
+### Looking for some more features or ideas??? Let's discuss on Discussions.
+
 This is the go boilerplate on the top of fiber web framework.
 
 With simple setup, you can use many features out of the box.
