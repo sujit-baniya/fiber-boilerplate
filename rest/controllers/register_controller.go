@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"fmt"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/sujit-baniya/fiber-boilerplate/app"
 	"github.com/sujit-baniya/fiber-boilerplate/pkg/auth"
@@ -53,7 +51,6 @@ func RequestPasswordResetPost(c *fiber.Ctx) error {
 		ctx := app.Http.Flash.WithError(c, fiber.Map{
 			"message": "User with requested email doesn't exist",
 		})
-		fmt.Println(app.Http.Flash.Data)
 		return ctx.Redirect("/request-password-reset")
 	}
 	go services.SendPasswordResetEmail(email, app.Http.Server.Url)
