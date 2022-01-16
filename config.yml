@@ -17,9 +17,9 @@ database:
   default: *postgres
 
 server: &server
-  name: "iSend.to"
+  name: "Test Server"
   host: localhost
-  port: 8080
+  port: 8084
 
 profiler:
   enabled: false
