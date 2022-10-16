@@ -1,1 +1,39 @@
-body{background-image:url(../img/pattern.svg)}.string{color:green}.number{color:#ff8c00}.boolean{color:#00f}.null{color:#f0f}.key{color:red}.hero_button{background-color:#0a165c!important;color:#fff!important;transition:all .5s ease}.hero_button:hover{background-color:#6074ed!important}.container{width:70%}
+body {
+  background-image: url("../img/pattern.svg");
+}
+
+.string {
+  color: green;
+}
+
+.number {
+  color: darkorange;
+}
+
+.boolean {
+  color: blue;
+}
+
+.null {
+  color: magenta;
+}
+
+.key {
+  color: red;
+}
+
+.hero_button {
+  background-color: #0a165c !important;
+  color: #fff !important;
+  transition: all 0.5s ease;
+}
+
+.hero_button:hover {
+  background-color: #6074ed !important;
+}
+
+.container {
+  width: 70%;
+}
+
+/*# sourceMappingURL=landing.css.map*/

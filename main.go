@@ -21,11 +21,11 @@ func main() {
 			ServerAddress:   app.Http.Profiler.Server,
 		})
 	}
-
 	app.Http.Server.Version = app.Version
 	if *migrate {
 		migrations.Migrate()
 	} else {
+		// app.LoadAdditionalServices() // Enable for PayPal and any other services
 		routes.LoadRoutes(app.Http.Server.App)
 		app.Http.Route404()
 		log.Fatal(app.Http.Server.ServeWithGraceFullShutdown())

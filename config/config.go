@@ -85,9 +85,10 @@ func (cfg *AppConfig) Route404() {
 }
 
 func (cfg *AppConfig) LoadComponents() {
-	cfg.Flash = &flash.Flash{
-		CookiePrefix: "Verify-Rest",
-	}
+	cfg.Flash = flash.New(flash.Config{
+		Name:     "fiber",
+		HTTPOnly: true,
+	})
 	cfg.LoadStatic()
 	cfg.PrepareLog()
 	cfg.Server.Use(

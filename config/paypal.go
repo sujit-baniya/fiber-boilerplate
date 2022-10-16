@@ -13,7 +13,6 @@ type PayPalConfig struct {
 }
 
 func (p *PayPalConfig) Connect(env string) {
-
 	var err error
 	if p.Client != nil {
 		return

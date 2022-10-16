@@ -18,6 +18,9 @@ func Load(configFile string) {
 	Http = &config.AppConfig{ConfigFile: configFile}
 	Http.Setup()
 	LoadBuiltInMiddlewares(Http)
+}
+
+func LoadAdditionalServices() {
 	Http.PayPal.Connect(Http.Server.Env)
 }
 
