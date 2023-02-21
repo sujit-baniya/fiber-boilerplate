@@ -8,7 +8,6 @@ import (
 	"github.com/sujit-baniya/flash"
 	"github.com/sujit-baniya/ip"
 	"github.com/sujit-baniya/log"
-	"github.com/sujit-baniya/sblogger"
 	"os"
 	"path/filepath"
 	"time"
@@ -91,12 +90,6 @@ func (cfg *AppConfig) LoadComponents() {
 	})
 	cfg.LoadStatic()
 	cfg.PrepareLog()
-	cfg.Server.Use(
-		sblogger.New(sblogger.Config{
-			Logger:    &log.DefaultLogger,
-			LogWriter: log.DefaultLogger.Writer,
-		}),
-	)
 	_ = cfg.Database.Setup()
 	_ = cfg.Session.Setup()
 	cfg.Cache.Setup()
