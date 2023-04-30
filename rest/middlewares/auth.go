@@ -3,12 +3,14 @@ package middlewares
 import (
 	"errors"
 	"fmt"
+	"reflect"
+	"strings"
+
+	"github.com/oarkflow/log"
+
 	"github.com/sujit-baniya/fiber-boilerplate/app"
 	config2 "github.com/sujit-baniya/fiber-boilerplate/config"
 	"github.com/sujit-baniya/fiber-boilerplate/pkg/auth"
-	"github.com/sujit-baniya/log"
-	"reflect"
-	"strings"
 
 	"github.com/form3tech-oss/jwt-go"
 	"github.com/gofiber/fiber/v2"

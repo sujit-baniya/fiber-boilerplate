@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"os"
 	"os/signal"
 	"path/filepath"
@@ -11,11 +10,13 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/pkg/errors"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
 	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-isatty"
-	"github.com/sujit-baniya/log"
+	"github.com/oarkflow/log"
 )
 
 type ServerConfig struct {
@@ -71,7 +72,6 @@ func (s *ServerConfig) Setup() {
 	})
 }
 
-//
 func (s *ServerConfig) Serve(addr ...string) error {
 	a := s.Host + ":" + s.Port
 	if len(addr) != 0 {
@@ -81,7 +81,6 @@ func (s *ServerConfig) Serve(addr ...string) error {
 	return s.Listen(a)
 }
 
-//
 func (s *ServerConfig) ServeWithGraceFullShutdown(addr ...string) error {
 	a := s.Host + ":" + s.Port
 	if len(addr) != 0 {
@@ -303,7 +302,6 @@ func (s *ServerConfig) startupMessage(addr string, tls bool, processIds string) 
 	_, _ = fmt.Fprintln(out, output)
 }
 
-//
 func (s *ServerConfig) Stop() {
 	_ = s.Shutdown()
 }

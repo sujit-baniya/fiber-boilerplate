@@ -3,9 +3,10 @@ package config
 import (
 	"context"
 	"fmt"
-	"github.com/sujit-baniya/log"
-	"gorm.io/gorm/logger"
 	"time"
+
+	"github.com/oarkflow/log"
+	"gorm.io/gorm/logger"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"

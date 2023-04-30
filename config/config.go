@@ -2,15 +2,16 @@ package config
 
 import (
 	"fmt"
-	"github.com/gofiber/fiber/v2"
-	"github.com/ilyakaznacheev/cleanenv"
-	"github.com/joho/godotenv"
-	"github.com/sujit-baniya/flash"
-	"github.com/sujit-baniya/ip"
-	"github.com/sujit-baniya/log"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/ilyakaznacheev/cleanenv"
+	"github.com/joho/godotenv"
+	"github.com/oarkflow/log"
+	"github.com/sujit-baniya/flash"
+	"github.com/sujit-baniya/ip"
 )
 
 // Config is a application configuration structure

@@ -1,9 +1,10 @@
 package middlewares
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"github.com/sujit-baniya/log"
 	"time"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/oarkflow/log"
 )
 
 func NewLog(logger *log.Logger, skip func(c *fiber.Ctx) bool) fiber.Handler {
