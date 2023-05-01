@@ -30,7 +30,6 @@ require (
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
 	github.com/sujit-baniya/flash v0.1.8
 	github.com/sujit-baniya/ip v0.0.10
-	github.com/sujit-baniya/xid v1.2.4
 	github.com/tklauser/go-sysconf v0.3.11 // indirect
 	github.com/valyala/bytebufferpool v1.0.0
 	github.com/xhit/go-simple-mail/v2 v2.13.0
@@ -45,7 +44,10 @@ require (
 	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 // indirect
 )
 
-require github.com/oarkflow/log v1.0.73
+require (
+	github.com/oarkflow/log v1.0.73
+	github.com/oarkflow/xid v1.2.5
+)
 
 require (
 	github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible // indirect

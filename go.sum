@@ -494,6 +494,8 @@ github.com/nxadm/tail v1.4.4/go.mod h1:kenIhsEOeOJmVchQTgglprH7qJGnHDVpk1VPCcaMI
 github.com/nxadm/tail v1.4.8 h1:nPr65rt6Y5JFSKQO7qToXr7pePgD6Gwiw05lkbyAQTE=
 github.com/oarkflow/log v1.0.73 h1:UQW1uMaKJBHr7EcLA5yZGbiO7aXHmtFi23TyC/o0diQ=
 github.com/oarkflow/log v1.0.73/go.mod h1:XTPYB9X9MZGeL1wFeG+Of8NKXTuS4hWR1tAJTxS0img=
+github.com/oarkflow/xid v1.2.5 h1:6RcNJm9+oZ/B647gkME9trCzhpxGQaSdNoD56Vmkeho=
+github.com/oarkflow/xid v1.2.5/go.mod h1:jG4YBh+swbjlWApGWDBYnsJEa7hi3CCpmuqhB3RAxVo=
 github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/ginkgo v1.12.1/go.mod h1:zj2OWP4+oCPe1qIXoGWkgMRwljMUYCdkwsT2108oapk=
 github.com/onsi/ginkgo v1.14.1/go.mod h1:iSB4RoI2tjJc9BBv4NKIKWKya62Rps+oPG/Lv9klQyY=
@@ -606,8 +608,6 @@ github.com/sujit-baniya/flash v0.1.8 h1:BwcrybCatPU30VMA9IBA5q3ZE0VSr5c7qTqwZrSv
 github.com/sujit-baniya/flash v0.1.8/go.mod h1:kmlAIkLDMlLshEeeE6fETEW8kSOopKN5WA3KXLmS/U0=
 github.com/sujit-baniya/ip v0.0.10 h1:4FxdNgibzkDGS6B1+2//o4nStxmvD11i3NEgljh6SLk=
 github.com/sujit-baniya/ip v0.0.10/go.mod h1:9wktAv0khHVF2t6lIWRbNV4ScqcHSi92pc5RfBb9YV8=
-github.com/sujit-baniya/xid v1.2.4 h1:qSrnwnDYUwV01pwAmpzRwepkxXwavfKA6hjIoU+Kg/4=
-github.com/sujit-baniya/xid v1.2.4/go.mod h1:6dyI6pHzpJuw4lUnHWDXuYFZmEl8KOBbE1I8eQVojhQ=
 github.com/tinylib/msgp v1.1.2/go.mod h1:+d+yLhGm8mzTaHzB+wgMYrodPfmZrzkirds8fDWklFE=
 github.com/tinylib/msgp v1.1.6/go.mod h1:75BAfg2hauQhs3qedfdDZmWAPcFMAvJE5b9rGOMufyw=
 github.com/tinylib/msgp v1.1.8 h1:FCXC1xanKO4I8plpHGH2P7koL/RzZs12l/+r7vakfm0=
