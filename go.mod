@@ -35,7 +35,7 @@ require (
 	github.com/xhit/go-simple-mail/v2 v2.16.0
 	golang.org/x/crypto v0.18.0
 	golang.org/x/sys v0.16.0 // indirect
-	google.golang.org/protobuf v1.32.0 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c
 	gorm.io/driver/mysql v1.5.2
 	gorm.io/driver/postgres v1.5.4
@@ -50,7 +50,6 @@ require (
 )
 
 require (
-	github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible // indirect
 	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/aquasecurity/libbpfgo v0.6.0-libbpf-1.3 // indirect
@@ -73,9 +72,7 @@ require (
 	github.com/golang-sql/civil v0.0.0-20220223132316-b832511892a9 // indirect
 	github.com/golang-sql/sqlexp v0.1.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
-	github.com/google/gnostic v0.7.0 // indirect
 	github.com/google/gnostic-models v0.6.9-0.20230804172637-c7be7c783f49 // indirect
-	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/gofuzz v1.2.0 // indirect
 	github.com/google/uuid v1.5.0 // indirect
 	github.com/gookit/filter v1.2.1 // indirect
