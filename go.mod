@@ -11,7 +11,7 @@ require (
 	github.com/form3tech-oss/jwt-go v3.2.5+incompatible
 	github.com/go-redis/redis/v8 v8.11.5 // indirect
 	github.com/gobuffalo/here v0.6.7 // indirect
-	github.com/gofiber/fiber/v2 v2.52.0
+	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/gofiber/session/v2 v2.0.2
 	github.com/gofiber/storage/redis v1.3.4
 	github.com/gofiber/template v1.8.1
