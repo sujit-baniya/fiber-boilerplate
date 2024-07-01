@@ -231,8 +231,8 @@ github.com/gofiber/fiber/v2 v2.1.0/go.mod h1:aG+lMkwy3LyVit4CnmYUbUdgjpc3UYOltvl
 github.com/gofiber/fiber/v2 v2.9.0/go.mod h1:Ah3IJikrKNRepl/HuVawppS25X7FWohwfCSRn7kJG28=
 github.com/gofiber/fiber/v2 v2.36.0/go.mod h1:tgCr+lierLwLoVHHO/jn3Niannv34WRkQETU8wiL9fQ=
 github.com/gofiber/fiber/v2 v2.44.0/go.mod h1:VTMtb/au8g01iqvHyaCzftuM/xmZgKOZCtFzz6CdV9w=
-github.com/gofiber/fiber/v2 v2.52.0 h1:S+qXi7y+/Pgvqq4DrSmREGiFwtB7Bu6+QFLuIHYw/UE=
-github.com/gofiber/fiber/v2 v2.52.0/go.mod h1:KEOE+cXMhXG0zHc9d8+E38hoX+ZN7bhOtgeF2oT6jrQ=
+github.com/gofiber/fiber/v2 v2.52.5 h1:tWoP1MJQjGEe4GB5TUGOi7P2E0ZMMRx5ZTG4rT+yGMo=
+github.com/gofiber/fiber/v2 v2.52.5/go.mod h1:KEOE+cXMhXG0zHc9d8+E38hoX+ZN7bhOtgeF2oT6jrQ=
 github.com/gofiber/session/v2 v2.0.2 h1:VuLOb+QpMHaXZ6JXZnp3xCRv8TPRc1VLB9ddaA0MMGU=
 github.com/gofiber/session/v2 v2.0.2/go.mod h1:H+M+PENuiMTQJf9cTx+DJ7Jw8IqBAJ3QSbS6PbmvA78=
 github.com/gofiber/storage/redis v1.3.4 h1:IUNx09vnLiI1wZ/z3Dl5lYPrFdFgtgkAqG26wyIrwNI=
