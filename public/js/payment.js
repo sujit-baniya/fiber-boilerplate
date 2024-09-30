@@ -23,7 +23,6 @@ paypal.Buttons({
     // true | false,
     tagline: false // true | false,
   },
-
   // onInit is called when the button first renders
   onInit: function onInit(data, actions) {
     // Disable the buttons
