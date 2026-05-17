@@ -2,6 +2,7 @@ package config
 
 import (
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/form3tech-oss/jwt-go"
@@ -11,8 +12,32 @@ import (
 type Token struct {
 	Hash         string `json:"token"`
 	Expire       int64  `mapstructure:"JWT_EXPIRE" json:"expires_in" yaml:"expires_in"`
-	AppJwtSecret string `mapstructure:"APP_JWT_SECRET" yaml:"app_jwt_secret"`
-	ApiJwtSecret string `mapstructure:"API_JWT_SECRET" yaml:"api_jwt_secret"`
+	AppJwtSecret string `mapstructure:"APP_JWT_SECRET" yaml:"app_jwt_secret" env:"APP_JWT_SECRET"`
+	ApiJwtSecret string `mapstructure:"API_JWT_SECRET" yaml:"api_jwt_secret" env:"API_JWT_SECRET"`
+}
+
+// ValidateSecrets checks that JWT secrets are set and not using default/example values.
+func (t *Token) ValidateSecrets() error {
+	weakDefaults := map[string]bool{
+		"":           true,
+		"SECRET_APP": true,
+		"SECRET_API": true,
+		"secret":     true,
+		"changeme":   true,
+	}
+	if weakDefaults[t.AppJwtSecret] {
+		return fmt.Errorf("token.app_jwt_secret must not be a default/example value — generate with: openssl rand -hex 32")
+	}
+	if weakDefaults[t.ApiJwtSecret] {
+		return fmt.Errorf("token.api_jwt_secret must not be a default/example value — generate with: openssl rand -hex 32")
+	}
+	if len(t.AppJwtSecret) < 32 {
+		return fmt.Errorf("token.app_jwt_secret must be at least 32 characters (got %d)", len(t.AppJwtSecret))
+	}
+	if len(t.ApiJwtSecret) < 32 {
+		return fmt.Errorf("token.api_jwt_secret must be at least 32 characters (got %d)", len(t.ApiJwtSecret))
+	}
+	return nil
 }
 
 //CreateToken authenticates the user

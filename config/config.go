@@ -43,6 +43,10 @@ func (cfg *AppConfig) Setup() {
 		fmt.Println(err)
 		os.Exit(2)
 	}
+	if err = cfg.Token.ValidateSecrets(); err != nil {
+		fmt.Printf("JWT secret validation failed: %v\n", err)
+		os.Exit(2)
+	}
 	cfg.Server.LoadPath()
 	cfg.View.Load(cfg.Server.Path)
 	cfg.Mail.View = &cfg.View
