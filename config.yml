@@ -3,15 +3,15 @@ database:
     mysql: &mysql
       driver: mysql
       host: localhost
-      username: root
-      password: root
+      username: ""
+      password: ""
       db_name: casbin
       port: 3306
     postgres: &postgres
       driver: postgres
       host: localhost
-      username: postgres
-      password: postgres
+      username: ""
+      password: ""
       port: 5432
       db_name: casbin
   default: *postgres
@@ -56,15 +56,15 @@ mail:
   from_name: "Sujit Baniya"
 
 token:
-  app_jwt_secret: SECRET_APP
-  api_jwt_secret: SECRET_API
+  app_jwt_secret: ""
+  api_jwt_secret: ""
   expires_in: 3600
 jwt:
   app:
-    secret: SECRET_APP
+    secret: ""
     expire: 3600
   api:
-    secret: SECRET_API
+    secret: ""
     expire: 3600
 
 template:
